@@ -311,11 +311,50 @@ button {
   border-color: rgba(200, 211, 203, 0.2);
 }
 
-/* ───── Grain overlay ─────
-   Cream needs more grain to register — dark sections get brighter pass via var override. */
-:root {
-  --grain-opacity: 0.06;
+/* ───── Shared link + nav treatments ─────
+   Consolidated so no component ships an inline <style> block. */
+.nav-link {
+  transition: color var(--dur-hover) var(--ease-editorial);
 }
-.dark-section {
-  --grain-opacity: 0.11;
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.footer-link {
+  transition: color var(--dur-hover) var(--ease-editorial);
+}
+.footer-link:hover {
+  color: var(--color-accent);
+}
+
+/* Mono label + 1px rule underline — the editorial "read more" treatment. */
+.link-rule {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--color-ink);
+  transition:
+    color var(--dur-hover) var(--ease-editorial),
+    border-bottom-color var(--dur-hover) var(--ease-editorial);
+}
+.link-rule:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Section-to-section hairline rule used on every page transition. */
+.section-rule {
+  border-top: 1px solid var(--color-rule);
+}
+
+/* Dossier number hover reveal (masthead). Scoped so it doesn't leak into
+   other .group wrappers on the page. */
+.masthead-dossier:hover .masthead-dossier-slug {
+  max-width: 240px;
+  opacity: 1;
+  padding-left: 8px;
 }

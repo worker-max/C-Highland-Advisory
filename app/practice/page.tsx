@@ -49,16 +49,7 @@ export default function PracticePage() {
             >
               Begin with a brief. From a brief, a <em>scope.</em>
             </p>
-            <Link
-              href="/engagement"
-              className="mt-8 inline-block mono-label transition-colors hover:text-[color:var(--color-accent)]"
-              style={{
-                color: "var(--color-ink)",
-                letterSpacing: "0.12em",
-                borderBottom: "1px solid var(--color-ink)",
-                paddingBottom: 2,
-              }}
-            >
+            <Link href="/engagement" className="link-rule mt-8">
               How we work →
             </Link>
           </div>

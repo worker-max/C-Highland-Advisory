@@ -116,19 +116,14 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
               {division.services.map((service, i) => (
                 <li
                   key={service}
-                  className="border-t pt-4 text-[16px] leading-[1.55]"
+                  className="grid grid-cols-[40px_1fr] items-baseline gap-3 border-t pt-4 text-[16px] leading-[1.55]"
                   style={{
                     borderTopColor: "var(--color-rule)",
                     color: "var(--color-ink)",
                   }}
                 >
-                  <span
-                    className="mono-numeral mr-3"
-                    style={{ letterSpacing: "0.08em" }}
-                  >
-                    0{i + 1}
-                  </span>
-                  {service}
+                  <span className="mono-numeral">0{i + 1}</span>
+                  <span>{service}</span>
                 </li>
               ))}
             </ul>

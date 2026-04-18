@@ -76,6 +76,16 @@ const COLOPHON = [
     label: "Also at",
     items: ["colinhighland.com — writing, portfolio, editorial"],
   },
+  {
+    label: "Speaking",
+    items: ["— forthcoming"],
+    muted: true,
+  },
+  {
+    label: "Publications",
+    items: ["— forthcoming"],
+    muted: true,
+  },
 ];
 
 export default function FounderPage() {
@@ -161,18 +171,18 @@ export default function FounderPage() {
             {COLOPHON.map((group) => (
               <div
                 key={group.label}
-                className="border-t pt-4"
-                style={{ borderTopColor: "var(--color-rule)" }}
+                className="section-rule pt-4"
               >
-                <div
-                  className="mono-label"
-                  style={{ letterSpacing: "0.12em" }}
-                >
+                <div className="mono-label" style={{ letterSpacing: "0.12em" }}>
                   {group.label}
                 </div>
                 <ul
                   className="mt-3 space-y-1.5 text-[14px] leading-[1.5]"
-                  style={{ color: "var(--color-ink-soft)" }}
+                  style={{
+                    color: group.muted
+                      ? "var(--color-ink-mute)"
+                      : "var(--color-ink-soft)",
+                  }}
                 >
                   {group.items.map((item) => (
                     <li key={item}>{item}</li>
@@ -180,34 +190,6 @@ export default function FounderPage() {
                 </ul>
               </div>
             ))}
-            <div
-              className="border-t pt-4"
-              style={{ borderTopColor: "var(--color-rule)" }}
-            >
-              <div className="mono-label" style={{ letterSpacing: "0.12em" }}>
-                Speaking
-              </div>
-              <div
-                className="mt-3 text-[14px]"
-                style={{ color: "var(--color-ink-mute)" }}
-              >
-                — forthcoming
-              </div>
-            </div>
-            <div
-              className="border-t pt-4"
-              style={{ borderTopColor: "var(--color-rule)" }}
-            >
-              <div className="mono-label" style={{ letterSpacing: "0.12em" }}>
-                Publications
-              </div>
-              <div
-                className="mt-3 text-[14px]"
-                style={{ color: "var(--color-ink-mute)" }}
-              >
-                — forthcoming
-              </div>
-            </div>
           </aside>
 
           <article className="space-y-16">
@@ -252,13 +234,7 @@ export default function FounderPage() {
                 href={FIRM.portfolioUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mono-label inline-block transition-colors hover:text-[color:var(--color-accent)]"
-                style={{
-                  letterSpacing: "0.12em",
-                  color: "var(--color-ink)",
-                  borderBottom: "1px solid var(--color-ink)",
-                  paddingBottom: 2,
-                }}
+                className="link-rule"
               >
                 For writing, portfolio, and editorial, see colinhighland.com ↗
               </Link>

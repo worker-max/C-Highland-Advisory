@@ -91,7 +91,7 @@ export default function Home() {
           </Reveal>
 
           <div
-            className="grid gap-px"
+            className="grid gap-px rule-dark-bg"
             style={{ background: "rgba(200,211,203,0.2)" }}
           >
             {POSITIONS.map((row, i) => (

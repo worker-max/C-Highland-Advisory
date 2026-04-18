@@ -168,17 +168,16 @@ export default function TransmissionsPage() {
               className="text-[13px]"
               style={{ color: "var(--color-ink-mute)" }}
             >
-              Until the first dispatch, Colin&apos;s personal writing lives at{" "}
+              Until the first dispatch, Colin&apos;s writing lives at{" "}
               <Link
                 href={FIRM.portfolioUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[color:var(--color-accent)]"
-                style={{ color: "var(--color-ink-soft)", textDecoration: "underline" }}
+                className="link-rule"
+                style={{ fontSize: 11 }}
               >
                 colinhighland.com ↗
               </Link>
-              .
             </p>
           </form>
         </div>

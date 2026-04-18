@@ -31,9 +31,6 @@ export function Footer() {
         style={{ letterSpacing: "0.12em" }}
       >
         colinhighland.com ↗
-        <style>{`
-          .footer-link:hover { color: var(--color-accent) !important; }
-        `}</style>
       </a>
     </footer>
   );

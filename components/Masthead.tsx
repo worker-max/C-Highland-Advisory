@@ -51,7 +51,7 @@ export function Masthead() {
       }}
     >
       <div className="flex items-center gap-4 md:gap-6">
-        <span>Issue 01</span>
+        <span>Issue 00</span>
         <span aria-hidden="true" style={{ color: "var(--color-rule)" }}>
           ·
         </span>
@@ -61,34 +61,31 @@ export function Masthead() {
         </span>
         <span className="hidden md:inline">Established {FIRM.founded}</span>
       </div>
-      <div className="group relative flex items-center gap-1">
+      <div className="masthead-dossier relative flex items-center gap-1">
         <span style={{ color: "var(--color-ink-soft)" }}>Dossier No.</span>
         <span
-          style={{ color: "var(--color-ink)" }}
-          className="transition-colors group-hover:text-[color:var(--color-accent)]"
+          style={{
+            color: "var(--color-ink)",
+            transition: "color var(--dur-hover) var(--ease-editorial)",
+          }}
         >
           {dossier.n}
         </span>
         <span
           aria-hidden="true"
-          className="overflow-hidden whitespace-nowrap transition-[max-width,opacity,padding] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+          className="masthead-dossier-slug overflow-hidden whitespace-nowrap"
           style={{
             maxWidth: 0,
             opacity: 0,
             paddingLeft: 0,
             color: "var(--color-ink-soft)",
+            transition:
+              "max-width 300ms var(--ease-editorial), opacity 300ms var(--ease-editorial), padding 300ms var(--ease-editorial)",
           }}
         >
           · {dossier.slug}
         </span>
       </div>
-      <style>{`
-        .group:hover span[aria-hidden="true"]:last-child {
-          max-width: 240px;
-          opacity: 1;
-          padding-left: 8px;
-        }
-      `}</style>
     </div>
   );
 }

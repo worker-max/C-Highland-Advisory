@@ -65,10 +65,6 @@ export function Nav() {
       <CTAButton href="/engagement" variant="primary" size="sm">
         Initiate brief →
       </CTAButton>
-
-      <style>{`
-        .nav-link:hover { color: var(--color-accent); }
-      `}</style>
     </nav>
   );
 }
