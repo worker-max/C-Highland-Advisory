@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════
+   C HIGHLAND ADVISORY — Design Tokens
+   Swiss-editorial / architectural minimal
+   ═══════════════════════════════════════════════ */
+
+@theme inline {
+  --color-paper: #f5f2ed;
+  --color-paper-deep: #ebe6dc;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #4a4a48;
+  --color-ink-mute: #8a877f;
+  --color-rule: #d4cec2;
+  --color-accent: #2d4a38;
+  --color-accent-deep: #1f3527;
+  --color-accent-soft: #c8d3cb;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-inter-tight), -apple-system, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Utility: em-dash prefix on mono section labels */
+.label-dash::before {
+  content: "— ";
+  color: var(--color-accent);
+}
+
+/* Hero headline — Fraunces 300, tight tracking, accent italics */
+.headline-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+}
+.headline-display em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-accent);
+}
+.headline-display .underline {
+  position: relative;
+  display: inline-block;
+}
+.headline-display .underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0.08em;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-ink-mute);
+}
