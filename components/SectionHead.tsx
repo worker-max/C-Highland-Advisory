@@ -9,26 +9,30 @@ type Props = {
   className?: string;
 };
 
+/*
+  items-start keeps the Swiss baseline — label/title left column anchors to
+  the top of the description column rather than dragging down to its bottom.
+*/
 export function SectionHead({ label, title, desc, inverted = false, className }: Props) {
   return (
     <div
       className={clsx(
-        "grid items-end gap-8 md:grid-cols-[1fr_2fr] md:gap-20",
-        desc ? "mb-16 md:mb-20" : "mb-12 md:mb-16",
+        "grid items-start gap-8 md:grid-cols-[1fr_2fr] md:gap-20",
+        desc ? "mb-10 md:mb-14" : "mb-10 md:mb-12",
         className,
       )}
     >
       <div>
         <div
-          className={clsx("mono-label label-dash", inverted && "label-dash-inverted")}
+          className={clsx("mono-label label-dash")}
           style={{
-            color: inverted ? "rgba(245,242,237,0.6)" : undefined,
+            color: inverted ? "var(--color-accent-soft)" : undefined,
           }}
         >
           {label}
         </div>
         <h2
-          className="section-title mt-[18px] text-[clamp(36px,5vw,64px)]"
+          className="section-title mt-4 text-[clamp(36px,5vw,64px)]"
           style={{ color: inverted ? "var(--color-paper)" : "var(--color-ink)" }}
         >
           {title}
@@ -37,13 +41,13 @@ export function SectionHead({ label, title, desc, inverted = false, className }:
       {desc && (
         <p
           className="max-w-[56ch] text-[17px] leading-[1.65]"
-          style={{ color: inverted ? "var(--color-paper)" : "var(--color-ink-soft)" }}
+          style={{
+            color: inverted ? "var(--color-accent-soft)" : "var(--color-ink-soft)",
+            fontWeight: 300,
+          }}
         >
           {desc}
         </p>
-      )}
-      {inverted && (
-        <style>{`.label-dash-inverted::before { color: var(--color-accent-soft); }`}</style>
       )}
     </div>
   );

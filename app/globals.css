@@ -2,7 +2,7 @@
 
 /* ═══════════════════════════════════════════════
    C HIGHLAND ADVISORY — Design Tokens
-   Swiss-editorial / architectural minimal
+   Modern Swiss-editorial. Single-family sans.
    ═══════════════════════════════════════════════ */
 
 @theme inline {
@@ -16,32 +16,56 @@
   --color-accent-deep: #1f3527;
   --color-accent-soft: #c8d3cb;
 
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-body: var(--font-inter-tight), -apple-system, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-editorial: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-hover: 240ms;
+  --dur-reveal: 600ms;
+
+  --screen-md: 900px;
 }
 
+@theme {
+  --breakpoint-md: 900px;
+}
+
+/* base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   background: var(--color-paper);
   color: var(--color-ink);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-weight: 300;
+  font-variation-settings: "opsz" 18;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+}
+
+body {
+  overflow-x: clip;
+  isolation: isolate;
 }
 
 ::selection {
   background: var(--color-accent);
   color: var(--color-paper);
+}
+
+.dark-section ::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
 }
 
 a {
@@ -59,57 +83,239 @@ button {
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: inherit;
 }
 
-/* Utility: em-dash prefix on mono section labels */
-.label-dash::before {
-  content: "— ";
-  color: var(--color-accent);
+.dark-section :focus-visible {
+  outline-color: var(--color-accent-soft);
 }
 
-/* Hero headline — Fraunces 300, tight tracking, accent italics */
-.headline-display {
-  font-family: var(--font-display);
-  font-weight: 300;
-  line-height: 0.96;
-  letter-spacing: -0.035em;
-  color: var(--color-ink);
-}
-.headline-display em {
-  font-style: italic;
-  font-weight: 300;
-  color: var(--color-accent);
-}
-.headline-display .underline {
-  position: relative;
-  display: inline-block;
-}
-.headline-display .underline::after {
-  content: "";
-  position: absolute;
-  bottom: 0.08em;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--color-accent);
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-}
-.section-title em {
-  font-style: italic;
-  color: var(--color-accent);
-}
-
+/* ───── Mono labels ─────
+   .mono-label = labels (0.12em)
+   .mono-numeral = numerical markers like 01/06 (0.08em) */
 .mono-label {
   font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   color: var(--color-ink-mute);
+}
+.mono-numeral {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-mute);
+}
+
+.label-dash::before {
+  content: "— ";
+  color: var(--color-accent);
+}
+.dark-section .label-dash::before {
+  color: var(--color-accent-soft);
+}
+
+/* ───── Display headlines ─────
+   Inter at ~250, opsz 96 gives the pulled, precise cut for large sizes.
+   Italic + accent color replaces Fraunces italic as the emphasis mechanism. */
+.headline-display {
+  font-family: var(--font-sans);
+  font-weight: 250;
+  font-variation-settings: "opsz" 96;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+.headline-display em,
+.section-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-accent);
+}
+
+.section-title {
+  font-family: var(--font-sans);
+  font-weight: 250;
+  font-variation-settings: "opsz" 72;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+/* Hero underline accent — soft-edge gradient, scales with em */
+.rule-under {
+  position: relative;
+  display: inline-block;
+}
+.rule-under::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.05em;
+  height: 0.055em;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-accent) 8%,
+    var(--color-accent) 92%,
+    transparent 100%
+  );
+}
+
+/* ───── Division row ─────
+   Lifted out of the component so there's one copy, one set of hover rules,
+   and the parent creates a stacking context so the ::before bleed works in Safari. */
+.division-row {
+  isolation: isolate;
+  overflow: visible;
+}
+.division-row::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  right: -1.5rem;
+  top: 0;
+  bottom: 0;
+  background: var(--color-paper-deep);
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease-editorial);
+  z-index: -1;
+}
+@media (min-width: 900px) {
+  .division-row::before {
+    left: -3rem;
+    right: -3rem;
+  }
+}
+.division-row:hover::before {
+  opacity: 1;
+}
+.division-row:hover .division-name,
+.division-row:focus-visible .division-name {
+  color: var(--color-accent);
+}
+.division-row:hover .division-arrow,
+.division-row:focus-visible .division-arrow {
+  color: var(--color-accent);
+  transform: translateX(8px);
+}
+.division-name,
+.division-arrow {
+  transition:
+    color var(--dur-hover) var(--ease-editorial),
+    transform var(--dur-hover) var(--ease-editorial);
+}
+
+/* ───── Sector pills ─────
+   Mono, editorial tag feel — not button-like. */
+.sector-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--color-ink);
+  padding: 6px 14px;
+  border: 1px solid var(--color-rule);
+  border-radius: 100px;
+  transition:
+    background var(--dur-hover) var(--ease-editorial),
+    border-color var(--dur-hover) var(--ease-editorial);
+  cursor: default;
+}
+.sector-pill:hover {
+  background: var(--color-paper-deep);
+  border-color: var(--color-accent);
+}
+
+/* ───── CTA buttons ─────
+   Primary hover uses accent-deep (not solid accent) to keep the ≤5% pigment rule. */
+.cta-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--color-ink);
+  transition:
+    background var(--dur-hover) var(--ease-editorial),
+    color var(--dur-hover) var(--ease-editorial),
+    border-color var(--dur-hover) var(--ease-editorial);
+}
+.cta-sm {
+  padding: 11px 20px;
+}
+.cta-md {
+  padding: 15px 28px;
+}
+.cta-primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+.cta-primary:hover {
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent);
+}
+.cta-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.cta-ghost:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+
+/* ───── Form fields ─────
+   Plain className-based focus state — no inline style fighting specificity. */
+.field-line {
+  width: 100%;
+  display: block;
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 16px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-rule);
+  outline: none;
+  transition: border-color var(--dur-hover) var(--ease-editorial);
+}
+.field-line:focus {
+  border-bottom-color: var(--color-accent);
+}
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-mute);
+}
+
+/* ───── Dark sections ─────
+   Carry a third rule weight tinted with accent-soft rather than inventing rgba on the fly. */
+.dark-section {
+  background: var(--color-ink);
+  color: var(--color-accent-soft);
+}
+.dark-section .section-title,
+.dark-section .headline-display {
+  color: var(--color-paper);
+}
+.rule-dark {
+  border-color: rgba(200, 211, 203, 0.2);
+}
+
+/* ───── Grain overlay ─────
+   Cream needs more grain to register — dark sections get brighter pass via var override. */
+:root {
+  --grain-opacity: 0.06;
+}
+.dark-section {
+  --grain-opacity: 0.11;
 }

@@ -3,18 +3,23 @@ import { FIRM } from "@/lib/constants";
 export function Footer() {
   return (
     <footer
-      className="flex flex-col items-start justify-between gap-4 border-t px-6 py-10 md:flex-row md:items-center md:px-12 md:pb-10 md:pt-[60px]"
+      className="grid grid-cols-1 items-center gap-4 border-t px-6 py-10 md:grid-cols-3 md:px-12 md:pb-10 md:pt-[60px]"
       style={{ borderTopColor: "var(--color-rule)" }}
     >
       <div
-        className="font-display text-[14px]"
-        style={{ color: "var(--color-ink)", letterSpacing: "-0.01em" }}
+        className="text-[14px]"
+        style={{
+          color: "var(--color-ink)",
+          fontFamily: "var(--font-sans)",
+          fontWeight: 400,
+          letterSpacing: "-0.01em",
+        }}
       >
         {FIRM.legalName}
       </div>
       <div
-        className="font-mono text-[11px] uppercase"
-        style={{ color: "var(--color-ink-mute)", letterSpacing: "0.1em" }}
+        className="mono-label md:justify-self-center"
+        style={{ letterSpacing: "0.12em" }}
       >
         {FIRM.location} · Est. {FIRM.founded}
       </div>
@@ -22,10 +27,13 @@ export function Footer() {
         href={FIRM.portfolioUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-mono text-[11px] uppercase transition-colors hover:text-ink"
-        style={{ color: "var(--color-ink-mute)", letterSpacing: "0.1em" }}
+        className="mono-label footer-link md:justify-self-end"
+        style={{ letterSpacing: "0.12em" }}
       >
         colinhighland.com ↗
+        <style>{`
+          .footer-link:hover { color: var(--color-accent) !important; }
+        `}</style>
       </a>
     </footer>
   );

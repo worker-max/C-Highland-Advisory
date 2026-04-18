@@ -61,7 +61,7 @@ export function BriefForm() {
       >
         <div className="mono-label label-dash mb-6">Received</div>
         <h3 className="section-title mb-6 text-[clamp(28px,3.6vw,40px)]">
-          Thank you — your brief is in.
+          Your brief is received.
         </h3>
         <p
           className="max-w-[56ch] text-[17px] leading-[1.6]"
@@ -75,7 +75,7 @@ export function BriefForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-10">
       <input
         type="text"
         name="website"
@@ -98,7 +98,7 @@ export function BriefForm() {
           name="division"
           required
           options={[
-            { value: "", label: "Select a division" },
+            { value: "", label: "— choose a division" },
             ...DIVISIONS.map((d) => ({ value: d.slug, label: d.name })),
             { value: "not-sure", label: "Not sure yet" },
           ]}
@@ -108,20 +108,46 @@ export function BriefForm() {
           name="timeline"
           required
           options={[
-            { value: "", label: "Select a timeline" },
+            { value: "", label: "— choose a horizon" },
             ...TIMELINES.map((t) => ({ value: t, label: t })),
           ]}
         />
       </div>
 
-      <TextareaField
-        label="What are you trying to decide, build, or fix?"
-        name="message"
-        required
-      />
+      {/* The consequential field gets an editorial lede and its own rhythm. */}
+      <div
+        className="border-t pt-8"
+        style={{ borderTopColor: "var(--color-rule)" }}
+      >
+        <div className="mono-label label-dash mb-3">The question</div>
+        <label className="block">
+          <span
+            className="block text-[20px] leading-[1.3]"
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 300,
+              color: "var(--color-ink)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            What are you trying to decide, build, or fix?
+          </span>
+          <textarea
+            name="message"
+            required
+            rows={6}
+            className="field-line mt-4 resize-y leading-[1.55]"
+          />
+        </label>
+      </div>
 
       <div className="flex flex-wrap items-center gap-6">
-        <CTAButton variant="primary" type="submit">
+        <CTAButton
+          variant="primary"
+          type="submit"
+          disabled={status === "submitting"}
+          ariaBusy={status === "submitting"}
+        >
           {status === "submitting" ? "Sending…" : "Send brief →"}
         </CTAButton>
         {status === "error" && (
@@ -150,28 +176,11 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span
-        className="font-mono text-[11px] uppercase"
-        style={{
-          color: "var(--color-ink-mute)",
-          letterSpacing: "0.12em",
-        }}
-      >
+      <span className="field-label">
         {label}
         {required ? " *" : ""}
       </span>
-      <input
-        type={type}
-        name={name}
-        required={required}
-        className="mt-2 block w-full border-b bg-transparent py-3 text-[16px] outline-none transition-colors focus:border-accent"
-        style={{
-          borderBottomColor: "var(--color-rule)",
-          color: "var(--color-ink)",
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-        }}
-      />
+      <input type={type} name={name} required={required} className="field-line mt-2" />
     </label>
   );
 }
@@ -189,71 +198,17 @@ function SelectField({
 }) {
   return (
     <label className="block">
-      <span
-        className="font-mono text-[11px] uppercase"
-        style={{
-          color: "var(--color-ink-mute)",
-          letterSpacing: "0.12em",
-        }}
-      >
+      <span className="field-label">
         {label}
         {required ? " *" : ""}
       </span>
-      <select
-        name={name}
-        required={required}
-        defaultValue=""
-        className="mt-2 block w-full border-b bg-transparent py-3 text-[16px] outline-none focus:border-accent"
-        style={{
-          borderBottomColor: "var(--color-rule)",
-          color: "var(--color-ink)",
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-        }}
-      >
+      <select name={name} required={required} defaultValue="" className="field-line mt-2">
         {options.map((o) => (
           <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ))}
       </select>
-    </label>
-  );
-}
-
-function TextareaField({
-  label,
-  name,
-  required = false,
-}: {
-  label: string;
-  name: string;
-  required?: boolean;
-}) {
-  return (
-    <label className="block">
-      <span
-        className="font-mono text-[11px] uppercase"
-        style={{
-          color: "var(--color-ink-mute)",
-          letterSpacing: "0.12em",
-        }}
-      >
-        {label}
-        {required ? " *" : ""}
-      </span>
-      <textarea
-        name={name}
-        required={required}
-        rows={6}
-        className="mt-2 block w-full resize-y border-b bg-transparent py-3 text-[16px] leading-[1.55] outline-none focus:border-accent"
-        style={{
-          borderBottomColor: "var(--color-rule)",
-          color: "var(--color-ink)",
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-        }}
-      />
     </label>
   );
 }

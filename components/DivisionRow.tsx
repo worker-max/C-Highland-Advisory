@@ -13,20 +13,22 @@ export function DivisionRow({ division, totalCount }: Props) {
   return (
     <Link
       href={`/practice/${division.slug}`}
-      className="division-row relative grid cursor-pointer items-start gap-4 border-b py-9 transition-all md:grid-cols-[60px_1fr_2fr_200px] md:gap-10"
+      className="division-row relative grid items-start gap-4 border-b py-9 md:grid-cols-[60px_minmax(240px,1.2fr)_2fr_200px] md:gap-10"
       style={{ borderBottomColor: "var(--color-rule)" }}
       aria-label={`${division.name} — ${modelsLabel}`}
     >
-      <div
-        className="pt-2 font-mono text-[12px]"
-        style={{ color: "var(--color-ink-mute)", letterSpacing: "0.08em" }}
-      >
-        {numLabel}
-      </div>
+      <div className="mono-numeral pt-2">{numLabel}</div>
       <div>
         <div
-          className="division-name font-display text-[24px] transition-colors md:text-[26px]"
-          style={{ fontWeight: 300, lineHeight: 1.15, letterSpacing: "-0.01em" }}
+          className="division-name"
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontWeight: 300,
+            fontSize: "clamp(26px, 2.6vw, 34px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: "var(--color-ink)",
+          }}
         >
           {division.name}
         </div>
@@ -39,43 +41,23 @@ export function DivisionRow({ division, totalCount }: Props) {
       </p>
       <div
         className="flex flex-col items-start gap-2 font-mono text-[11px] uppercase md:items-end md:text-right"
-        style={{ color: "var(--color-ink-mute)", letterSpacing: "0.1em" }}
+        style={{ color: "var(--color-ink-mute)", letterSpacing: "0.12em" }}
       >
         <span>Engagement</span>
         <span>{modelsLabel}</span>
         <span
-          className="division-arrow mt-0 font-display text-[24px] transition-all"
-          style={{ color: "var(--color-ink-mute)" }}
+          className="division-arrow mt-0"
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontWeight: 200,
+            fontSize: 28,
+            color: "var(--color-ink-soft)",
+            lineHeight: 1,
+          }}
         >
           →
         </span>
       </div>
-      <style>{`
-        .division-row::before {
-          content: "";
-          position: absolute;
-          left: -1.5rem;
-          right: -1.5rem;
-          top: 0;
-          bottom: 0;
-          background: var(--color-paper-deep);
-          opacity: 0;
-          transition: opacity 0.3s;
-          z-index: -1;
-        }
-        @media (min-width: 768px) {
-          .division-row::before {
-            left: -3rem;
-            right: -3rem;
-          }
-        }
-        .division-row:hover::before { opacity: 1; }
-        .division-row:hover .division-name { color: var(--color-accent); }
-        .division-row:hover .division-arrow {
-          color: var(--color-accent);
-          transform: translateX(8px);
-        }
-      `}</style>
     </Link>
   );
 }
