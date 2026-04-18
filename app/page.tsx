@@ -91,8 +91,8 @@ export default function Home() {
           </Reveal>
 
           <div
-            className="grid gap-px rule-dark-bg"
-            style={{ background: "rgba(200,211,203,0.2)" }}
+            className="grid gap-px"
+            style={{ background: "rgba(200, 211, 203, 0.2)" }}
           >
             {POSITIONS.map((row, i) => (
               <Reveal key={row.n} delay={0.2 + i * 0.08}>
