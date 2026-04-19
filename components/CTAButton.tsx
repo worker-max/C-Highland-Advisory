@@ -2,13 +2,11 @@ import Link from "next/link";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
-type Variant = "primary" | "ghost";
-type Size = "sm" | "md";
+type Variant = "primary" | "secondary" | "ghost";
 
 type BaseProps = {
   children: ReactNode;
   variant?: Variant;
-  size?: Size;
   className?: string;
 };
 
@@ -17,6 +15,7 @@ type LinkProps = BaseProps & {
   onClick?: never;
   type?: never;
   disabled?: never;
+  ariaBusy?: never;
 };
 
 type ButtonProps = BaseProps & {
@@ -27,15 +26,15 @@ type ButtonProps = BaseProps & {
   ariaBusy?: boolean;
 };
 
-export function CTAButton(props: LinkProps | ButtonProps) {
-  const { children, variant = "primary", size = "md", className } = props;
+const VARIANT_CLASS: Record<Variant, string> = {
+  primary: "cta cta-primary",
+  secondary: "cta cta-secondary",
+  ghost: "cta cta-ghost",
+};
 
-  const classes = clsx(
-    "cta-base",
-    size === "sm" ? "cta-sm" : "cta-md",
-    variant === "primary" ? "cta-primary" : "cta-ghost",
-    className,
-  );
+export function CTAButton(props: LinkProps | ButtonProps) {
+  const { children, variant = "primary", className } = props;
+  const classes = clsx(VARIANT_CLASS[variant], className);
 
   if ("href" in props && props.href) {
     return (
@@ -44,7 +43,6 @@ export function CTAButton(props: LinkProps | ButtonProps) {
       </Link>
     );
   }
-
   const btn = props as ButtonProps;
   return (
     <button
