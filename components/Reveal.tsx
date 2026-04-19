@@ -12,8 +12,9 @@ type Props = {
 
 /*
   Gentler scroll-in than the editorial build:
-  24px rise, 800ms, easing [0.16, 1, 0.3, 1].
+  24px rise, 800ms, easing [0.16, 1, 0.3, 1] — matches --ease-quiet in globals.css.
   Fires once, triggered 80px before element enters view.
+  Duration stays inline because framer-motion can't consume CSS vars for numerics.
 */
 export function Reveal({ children, delay = 0, y = 24, className }: Props) {
   return (
