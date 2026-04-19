@@ -63,7 +63,7 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
           <Reveal>
             <SectionHead
               eyebrow="What we do"
-              title={<>Services in this <em>practice.</em></>}
+              title={<>Services in this practice.</>}
             />
           </Reveal>
           <ServiceGrid services={division.services} />
@@ -83,7 +83,7 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
           <Reveal>
             <SectionHead
               eyebrow="Engagement models"
-              title={<>How we <em>enter.</em></>}
+              title={<>How we enter.</>}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -116,7 +116,7 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <h2 className="display-md max-w-[22ch]">
               Ready to discuss{" "}
-              <em>{division.shortName ?? division.name}</em>?
+              {division.shortName ?? division.name}?
             </h2>
             <CTAButton href="/engagement" variant="primary">
               Begin engagement

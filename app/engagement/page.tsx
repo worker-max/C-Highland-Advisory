@@ -55,7 +55,7 @@ export default function EngagementPage() {
     <>
       <Hero
         eyebrow="Engagement"
-        headline={<>How <em>we work.</em></>}
+        headline={<>How we work.</>}
         lead="Engagements begin with a brief — a short, structured conversation to understand what you are trying to decide, build, or fix. From there, we scope."
       />
 
@@ -65,7 +65,7 @@ export default function EngagementPage() {
           <Reveal>
             <SectionHead
               eyebrow="Engagement models"
-              title={<>Four models. <em>One method.</em></>}
+              title={<>Four models. One method.</>}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -85,7 +85,7 @@ export default function EngagementPage() {
             <Reveal>
               <SectionHead
                 eyebrow="The brief"
-                title={<>Thirty minutes. <em>No deck required.</em></>}
+                title={<>Thirty minutes. No deck required.</>}
                 lead="We will ask what you are trying to decide, what has and has not worked, and what success looks like. We will tell you whether we are the right firm — and if we are not, we will tell you who might be."
               />
             </Reveal>
@@ -102,7 +102,7 @@ export default function EngagementPage() {
           <Reveal>
             <SectionHead
               eyebrow="What happens next"
-              title={<>Three steps. <em>Nothing theatrical.</em></>}
+              title={<>Three steps. Nothing theatrical.</>}
             />
           </Reveal>
           <StepFlow steps={STEPS} />

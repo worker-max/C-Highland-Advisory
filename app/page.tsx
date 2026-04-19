@@ -55,8 +55,7 @@ export default function Home() {
         headline={
           <>
             Strategy, operations, and applied AI — from someone who has{" "}
-            <em>actually done all three.</em>
-          </>
+            actually done all three.          </>
         }
         lead="C Highland Advisory partners with leaders across healthcare, government, hospitality, and the industries that run them — translating frontline reality into operational systems and deploying artificial intelligence where it actually creates leverage."
         primaryCta={{ label: "Begin engagement", href: "/engagement" }}
@@ -76,7 +75,7 @@ export default function Home() {
           <Reveal>
             <SectionHead
               eyebrow="The Practice"
-              title={<>Six disciplines. <em>One operating thesis.</em></>}
+              title={<>Six disciplines. One operating thesis.</>}
               lead="Each division stands alone — but each is informed by the same conviction: that the gap between frontline reality and executive decision-making is where most strategy quietly fails."
             />
           </Reveal>
@@ -96,7 +95,7 @@ export default function Home() {
           <Reveal>
             <SectionHead
               eyebrow="The Founder"
-              title={<>A career built at the <em>intersection.</em></>}
+              title={<>A career built at the intersection.</>}
             />
           </Reveal>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
@@ -127,7 +126,7 @@ export default function Home() {
           <Reveal>
             <SectionHead
               eyebrow="How engagements work"
-              title={<>Three steps. <em>No deck required.</em></>}
+              title={<>Three steps. No deck required.</>}
               lead="Engagements begin with a brief — a short, structured conversation. From there, we scope."
             />
           </Reveal>
@@ -141,8 +140,7 @@ export default function Home() {
           <Reveal>
             <h2 className="display-lg mx-auto max-w-[22ch]">
               When the next decision has to{" "}
-              <em>survive contact with reality.</em>
-            </h2>
+              survive contact with reality.            </h2>
             <div className="mt-10 flex justify-center">
               <CTAButton href="/engagement" variant="primary">
                 Begin engagement

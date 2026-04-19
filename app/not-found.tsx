@@ -7,8 +7,7 @@ export default function NotFound() {
       <Container>
         <div className="eyebrow mb-6">Not found</div>
         <h1 className="display-lg max-w-[18ch]">
-          This page is not in the <em>ledger.</em>
-        </h1>
+          This page is not in the ledger.        </h1>
         <p className="lead mt-8">
           It may have moved, or it may never have existed. The practice is still
           the right next step.

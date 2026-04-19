@@ -16,7 +16,7 @@ export default function TransmissionsPage() {
     <>
       <Hero
         eyebrow="Transmissions"
-        headline={<>Writing from the <em>practice.</em></>}
+        headline={<>Writing from the practice.</>}
         lead="Essays, frameworks, and field notes from across the six divisions. The inaugural dispatch is forthcoming."
       />
 

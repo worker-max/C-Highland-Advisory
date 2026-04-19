@@ -12,7 +12,7 @@ export function PullQuote({ quote, attribution, chapter }: Props) {
   return (
     <figure>
       <blockquote
-        className="display-md italic"
+        className="display-md"
         style={{ color, fontWeight: 400 }}
       >
         {`\u201C${quote}\u201D`}

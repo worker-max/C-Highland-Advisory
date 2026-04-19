@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import type { ChapterKey } from "@/content/divisions";
+import { chapterColor } from "@/lib/chapters";
 import { Container } from "./Container";
 import { CTAButton } from "./CTAButton";
 import { ChapterBand } from "./ChapterBand";
@@ -41,7 +42,18 @@ export function Hero({
       {mode === "page" && chapter && <ChapterWash chapter={chapter} />}
       <Container>
         <Reveal>
-          {eyebrow && <div className="eyebrow mb-6">{eyebrow}</div>}
+          {eyebrow && (
+            <div
+              className="eyebrow mb-6"
+              style={
+                mode === "page" && chapter
+                  ? { color: chapterColor(chapter) }
+                  : undefined
+              }
+            >
+              {eyebrow}
+            </div>
+          )}
           <h1 className={mode === "homepage" ? "display-xl" : "display-lg"}>
             {headline}
           </h1>

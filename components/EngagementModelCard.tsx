@@ -11,11 +11,12 @@ export function EngagementModelCard({ model, description, active = true }: Props
   return (
     <div
       className={clsx(
-        "card p-6 md:p-7",
-        !active && "opacity-50 grayscale",
+        "p-6 md:p-7 rounded-[14px]",
+        active && "card",
+        !active && "opacity-40 border border-dashed border-[color:var(--color-mist)]",
       )}
     >
-      <div className="eyebrow mb-3">Model</div>
+      <div className="eyebrow mb-3">{active ? "Model" : "Not offered here"}</div>
       <div className="display-sm mb-3">{model}</div>
       <p className="prose-base text-[color:var(--color-silt)]">{description}</p>
     </div>

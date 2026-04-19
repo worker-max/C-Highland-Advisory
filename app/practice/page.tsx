@@ -20,8 +20,7 @@ export default function PracticePage() {
       <Hero
         headline={
           <>
-            Six disciplines. <em>One operating thesis.</em>
-          </>
+            Six disciplines. One operating thesis.          </>
         }
         lead="Each division below stands as its own practice area — with its own clients, engagement models, and deliverables. They are unified not by sector but by method: frontline reality, translated into operational systems, deployed with discipline."
       />
@@ -48,8 +47,7 @@ export default function PracticePage() {
         <Container>
           <Reveal>
             <h2 className="display-lg max-w-[24ch]">
-              Begin with a brief. From a brief, <em>a scope.</em>
-            </h2>
+              Begin with a brief. From a brief, a scope.            </h2>
             <div className="mt-10">
               <CTAButton href="/engagement" variant="primary">
                 How we work

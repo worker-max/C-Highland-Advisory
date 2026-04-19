@@ -55,8 +55,7 @@ export default function FounderPage() {
         eyebrow="The Founder"
         headline={
           <>
-            A career built at the <em>intersection.</em>
-          </>
+            A career built at the intersection.          </>
         }
         lead="Colin Highland is the founder of C Highland Advisory. His work sits where three disciplines meet — bedside clinical care, operational leadership, and applied artificial intelligence — because he has spent his career doing all three."
       />
@@ -75,12 +74,35 @@ export default function FounderPage() {
             >
               <Reveal>
                 <div
-                  className="card h-full min-h-[280px] overflow-hidden"
+                  className="card relative flex h-full min-h-[320px] items-end justify-start overflow-hidden p-10"
                   style={{
-                    background: `linear-gradient(135deg, var(--color-ch-${ch.chapterKey}) 0%, var(--color-paper) 120%)`,
-                    opacity: 0.92,
+                    background: `radial-gradient(ellipse 90% 90% at 10% 110%, var(--color-ch-${ch.chapterKey}) 0%, color-mix(in oklab, var(--color-ch-${ch.chapterKey}) 50%, var(--color-paper)) 40%, var(--color-paper) 90%)`,
                   }}
-                />
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-6 top-6 font-sans font-medium leading-none"
+                    style={{
+                      fontSize: "clamp(96px, 14vw, 200px)",
+                      letterSpacing: "-0.06em",
+                      color: "var(--color-paper)",
+                      mixBlendMode: "overlay",
+                      opacity: 0.9,
+                    }}
+                  >
+                    {ch.n}
+                  </span>
+                  <span
+                    className="relative font-sans font-medium uppercase"
+                    style={{
+                      fontSize: 13,
+                      letterSpacing: "0.06em",
+                      color: "var(--color-paper)",
+                    }}
+                  >
+                    {ch.label}
+                  </span>
+                </div>
               </Reveal>
               <Reveal delay={0.1}>
                 <div>
