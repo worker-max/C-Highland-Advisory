@@ -1,10 +1,19 @@
 export type EngagementModel = "Retainer" | "Project" | "Embedded" | "Build" | "Advisory";
 
+export type ChapterKey =
+  | "strategy"
+  | "healthcare"
+  | "homehealth"
+  | "talent"
+  | "hr"
+  | "ai";
+
 export type Division = {
   number: string;
   slug: string;
   name: string;
   shortName?: string;
+  chapter: ChapterKey;
   positioning: string;
   shortDescription: string;
   services: string[];
@@ -18,6 +27,7 @@ export const DIVISIONS: Division[] = [
     number: "01",
     slug: "strategy-advisory",
     name: "Strategy & Advisory",
+    chapter: "strategy",
     positioning:
       "Cross-sector strategic counsel for leaders making consequential decisions.",
     shortDescription:
@@ -49,6 +59,7 @@ export const DIVISIONS: Division[] = [
     number: "02",
     slug: "healthcare-strategy",
     name: "Healthcare Strategy",
+    chapter: "healthcare",
     positioning:
       "Strategy built by someone who has actually been on the floor.",
     shortDescription:
@@ -74,6 +85,7 @@ export const DIVISIONS: Division[] = [
     number: "03",
     slug: "home-health-operations",
     name: "Home Health Operations",
+    chapter: "homehealth",
     positioning:
       "The unglamorous work that moves OASIS scores and margin in the same quarter.",
     shortDescription:
@@ -96,6 +108,7 @@ export const DIVISIONS: Division[] = [
     slug: "talent-acquisition",
     name: "Talent Acquisition & Workforce Strategy",
     shortName: "Talent Acquisition",
+    chapter: "talent",
     positioning: "Hiring architecture that survives the first six months.",
     shortDescription:
       "Hiring architecture for clinical, operational, and field-service roles. Pipeline design, sourcing systems, structured interviewing, and the workforce planning frameworks that survive the first six months post-engagement.",
@@ -121,6 +134,7 @@ export const DIVISIONS: Division[] = [
     slug: "operational-hr",
     name: "Operational HR & Associate Engagement",
     shortName: "Operational HR",
+    chapter: "hr",
     positioning: "Culture as a measurable asset, not a slogan.",
     shortDescription:
       "Manager development, retention systems, and the operational HR work that determines whether your culture is a slogan or a measurable asset. Built for organizations whose people strategy needs to catch up to their growth.",
@@ -147,6 +161,7 @@ export const DIVISIONS: Division[] = [
     slug: "ai-practice",
     name: "AI Practice — Voice & Workflow Automation",
     shortName: "AI Practice",
+    chapter: "ai",
     positioning: "Built by an operator, not a vendor.",
     shortDescription:
       "Voice AI deployment, workflow automation, and the modular prompting frameworks that make LLM systems reliable in regulated and operationally complex environments. Production deployments across healthcare, government, hospitality, home services, and political operations.",
