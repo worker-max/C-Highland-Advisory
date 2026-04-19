@@ -40,7 +40,7 @@ export function Hero({
       {mode === "homepage" && <ChapterBand />}
       {mode === "page" && chapter && <ChapterWash chapter={chapter} />}
       <Container>
-        <Reveal delay={0.05}>
+        <Reveal>
           {eyebrow && <div className="eyebrow mb-6">{eyebrow}</div>}
           <h1 className={mode === "homepage" ? "display-xl" : "display-lg"}>
             {headline}

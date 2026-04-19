@@ -14,7 +14,7 @@ export function Nav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--color-mist)] bg-[color:var(--color-bone)]/80 backdrop-blur"
+      className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--color-mist)] bg-[rgb(247_245_241_/_0.8)] backdrop-blur"
     >
       <Container className="flex items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-3 text-[color:var(--color-ink)]">

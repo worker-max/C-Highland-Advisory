@@ -1,5 +1,5 @@
 import type { ChapterKey } from "@/content/divisions";
-import { chapterColor } from "./ChapterChip";
+import { chapterColor } from "@/lib/chapters";
 
 type Props = {
   chapter: ChapterKey;
