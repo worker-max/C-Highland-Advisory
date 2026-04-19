@@ -11,11 +11,11 @@ type Props = {
 };
 
 /*
-  Single source for editorial scroll-in reveals. 16px rise, 600ms duration,
-  editorial ease. Fires once, triggered 80px before the element enters view.
-  Pass a delay in seconds for staggered stacks (e.g. division ledger rows).
+  Gentler scroll-in than the editorial build:
+  24px rise, 800ms, easing [0.16, 1, 0.3, 1].
+  Fires once, triggered 80px before element enters view.
 */
-export function Reveal({ children, delay = 0, y = 16, className }: Props) {
+export function Reveal({ children, delay = 0, y = 24, className }: Props) {
   return (
     <motion.div
       className={className}
@@ -23,9 +23,9 @@ export function Reveal({ children, delay = 0, y = 16, className }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{
-        duration: 0.6,
+        duration: 0.8,
         delay,
-        ease: [0.2, 0.8, 0.2, 1],
+        ease: [0.16, 1, 0.3, 1],
       }}
     >
       {children}
