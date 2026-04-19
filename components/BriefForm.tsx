@@ -55,18 +55,10 @@ export function BriefForm() {
 
   if (status === "success") {
     return (
-      <div
-        className="border-t pt-10"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <div className="mono-label label-dash mb-6">Received</div>
-        <h3 className="section-title mb-6 text-[clamp(28px,3.6vw,40px)]">
-          Your brief is received.
-        </h3>
-        <p
-          className="max-w-[56ch] text-[17px] leading-[1.6]"
-          style={{ color: "var(--color-ink-soft)" }}
-        >
+      <div className="card p-8">
+        <div className="eyebrow mb-4">Received</div>
+        <div className="display-sm mb-4">Your brief is received.</div>
+        <p className="prose-base max-w-[56ch] text-[color:var(--color-silt)]">
           We respond to every submission within three business days. If
           there&apos;s a fit, we&apos;ll send a proposed scope within the week.
         </p>
@@ -114,29 +106,16 @@ export function BriefForm() {
         />
       </div>
 
-      {/* The consequential field gets an editorial lede and its own rhythm. */}
-      <div
-        className="border-t pt-8"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <div className="mono-label label-dash mb-3">The question</div>
+      <div>
         <label className="block">
-          <span
-            className="block text-[20px] leading-[1.3]"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 300,
-              color: "var(--color-ink)",
-              letterSpacing: "-0.01em",
-            }}
-          >
+          <span className="field-label">
             What are you trying to decide, build, or fix?
           </span>
           <textarea
             name="message"
             required
             rows={6}
-            className="field-line mt-4 resize-y leading-[1.55]"
+            className="field-line mt-3 resize-y leading-[1.55]"
           />
         </label>
       </div>
@@ -151,12 +130,7 @@ export function BriefForm() {
           {status === "submitting" ? "Sending…" : "Send brief →"}
         </CTAButton>
         {status === "error" && (
-          <p
-            className="text-[14px]"
-            style={{ color: "var(--color-accent-deep)" }}
-          >
-            {errorMsg}
-          </p>
+          <p className="text-[14px] text-[color:var(--color-ch-homehealth)]">{errorMsg}</p>
         )}
       </div>
     </form>
@@ -176,10 +150,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="field-label">
-        {label}
-        {required ? " *" : ""}
-      </span>
+      <span className="field-label">{label}{required ? " *" : ""}</span>
       <input type={type} name={name} required={required} className="field-line mt-2" />
     </label>
   );
@@ -198,15 +169,10 @@ function SelectField({
 }) {
   return (
     <label className="block">
-      <span className="field-label">
-        {label}
-        {required ? " *" : ""}
-      </span>
+      <span className="field-label">{label}{required ? " *" : ""}</span>
       <select name={name} required={required} defaultValue="" className="field-line mt-2">
         {options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
+          <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
     </label>
