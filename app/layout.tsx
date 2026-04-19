@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import { Masthead } from "@/components/Masthead";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -7,10 +7,10 @@ import { GrainOverlay } from "@/components/GrainOverlay";
 import { FIRM } from "@/lib/constants";
 import "./globals.css";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
-  axes: ["opsz"],
+  variable: "--font-dm",
+  weight: ["400", "500", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body>
         <GrainOverlay />
         <Masthead />
