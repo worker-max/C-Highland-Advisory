@@ -2,51 +2,27 @@ import type { ReactNode } from "react";
 import clsx from "clsx";
 
 type Props = {
-  label: string;
+  eyebrow?: string;
   title: ReactNode;
-  desc?: ReactNode;
-  inverted?: boolean;
+  lead?: ReactNode;
+  align?: "start" | "center";
   className?: string;
 };
 
-/*
-  items-start keeps the Swiss baseline — label/title left column anchors to
-  the top of the description column rather than dragging down to its bottom.
-*/
-export function SectionHead({ label, title, desc, inverted = false, className }: Props) {
+export function SectionHead({
+  eyebrow,
+  title,
+  lead,
+  align = "start",
+  className,
+}: Props) {
   return (
-    <div
-      className={clsx(
-        "grid items-start gap-8 md:grid-cols-[1fr_2fr] md:gap-20",
-        desc ? "mb-10 md:mb-14" : "mb-10 md:mb-12",
-        className,
-      )}
-    >
-      <div>
-        <div
-          className={clsx("mono-label label-dash")}
-          style={{
-            color: inverted ? "var(--color-accent-soft)" : undefined,
-          }}
-        >
-          {label}
-        </div>
-        <h2
-          className="section-title mt-4 text-[clamp(36px,5vw,64px)]"
-          style={{ color: inverted ? "var(--color-paper)" : "var(--color-ink)" }}
-        >
-          {title}
-        </h2>
-      </div>
-      {desc && (
-        <p
-          className="max-w-[56ch] text-[17px] leading-[1.65]"
-          style={{
-            color: inverted ? "var(--color-accent-soft)" : "var(--color-ink-soft)",
-            fontWeight: 300,
-          }}
-        >
-          {desc}
+    <div className={clsx("mb-12 md:mb-16", align === "center" && "text-center", className)}>
+      {eyebrow && <div className="eyebrow mb-4">{eyebrow}</div>}
+      <h2 className="display-md">{title}</h2>
+      {lead && (
+        <p className={clsx("lead mt-6", align === "center" && "mx-auto")}>
+          {lead}
         </p>
       )}
     </div>
