@@ -2,11 +2,27 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DIVISIONS, getDivision } from "@/content/divisions";
-import { SectorPills } from "@/components/SectorPills";
+import { Container } from "@/components/Container";
+import { Hero } from "@/components/Hero";
+import { SectionHead } from "@/components/SectionHead";
+import { ServiceGrid } from "@/components/ServiceGrid";
+import { PillRow } from "@/components/PillRow";
+import { EngagementModelCard } from "@/components/EngagementModelCard";
+import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
 
 type Params = { slug: string };
+
+const ALL_MODELS = ["Retainer", "Project", "Embedded", "Build", "Advisory"] as const;
+
+const MODEL_EXPLANATIONS: Record<string, string> = {
+  Retainer: "Ongoing advisory with a monthly cadence, typically 3–12 months.",
+  Project: "Scoped deliverable with a defined end date, typically 4–16 weeks.",
+  Embedded: "On-site or near-site operational work, typically for operations-heavy engagements.",
+  Build: "Deploy a working system, typically 6–16 weeks to production.",
+  Advisory: "As-needed counsel without an ongoing retainer commitment.",
+};
 
 export function generateStaticParams() {
   return DIVISIONS.map((d) => ({ slug: d.slug }));
@@ -26,218 +42,88 @@ export async function generateMetadata({
   };
 }
 
-function articleFor(word: string) {
-  return /^[aeiou]/i.test(word) ? "an" : "a";
-}
-
-const ENGAGEMENT_EXPLANATIONS: Record<string, string> = {
-  Retainer: "Ongoing advisory with a monthly cadence, typically 3–12 months.",
-  Project: "Scoped deliverable with a defined end date, typically 4–16 weeks.",
-  Embedded: "On-site or near-site operational work, typically for operations-heavy engagements.",
-  Build: "Deploy a working system, typically 6–16 weeks to production.",
-  Advisory: "As-needed counsel without an ongoing retainer commitment.",
-};
-
 export default async function DivisionPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const division = getDivision(slug);
   if (!division) notFound();
 
-  const numLabel = `${division.number} / ${String(DIVISIONS.length).padStart(2, "0")}`;
-
   return (
-    <>
-      {/* HERO — number raised to display scale as typographic furniture */}
-      <section className="relative px-6 pb-20 pt-[160px] md:px-12 md:pb-[100px] md:pt-[216px]">
-        <div
-          className="mono-label label-dash mb-8"
-          style={{ letterSpacing: "0.12em" }}
-        >
-          <Link href="/practice" className="hover:text-[color:var(--color-ink)]">
-            Practice
-          </Link>
-          <span className="mx-2" style={{ color: "var(--color-ink-mute)" }}>
-            /
-          </span>
-          <span style={{ color: "var(--color-ink)" }}>{division.name}</span>
-        </div>
+    <div data-chapter={division.chapter}>
+      <Hero
+        mode="page"
+        chapter={division.chapter}
+        eyebrow={`${division.number} / 06 · The Practice`}
+        headline={division.name}
+        lead={division.positioning}
+      />
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-[auto_1fr] md:gap-16">
-          <div
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 200,
-              fontVariationSettings: '"opsz" 96',
-              fontSize: "clamp(64px, 8vw, 120px)",
-              lineHeight: 0.9,
-              letterSpacing: "-0.04em",
-              color: "var(--color-ink-mute)",
-            }}
-          >
-            {numLabel}
-          </div>
-
-          <div>
-            <h1 className="headline-display text-[clamp(40px,6vw,92px)]" style={{ maxWidth: "18ch" }}>
-              {division.name}
-            </h1>
-            <p
-              className="mt-8 max-w-[46ch]"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "clamp(22px, 2.4vw, 32px)",
-                lineHeight: 1.25,
-                color: "var(--color-accent)",
-                letterSpacing: "-0.015em",
-              }}
-            >
-              {division.positioning}
-            </p>
-          </div>
-        </div>
+      {/* What we do */}
+      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
+        <Container>
+          <Reveal>
+            <SectionHead
+              eyebrow="What we do"
+              title={<>Services in this <em>practice.</em></>}
+            />
+          </Reveal>
+          <ServiceGrid services={division.services} />
+        </Container>
       </section>
 
-      {/* WHAT WE DO */}
-      <section
-        className="border-t px-6 py-16 md:px-12 md:py-24"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <Reveal>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-20">
-            <div>
-              <div className="mono-label label-dash mb-3">What we do</div>
-              <h2 className="section-title text-[clamp(30px,4vw,48px)]">
-                Services in this <em>practice.</em>
-              </h2>
-            </div>
-            <ul className="grid grid-cols-1 gap-x-12 gap-y-4 md:grid-cols-2">
-              {division.services.map((service, i) => (
-                <li
-                  key={service}
-                  className="grid grid-cols-[40px_1fr] items-baseline gap-3 border-t pt-4 text-[16px] leading-[1.55]"
-                  style={{
-                    borderTopColor: "var(--color-rule)",
-                    color: "var(--color-ink)",
-                  }}
-                >
-                  <span className="mono-numeral">0{i + 1}</span>
-                  <span>{service}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
+      {/* Who we serve */}
+      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
+        <Container>
+          <PillRow items={division.sectors} label="Who we serve" />
+        </Container>
       </section>
 
-      {/* WHO WE SERVE */}
-      <section
-        className="border-t px-6 py-16 md:px-12 md:py-24"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <SectorPills sectors={division.sectors} label="Who we serve" />
+      {/* Engagement models */}
+      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
+        <Container>
+          <Reveal>
+            <SectionHead
+              eyebrow="Engagement models"
+              title={<>How we <em>enter.</em></>}
+            />
+          </Reveal>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {ALL_MODELS.map((model, i) => (
+              <Reveal key={model} delay={i * 0.04}>
+                <EngagementModelCard
+                  model={model}
+                  description={MODEL_EXPLANATIONS[model]}
+                  active={(division.engagementModels as readonly string[]).includes(model)}
+                />
+              </Reveal>
+            ))}
+          </div>
+        </Container>
       </section>
 
-      {/* ENGAGEMENT MODELS */}
-      <section
-        className="border-t px-6 py-16 md:px-12 md:py-24"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <Reveal>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-20">
-            <div>
-              <div className="mono-label label-dash mb-3">Engagement models</div>
-              <h2 className="section-title text-[clamp(30px,4vw,48px)]">
-                How we <em>enter.</em>
-              </h2>
-            </div>
-            <div className="space-y-6">
-              {division.engagementModels.map((model) => (
-                <div
-                  key={model}
-                  className="grid grid-cols-[140px_1fr] gap-8 border-t pt-5"
-                  style={{ borderTopColor: "var(--color-rule)" }}
-                >
-                  <div
-                    className="mono-label"
-                    style={{
-                      color: "var(--color-ink)",
-                      letterSpacing: "0.12em",
-                    }}
-                  >
-                    {model}
-                  </div>
-                  <div
-                    className="text-[16px] leading-[1.6]"
-                    style={{ color: "var(--color-ink-soft)" }}
-                  >
-                    {ENGAGEMENT_EXPLANATIONS[model]}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* THESIS — dark inversion */}
-      <section
-        className="dark-section border-t px-6 py-20 md:px-12 md:py-28"
-        style={{ borderTopColor: "var(--color-ink)" }}
-      >
-        <Reveal>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-20">
-            <div>
-              <div
-                className="mono-label label-dash mb-3"
-                style={{ color: "var(--color-accent-soft)" }}
-              >
-                The thesis
-              </div>
-              <div
-                className="mono-numeral"
-                style={{
-                  color: "var(--color-accent-soft)",
-                  letterSpacing: "0.1em",
-                }}
-              >
-                {numLabel}
-              </div>
-            </div>
-            <p
-              className="max-w-[62ch]"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontWeight: 300,
-                fontStyle: "italic",
-                fontSize: "clamp(22px, 2.4vw, 32px)",
-                lineHeight: 1.35,
-                letterSpacing: "-0.015em",
-                color: "var(--color-paper)",
-              }}
-            >
-              {division.thesis}
-            </p>
-          </div>
-        </Reveal>
+      {/* Thesis */}
+      <section className="border-t border-[color:var(--color-mist)] bg-[color:var(--color-paper)] py-24 md:py-28">
+        <Container>
+          <Reveal>
+            <div className="eyebrow mb-6">The thesis</div>
+            <PullQuote quote={division.thesis} chapter={division.chapter} />
+          </Reveal>
+        </Container>
       </section>
 
       {/* CTA */}
-      <section
-        className="border-t px-6 py-20 md:px-12 md:py-24"
-        style={{ borderTopColor: "var(--color-rule)" }}
-      >
-        <div className="grid grid-cols-1 items-end gap-8 md:grid-cols-[1fr_auto] md:gap-20">
-          <h2 className="section-title text-[clamp(28px,4vw,48px)]">
-            Ready to discuss {articleFor(division.shortName ?? division.name)}{" "}
-            <em>{division.shortName ?? division.name}</em> engagement?
-          </h2>
-          <CTAButton href="/engagement" variant="primary">
-            Initiate brief →
-          </CTAButton>
-        </div>
+      <section className="py-20 md:py-24">
+        <Container>
+          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <h2 className="display-md max-w-[22ch]">
+              Ready to discuss{" "}
+              <em>{division.shortName ?? division.name}</em>?
+            </h2>
+            <CTAButton href="/engagement" variant="primary">
+              Begin engagement
+            </CTAButton>
+          </div>
+        </Container>
       </section>
-    </>
+    </div>
   );
 }
