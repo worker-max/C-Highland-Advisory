@@ -21,6 +21,9 @@
   --color-ch-hr:         #6d2e4e;
   --color-ch-ai:         #1fa79c;
 
+  /* Semantic state — separate from chapter identity */
+  --color-error: #c5341e;
+
   /* Fonts */
   --font-sans: var(--font-dm), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;

@@ -130,7 +130,7 @@ export function BriefForm() {
           {status === "submitting" ? "Sending…" : "Send brief →"}
         </CTAButton>
         {status === "error" && (
-          <p className="text-[14px] text-[color:var(--color-ch-homehealth)]">{errorMsg}</p>
+          <p className="text-[14px] text-[color:var(--color-error)]">{errorMsg}</p>
         )}
       </div>
     </form>

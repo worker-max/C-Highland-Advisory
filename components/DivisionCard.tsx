@@ -20,7 +20,7 @@ export function DivisionCard({ division, totalCount }: Props) {
       <p className="prose-base mb-6 max-w-[48ch] text-[color:var(--color-silt)]">
         {division.positioning}
       </p>
-      <span className="cta cta-ghost">Learn more</span>
+      <span aria-hidden="true" className="cta cta-ghost">Learn more</span>
     </Link>
   );
 }
