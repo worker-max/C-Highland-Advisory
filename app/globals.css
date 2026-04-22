@@ -5,13 +5,13 @@
    ═══════════════════════════════════════════════ */
 
 @theme inline {
-  /* Neutral base */
-  --color-bone:     #f7f5f1;
-  --color-paper:    #fafaf7;
+  /* Neutral base — warmed toward TBC letterhead paper */
+  --color-bone:     #eeeee7;
+  --color-paper:    #f5f3ec;
   --color-ink:      #0f0f10;
   --color-graphite: #2a2a2c;
   --color-silt:     #6b6b6e;
-  --color-mist:     #c4c2be;
+  --color-mist:     #c9c6bd;
 
   /* Chapter signatures — muted-vivid, non-primary */
   --color-ch-strategy:   #2a2a2c;
@@ -312,4 +312,45 @@ button {
     animation: none;
   }
   .ico [data-role="dot"] { opacity: 0.75; }
+}
+
+/* ═══════════════════════════════════════════════
+   The emblem — signature brand mark, The Valve.
+   Ring rotates at 60s; on hover, tightens to 24s.
+   ═══════════════════════════════════════════════ */
+.emblem {
+  display: inline-block;
+  color: var(--color-ink);
+  vertical-align: middle;
+}
+.emblem-ring {
+  transform-origin: 60px 60px;
+  transform-box: fill-box;
+  animation: emblem-spin 60s linear infinite;
+}
+.emblem:hover .emblem-ring,
+a:hover .emblem-ring {
+  animation-duration: 24s;
+}
+.emblem-pulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: emblem-pulse 2.4s var(--ease-quiet) infinite;
+}
+.emblem:hover .emblem-pulse,
+a:hover .emblem-pulse {
+  animation-duration: 1.2s;
+}
+@keyframes emblem-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes emblem-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emblem-ring,
+  .emblem-pulse { animation: none; }
+  .emblem-pulse { opacity: 0.8; }
 }

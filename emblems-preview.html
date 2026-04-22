@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>C Highland Advisory — Emblem concepts</title>
+<style>
+  :root {
+    --paper: #f7f5f1;
+    --ink:   #0f0f10;
+    --silt:  #6b6b6e;
+    --mist:  #c4c2be;
+    --accent-ai: #1fa79c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink);
+               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+               -webkit-font-smoothing: antialiased; }
+  header { padding: 48px 48px 16px; max-width: 1400px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+  p.sub { color: var(--silt); margin: 0; max-width: 64ch; font-size: 15px; line-height: 1.55; }
+  section.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+                 padding: 32px 48px 96px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 1000px) { section.grid { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--mist); border-radius: 14px; background: #fafaf7;
+          padding: 32px 24px; display: flex; flex-direction: column; align-items: center; }
+  .card h2 { font-size: 15px; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 4px;
+             align-self: flex-start; }
+  .card .label { color: var(--silt); font-size: 12px; margin: 0 0 20px; align-self: flex-start;
+                 line-height: 1.5; }
+  .stage { display: flex; align-items: center; gap: 32px; padding: 24px 0;
+           border-top: 1px solid var(--mist); width: 100%; justify-content: center; }
+  .stage:first-of-type { border-top: 0; padding-top: 8px; }
+  .stage .emblem-200 { width: 200px; height: 200px; color: var(--ink); }
+  .stage .emblem-48  { width: 48px;  height: 48px;  color: var(--ink); }
+  .stage .meta { color: var(--silt); font-size: 11px; text-transform: uppercase;
+                 letter-spacing: 0.14em; }
+  .hover-hint { color: var(--silt); font-size: 12px; margin-top: 8px; text-align: center; }
+  /* hover: speed the ring */
+  .emblem-200:hover .ring animate,
+  .emblem-200:hover .ring animateTransform { /* noop: animations auto-managed */ }
+  .emblem-200:hover circle.pulse { animation-duration: 1.2s; }
+  footer { text-align: center; color: var(--silt); font-size: 12px; padding: 24px 48px 48px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Emblem concepts — C Highland Advisory</h1>
+  <p class="sub">
+    Three hand-drawn circular marks, each 120×120 with type-on-a-path wrapping
+    the outer ring and a pulsing flow-node on the inner monogram. The outer
+    ring rotates slowly (60s per full revolution) — watch the wrapped text
+    drift. Below each at 48px so you can judge favicon-scale legibility.
+  </p>
+</header>
+
+<section class="grid">
+
+  <!-- ─── CONCEPT 1 — THE SEAL ─── -->
+  <div class="card">
+    <h2>1 — The Seal</h2>
+    <p class="label">Flow-schematic C + H. Dashed-draft intake arc feeding two parallel flow-lines with a junction bar. Pulse node at the junction.</p>
+
+    <div class="stage">
+      <svg class="emblem-200" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <path id="ring-seal" d="M 60 60 m -48 0 a 48 48 0 1 1 96 0 a 48 48 0 1 1 -96 0" />
+        </defs>
+        <g class="ring">
+          <circle cx="60" cy="60" r="52" opacity="0.25" />
+          <circle cx="60" cy="60" r="48">
+            <animateTransform attributeName="transform" type="rotate"
+                              from="0 60 60" to="360 60 60" dur="60s" repeatCount="indefinite" />
+          </circle>
+          <text font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
+                font-size="6" letter-spacing="0.28em" fill="currentColor" stroke="none">
+            <textPath href="#ring-seal" startOffset="0">C·HIGHLAND·ADVISORY · EST · 2025 · OPERATIONAL·PROGRAMS · DESIGNED·TO·LAST · </textPath>
+          </text>
+        </g>
+        <path d="M 52 42 A 14 14 0 0 0 52 78" stroke-dasharray="2 2" opacity="0.55" />
+        <line x1="64" y1="42" x2="64" y2="78" />
+        <line x1="78" y1="42" x2="78" y2="78" />
+        <line x1="64" y1="60" x2="78" y2="60" />
+        <circle class="pulse" cx="71" cy="60" r="2" fill="currentColor" stroke="none">
+          <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    </div>
+
+    <div class="stage">
+      <div class="meta">Favicon 48</div>
+      <svg class="emblem-48" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="60" r="48" opacity="0.35" />
+        <path d="M 52 42 A 14 14 0 0 0 52 78" stroke-dasharray="3 3" opacity="0.55" />
+        <line x1="64" y1="42" x2="64" y2="78" />
+        <line x1="78" y1="42" x2="78" y2="78" />
+        <line x1="64" y1="60" x2="78" y2="60" />
+        <circle cx="71" cy="60" r="3" fill="currentColor" stroke="none" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- ─── CONCEPT 2 — THE DIAL ─── -->
+  <div class="card">
+    <h2>2 — The Dial</h2>
+    <p class="label">Compass-dial with four practice ticks at N/E/S/W. CH at the center, held by an inner ring. Most navigational in feel.</p>
+
+    <div class="stage">
+      <svg class="emblem-200" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <path id="ring-dial" d="M 60 60 m -48 0 a 48 48 0 1 1 96 0 a 48 48 0 1 1 -96 0" />
+        </defs>
+        <g class="ring">
+          <circle cx="60" cy="60" r="52" opacity="0.25" />
+          <circle cx="60" cy="60" r="48">
+            <animateTransform attributeName="transform" type="rotate"
+                              from="0 60 60" to="360 60 60" dur="60s" repeatCount="indefinite" />
+          </circle>
+          <text font-family="ui-monospace, monospace" font-size="6" letter-spacing="0.28em"
+                fill="currentColor" stroke="none">
+            <textPath href="#ring-dial" startOffset="0">FOUR · PRACTICES · ONE · OPERATING · DISCIPLINE · EST · 2025 · </textPath>
+          </text>
+        </g>
+        <line x1="60" y1="20" x2="60" y2="28" />
+        <line x1="100" y1="60" x2="92" y2="60" />
+        <line x1="60" y1="100" x2="60" y2="92" />
+        <line x1="20" y1="60" x2="28" y2="60" />
+        <circle cx="60" cy="60" r="24" opacity="0.35" />
+        <path d="M 56 50 A 8 8 0 0 0 56 70" stroke-dasharray="2 2" opacity="0.6" />
+        <line x1="62" y1="50" x2="62" y2="70" />
+        <line x1="72" y1="50" x2="72" y2="70" />
+        <line x1="62" y1="60" x2="72" y2="60" />
+        <circle class="pulse" cx="67" cy="60" r="1.75" fill="currentColor" stroke="none">
+          <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    </div>
+
+    <div class="stage">
+      <div class="meta">Favicon 48</div>
+      <svg class="emblem-48" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="60" r="48" opacity="0.35" />
+        <line x1="60" y1="22" x2="60" y2="30" />
+        <line x1="98" y1="60" x2="90" y2="60" />
+        <line x1="60" y1="98" x2="60" y2="90" />
+        <line x1="22" y1="60" x2="30" y2="60" />
+        <path d="M 56 50 A 8 8 0 0 0 56 70" stroke-dasharray="3 3" opacity="0.6" />
+        <line x1="62" y1="50" x2="62" y2="70" />
+        <line x1="72" y1="50" x2="72" y2="70" />
+        <line x1="62" y1="60" x2="72" y2="60" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- ─── CONCEPT 3 — THE VALVE ─── -->
+  <div class="card">
+    <h2>3 — The Valve</h2>
+    <p class="label">Monogram IS a gate-valve schematic. C = valve body + seat, H = twin pipes with a shutoff handle. Most on-theme for "operations."</p>
+
+    <div class="stage">
+      <svg class="emblem-200" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <path id="ring-valve" d="M 60 60 m -48 0 a 48 48 0 1 1 96 0 a 48 48 0 1 1 -96 0" />
+        </defs>
+        <g class="ring">
+          <circle cx="60" cy="60" r="52" opacity="0.25" />
+          <circle cx="60" cy="60" r="48">
+            <animateTransform attributeName="transform" type="rotate"
+                              from="0 60 60" to="360 60 60" dur="60s" repeatCount="indefinite" />
+          </circle>
+          <text font-family="ui-monospace, monospace" font-size="6" letter-spacing="0.28em"
+                fill="currentColor" stroke="none">
+            <textPath href="#ring-valve" startOffset="0">C·HIGHLAND·ADVISORY · EST · 2025 · OPERATIONAL · PROGRAMS · DESIGNED · TO · LAST · </textPath>
+          </text>
+        </g>
+        <path d="M 54 42 A 14 14 0 0 0 54 78" stroke-dasharray="2 2" opacity="0.5" />
+        <path d="M 50 46 A 10 10 0 0 0 50 74" />
+        <line x1="36" y1="60" x2="48" y2="60" stroke-dasharray="2 2" opacity="0.5" />
+        <line x1="62" y1="42" x2="62" y2="78" />
+        <line x1="82" y1="42" x2="82" y2="78" />
+        <line x1="62" y1="60" x2="82" y2="60" />
+        <line x1="72" y1="56" x2="72" y2="64" />
+        <circle cx="72" cy="54" r="2" />
+        <circle class="pulse" cx="62" cy="60" r="2" fill="currentColor" stroke="none">
+          <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    </div>
+
+    <div class="stage">
+      <div class="meta">Favicon 48</div>
+      <svg class="emblem-48" viewBox="0 0 120 120" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="60" r="48" opacity="0.35" />
+        <path d="M 50 46 A 10 10 0 0 0 50 74" />
+        <line x1="62" y1="42" x2="62" y2="78" />
+        <line x1="82" y1="42" x2="82" y2="78" />
+        <line x1="62" y1="60" x2="82" y2="60" />
+        <line x1="72" y1="56" x2="72" y2="64" />
+        <circle cx="72" cy="54" r="3" />
+        <circle cx="62" cy="60" r="3" fill="currentColor" stroke="none" />
+      </svg>
+    </div>
+  </div>
+
+</section>
+
+<footer>Emblem ring rotates at ~60s per revolution · flow-node pulse at ~2.4s · reload to restart</footer>
+</body>
+</html>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FIRM } from "@/lib/constants";
 import { Container } from "./Container";
 import { CTAButton } from "./CTAButton";
-import { CHMonogram } from "./icons";
+import { Emblem } from "./Emblem";
 
 const LINKS = [
   { href: "/practice", label: "Practice" },
@@ -20,10 +20,9 @@ export function Nav() {
       <Container className="flex items-center justify-between py-4">
         <Link
           href="/"
-          data-chapter="ai"
           className="group flex items-center gap-3 text-[color:var(--color-ink)]"
         >
-          <CHMonogram size={56} title={FIRM.name} />
+          <Emblem size={40} title={FIRM.name} />
           <span className="text-[17px] font-medium tracking-tight">{FIRM.name}</span>
         </Link>
 
