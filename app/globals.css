@@ -237,3 +237,79 @@ button {
   transition: border-color var(--dur-hover) var(--ease-quiet);
 }
 .field-line:focus { border-bottom-color: var(--color-ink); }
+
+/* ═══════════════════════════════════════════════
+   Icon family — circuit traces, polychrome, hand-drafted
+   Shared grammar:
+   - 64×32 viewBox, 1.5 stroke, round caps/joins, fill none
+   - Graphite baseline + chapter-colored signal trace + one pulsing node
+   - CSS keyframes (not SMIL) so prefers-reduced-motion gates cleanly
+   ═══════════════════════════════════════════════ */
+
+.ico {
+  --ico-base: var(--color-graphite);
+  --ico-accent: var(--color-graphite);
+  --ico-draft: var(--color-mist);
+  display: inline-block;
+  vertical-align: middle;
+  overflow: visible;
+}
+
+.ico [data-role="base"]    { stroke: var(--ico-base); }
+.ico [data-role="accent"]  { stroke: var(--ico-accent); }
+.ico [data-role="draft"]   { stroke: var(--ico-draft); stroke-dasharray: 3 2; }
+.ico [data-role="dot"]     { fill: var(--ico-accent); stroke: none; }
+.ico [data-role="dot-ring"] { stroke: var(--ico-accent); fill: var(--color-paper); }
+
+/* Chapter scoping — drop an icon under [data-chapter] and it inherits. */
+[data-chapter="strategy"]   { --ico-accent: var(--color-ch-strategy); }
+[data-chapter="healthcare"] { --ico-accent: var(--color-ch-healthcare); }
+[data-chapter="homehealth"] { --ico-accent: var(--color-ch-homehealth); }
+[data-chapter="talent"]     { --ico-accent: var(--color-ch-talent); }
+[data-chapter="hr"]         { --ico-accent: var(--color-ch-hr); }
+[data-chapter="ai"]         { --ico-accent: var(--color-ch-ai); }
+
+/* Pulsing signal node — soft opacity cycle */
+@keyframes ico-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+.ico [data-role="dot"],
+.ico [data-role="dot-ring"] {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ico-pulse 2.4s var(--ease-quiet) infinite;
+}
+.ico [data-role="dot"][data-delay="1"] { animation-delay: 0.6s; }
+.ico [data-role="dot"][data-delay="2"] { animation-delay: 1.2s; }
+.ico [data-role="dot"][data-delay="3"] { animation-delay: 1.8s; }
+
+/* Hover interactivity — draw-in on the accent trace, speed up the pulse */
+.ico [data-role="accent"] {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--dur-hover) var(--ease-quiet);
+}
+.group:hover .ico [data-role="accent"],
+.ico:hover [data-role="accent"] {
+  animation: ico-draw 0.9s var(--ease-quiet);
+}
+.group:hover .ico [data-role="dot"],
+.ico:hover [data-role="dot"] {
+  animation: ico-pulse 1.2s var(--ease-quiet) infinite;
+}
+@keyframes ico-draw {
+  0%   { stroke-dashoffset: 120; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Respect users who don't want motion */
+@media (prefers-reduced-motion: reduce) {
+  .ico [data-role="dot"],
+  .ico [data-role="dot-ring"],
+  .group:hover .ico [data-role="accent"],
+  .ico:hover [data-role="accent"] {
+    animation: none;
+  }
+  .ico [data-role="dot"] { opacity: 0.75; }
+}
