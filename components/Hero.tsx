@@ -59,7 +59,12 @@ export function Hero({
               {eyebrow}
             </div>
           )}
-          <h1 className={mode === "homepage" ? "display-xl" : "display-lg"}>
+          <h1
+            className={clsx(
+              mode === "homepage" ? "display-xl" : "display-lg",
+              "max-w-[18ch]",
+            )}
+          >
             {headline}
           </h1>
           {lead && <p className="lead mt-8">{lead}</p>}

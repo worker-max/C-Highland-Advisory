@@ -55,19 +55,36 @@ const POSITIONS = [
 export default function Home() {
   return (
     <>
-      <Hero
-        mode="homepage"
-        headline={
-          <>
-            I design operational programs across healthcare, talent
-            acquisition, contingent workforce, and applied AI — and I build
-            them to last.
-          </>
-        }
-        byline={`— ${FIRM.founderFull} · ${FIRM.location} · Est. ${FIRM.founded}`}
-        primaryCta={{ label: "Begin engagement", href: "/engagement" }}
-        secondaryCta={{ label: "View practice", href: "/practice" }}
-      />
+      {/*
+        HOTFIX: hero-overflow patch only. Overall hero composition is being
+        reconsidered via the design research pass — do not polish this further.
+      */}
+      <section className="relative overflow-hidden pt-[140px] pb-[96px] md:pt-[180px] md:pb-[120px]">
+        {/* ChapterBand removed inline: it was fighting the long manifesto. */}
+        <Container>
+          <Reveal>
+            <p
+              className="mb-10 max-w-[58ch] font-sans text-[clamp(32px,3.6vw,56px)] font-medium leading-[1.1] tracking-[-0.02em] text-[color:var(--color-ink)]"
+              style={{ textWrap: "balance" as const }}
+            >
+              I design operational programs across healthcare, talent
+              acquisition, contingent workforce, and applied AI — and I
+              build them to last.
+            </p>
+            <p className="font-sans text-[13px] font-medium uppercase tracking-[0.08em] text-[color:var(--color-silt)]">
+              — {FIRM.founderFull} · {FIRM.location} · Est. {FIRM.founded}
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <CTAButton href="/engagement" variant="primary">
+                Begin engagement
+              </CTAButton>
+              <CTAButton href="/practice" variant="secondary">
+                View practice
+              </CTAButton>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
 
       {/* Proof strip */}
       <section className="border-t border-[color:var(--color-mist)] py-12 md:py-16">
