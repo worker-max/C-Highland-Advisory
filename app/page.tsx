@@ -1,37 +1,34 @@
+import Link from "next/link";
 import { DIVISIONS } from "@/content/divisions";
 import { FIRM, SECTORS } from "@/lib/constants";
 import { Container } from "@/components/Container";
-import { Hero } from "@/components/Hero";
-import { SectionHead } from "@/components/SectionHead";
-import { DivisionCard } from "@/components/DivisionCard";
+import { Emblem } from "@/components/Emblem";
 import { PillRow } from "@/components/PillRow";
 import { PullQuote } from "@/components/PullQuote";
-import { StepFlow } from "@/components/StepFlow";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
-import {
-  PracticeIcon,
-  FounderIcon,
-  AdoptionIcon,
-  HumanAITeammateIcon,
-} from "@/components/icons";
+import { chapterColor } from "@/lib/chapters";
 
-const ENGAGEMENT_STEPS = [
-  {
-    n: "01",
-    label: "You submit a brief",
-    dek: "A short, structured conversation. No deck required.",
-  },
-  {
-    n: "02",
-    label: "We respond within three days",
-    dek: "If there is a fit, we schedule a thirty-minute call.",
-  },
-  {
-    n: "03",
-    label: "We send a proposed scope",
-    dek: "Within a week of the call, you have a scope in hand.",
-  },
+/*
+  Homepage rebuilt TBC-style:
+   * Centered emblem above generous negative space
+   * Numbered proposition statement
+   * Four chapter rows (00–03) = the practice directory
+   * Founder-note paragraph lives lower as colophon
+   * Everything below flows naturally from the directory
+*/
+
+// The four practice tracks Colin surfaces at the hero, in chapter order.
+// Each picks the matching Division from content to stay in sync.
+const PRACTICE_CHAPTERS: Array<{
+  n: string;
+  label: string;
+  divisionSlug: string;
+}> = [
+  { n: "00", label: "Healthcare operations", divisionSlug: "home-health-operations" },
+  { n: "01", label: "Talent acquisition", divisionSlug: "talent-acquisition" },
+  { n: "02", label: "Contingent workforce", divisionSlug: "talent-acquisition" },
+  { n: "03", label: "Applied AI adoption", divisionSlug: "ai-practice" },
 ];
 
 const POSITIONS = [
@@ -55,89 +52,118 @@ const POSITIONS = [
 export default function Home() {
   return (
     <>
-      {/*
-        HOTFIX: hero-overflow patch only. Overall hero composition is being
-        reconsidered via the design research pass — do not polish this further.
-      */}
-      <section className="relative overflow-hidden pt-[140px] pb-[96px] md:pt-[180px] md:pb-[120px]">
-        {/* ChapterBand removed inline: it was fighting the long manifesto. */}
+      {/* ═════ HERO — emblem, proposition, chapter directory ═════ */}
+      <section className="relative pt-[160px] pb-[96px] md:pt-[220px] md:pb-[140px]">
+        <Container className="flex flex-col items-center text-center">
+          <Reveal>
+            <Emblem size={220} title={FIRM.name} />
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <h1
+              className="mt-14 max-w-[22ch] font-sans text-[clamp(32px,4.2vw,60px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]"
+              style={{ textWrap: "balance" as const }}
+            >
+              Four practices. One operating discipline.
+            </h1>
+            <p className="mt-6 max-w-[54ch] text-[17px] leading-[1.55] text-[color:var(--color-silt)]">
+              Operational programs designed by an operator — built to hold
+              past the first quarter, the tenth manager turnover, and the
+              model upgrade.
+            </p>
+          </Reveal>
+
+          {/* Chapter directory — four rows, each a deep link. */}
+          <Reveal delay={0.2}>
+            <ol className="mt-16 w-full max-w-[680px] list-none divide-y divide-[color:var(--color-mist)] border-y border-[color:var(--color-mist)] text-left">
+              {PRACTICE_CHAPTERS.map((ch) => {
+                const division = DIVISIONS.find((d) => d.slug === ch.divisionSlug);
+                const tintColor = division ? chapterColor(division.chapter) : "var(--color-ink)";
+                return (
+                  <li key={ch.n}>
+                    <Link
+                      href={`/practice/${ch.divisionSlug}`}
+                      data-chapter={division?.chapter}
+                      className="group flex items-center gap-6 py-5 transition-colors hover:text-[color:var(--color-ink)]"
+                    >
+                      <span className="font-mono text-[13px] tracking-[0.12em] text-[color:var(--color-silt)]">
+                        {ch.n}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="inline-block h-[2px] w-8 shrink-0 transition-[width,background] duration-200 group-hover:w-16"
+                        style={{ background: tintColor }}
+                      />
+                      <span className="flex-1 text-[clamp(20px,2.2vw,28px)] font-medium leading-[1.2] tracking-[-0.01em] text-[color:var(--color-ink)]">
+                        {ch.label}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="text-[20px] text-[color:var(--color-silt)] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[color:var(--color-ink)]"
+                      >
+                        →
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ol>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <div className="mt-12 flex flex-wrap justify-center gap-4">
+              <CTAButton href="/engagement" variant="primary">
+                Begin engagement
+              </CTAButton>
+              <CTAButton href="/practice" variant="secondary">
+                View the full practice
+              </CTAButton>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ═════ SECTORS — low-key proof strip ═════ */}
+      <section className="border-t border-[color:var(--color-mist)] py-14 md:py-20">
         <Container>
           <Reveal>
+            <PillRow items={SECTORS} label="Working across" />
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ═════ FOUNDER-NOTE — the 24-word sentence now earns its role as prose ═════ */}
+      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-28">
+        <Container className="max-w-[820px]">
+          <Reveal>
+            <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-silt)]">
+              — Founder note
+            </div>
             <p
-              className="mb-10 max-w-[58ch] font-sans text-[clamp(32px,3.6vw,56px)] font-medium leading-[1.1] tracking-[-0.02em] text-[color:var(--color-ink)]"
+              className="mt-8 text-[clamp(22px,2.4vw,32px)] font-normal leading-[1.45] tracking-[-0.015em] text-[color:var(--color-ink)]"
               style={{ textWrap: "balance" as const }}
             >
               I design operational programs across healthcare, talent
               acquisition, contingent workforce, and applied AI — and I
               build them to last.
             </p>
-            <p className="font-sans text-[13px] font-medium uppercase tracking-[0.08em] text-[color:var(--color-silt)]">
-              — {FIRM.founderFull} · {FIRM.location} · Est. {FIRM.founded}
+            <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.12em] text-[color:var(--color-silt)]">
+              {FIRM.founderFull} · {FIRM.location} · Est. {FIRM.founded}
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <CTAButton href="/engagement" variant="primary">
-                Begin engagement
-              </CTAButton>
-              <CTAButton href="/practice" variant="secondary">
-                View practice
-              </CTAButton>
-            </div>
           </Reveal>
         </Container>
       </section>
 
-      {/* Proof strip */}
-      <section className="border-t border-[color:var(--color-mist)] py-12 md:py-16">
-        <Container>
-          <PillRow items={SECTORS} label="Working across" />
-        </Container>
-      </section>
-
-      {/* The Practice */}
-      <section className="py-20 md:py-24">
-        <Container>
-          <Reveal>
-            <div className="mb-6">
-              <PracticeIcon size={72} />
-            </div>
-            <SectionHead
-              eyebrow="The Practice"
-              title={<>Six disciplines. One operating thesis.</>}
-              lead="Each division stands alone — but each is informed by the same conviction: that the gap between frontline reality and executive decision-making is where most strategy quietly fails."
-            />
-          </Reveal>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {DIVISIONS.map((division, i) => (
-              <Reveal key={division.slug} delay={i * 0.06}>
-                <DivisionCard division={division} totalCount={DIVISIONS.length} />
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* The Founder */}
+      {/* ═════ THE FOUNDER — expanded block (pull-quote + 3 positions) ═════ */}
       <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
         <Container>
-          <Reveal>
-            <div className="mb-6">
-              <FounderIcon size={72} />
-            </div>
-            <SectionHead
-              eyebrow="The Founder"
-              title={<>A career built at the intersection.</>}
-            />
-          </Reveal>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
+              <div className="eyebrow mb-6">A career built at the intersection</div>
               <PullQuote
                 quote="The best work doesn't come from another framework. It comes from operators who can sit at the bedside, build the spreadsheet, and ship the AI system — and know which one the moment actually calls for."
                 attribution={`— ${FIRM.founderFull} · Founder`}
               />
-              <div className="mt-8 flex items-center gap-3 text-[13px] font-medium text-[color:var(--color-silt)]">
-                <HumanAITeammateIcon size={48} />
-                <span>Signature framework: human-and-AI teammate adoption.</span>
-              </div>
             </Reveal>
             <div className="space-y-4">
               {POSITIONS.map((p, i) => (
@@ -154,30 +180,13 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* How engagements work */}
-      <section className="py-20 md:py-24">
-        <Container>
-          <Reveal>
-            <div className="mb-6">
-              <AdoptionIcon size={72} />
-            </div>
-            <SectionHead
-              eyebrow="How engagements work"
-              title={<>Three steps. No deck required.</>}
-              lead="Engagements begin with a brief — a short, structured conversation. From there, we scope. Programs are designed to hold — past the launch, past the next manager turnover."
-            />
-          </Reveal>
-          <StepFlow steps={ENGAGEMENT_STEPS} />
-        </Container>
-      </section>
-
-      {/* CTA footer block */}
+      {/* ═════ CTA FOOTER ═════ */}
       <section className="border-t border-[color:var(--color-mist)] bg-[color:var(--color-paper)] py-24 md:py-32">
         <Container className="text-center">
           <Reveal>
-            <h2 className="display-lg mx-auto max-w-[22ch]">
-              When the next decision has to{" "}
-              survive contact with reality.            </h2>
+            <h2 className="mx-auto max-w-[22ch] font-sans text-[clamp(36px,4.8vw,68px)] font-medium leading-[1.02] tracking-[-0.03em] text-[color:var(--color-ink)]">
+              When the next decision has to survive contact with reality.
+            </h2>
             <div className="mt-10 flex justify-center">
               <CTAButton href="/engagement" variant="primary">
                 Begin engagement
