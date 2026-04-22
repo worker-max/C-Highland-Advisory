@@ -51,13 +51,14 @@ export default function Home() {
     <>
       <Hero
         mode="homepage"
-        eyebrow={`${FIRM.location} · Est. ${FIRM.founded}`}
         headline={
           <>
-            Strategy, operations, and applied AI — from someone who has{" "}
-            actually done all three.          </>
+            I design operational programs across healthcare, talent
+            acquisition, contingent workforce, and applied AI — and I build
+            them to last.
+          </>
         }
-        lead="C Highland Advisory partners with leaders across healthcare, government, hospitality, and the industries that run them — translating frontline reality into operational systems and deploying artificial intelligence where it actually creates leverage."
+        byline={`— ${FIRM.founderFull} · ${FIRM.location} · Est. ${FIRM.founded}`}
         primaryCta={{ label: "Begin engagement", href: "/engagement" }}
         secondaryCta={{ label: "View practice", href: "/practice" }}
       />

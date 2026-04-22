@@ -16,6 +16,7 @@ type Props = {
   eyebrow?: string;
   headline: ReactNode;
   lead?: ReactNode;
+  byline?: ReactNode;
   primaryCta?: CtaSpec;
   secondaryCta?: CtaSpec;
   className?: string;
@@ -27,6 +28,7 @@ export function Hero({
   eyebrow,
   headline,
   lead,
+  byline,
   primaryCta,
   secondaryCta,
   className,
@@ -58,6 +60,13 @@ export function Hero({
             {headline}
           </h1>
           {lead && <p className="lead mt-8">{lead}</p>}
+          {byline && (
+            <p
+              className="mt-6 font-sans text-[13px] font-medium uppercase tracking-[0.08em] text-[color:var(--color-silt)]"
+            >
+              {byline}
+            </p>
+          )}
           {(primaryCta || secondaryCta) && (
             <div className="mt-10 flex flex-wrap gap-4">
               {primaryCta && (
