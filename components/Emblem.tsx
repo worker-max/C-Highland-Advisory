@@ -9,27 +9,26 @@ type Props = SVGProps<SVGSVGElement> & {
 };
 
 /*
-  The Valve — C Highland Advisory signature emblem.
+  The Seal — C Highland Advisory signature emblem.
 
   Grammar:
    * 120×120 circular mark with type-on-a-path wrapping the outer ring
-   * Monogram is a gate-valve schematic:
-       C = valve body (dashed-draft arc + solid inner seat arc)
-       H = twin flow-pipes with a shutoff handle crossbar + handle-cap
-   * Pulsing flow-node sits at the valve-to-pipe junction
-   * Outer ring rotates ~60s per revolution (set via CSS, respects reduced-motion)
-   * On hover of the parent .emblem element, ring speeds to 24s
+   * Inner monogram: clean CH letterforms at the center — arc + twin verticals
+     with a crossbar. Reads as letters first.
+   * The only motion is the outer ring rotating at ~60s per revolution
+     (tightens to 24s on hover). The type-on-path drifts with the ring.
+   * No pulsing node — the mark is intentionally quieter than the icon family,
+     which carries the pulsing flow-node signal in its own vocabulary.
 
-  This is the ambient brand signal. It appears in Nav at 40px, Footer at 48px,
-  homepage hero at ~240px, and as the favicon at 64px. Same geometry, one source.
+  This is the ambient brand signal. Same geometry at Nav 40px, Footer 48px,
+  hero 200–240px, favicon 64px.
 */
 
 const WRAP_TEXT =
   "C·HIGHLAND·ADVISORY · EST · 2025 · OPERATIONAL · PROGRAMS · DESIGNED · TO · LAST · ";
 
 export function Emblem({ size = 120, title, className, ...rest }: Props) {
-  // Unique ID per render for the textPath — avoids DOM collisions when
-  // multiple emblems render on one page (nav + footer + hero all).
+  // Unique ID per render so multiple emblems on one page don't collide.
   const pathId = `ring-${Math.random().toString(36).slice(2, 10)}`;
   return (
     <svg
@@ -55,7 +54,7 @@ export function Emblem({ size = 120, title, className, ...rest }: Props) {
         />
       </defs>
 
-      {/* Outer ring — rotates via .emblem-ring CSS rule */}
+      {/* Outer ring + type-on-path — the only moving element. */}
       <g className="emblem-ring">
         <circle cx="60" cy="60" r="52" opacity="0.25" />
         <circle cx="60" cy="60" r="48" />
@@ -72,33 +71,13 @@ export function Emblem({ size = 120, title, className, ...rest }: Props) {
         </text>
       </g>
 
-      {/* C: valve body — dashed-draft outer arc + solid inner seat arc */}
-      <path
-        d="M 54 42 A 14 14 0 0 0 54 78"
-        strokeDasharray="2 2"
-        opacity="0.55"
-      />
-      <path d="M 50 46 A 10 10 0 0 0 50 74" />
-
-      {/* Intake pipe (dashed draft) feeding the C */}
-      <line
-        x1="36"
-        y1="60"
-        x2="48"
-        y2="60"
-        strokeDasharray="2 2"
-        opacity="0.5"
-      />
-
-      {/* H: twin flow-pipes + shutoff crossbar + handle-cap */}
-      <line x1="62" y1="42" x2="62" y2="78" />
-      <line x1="82" y1="42" x2="82" y2="78" />
-      <line x1="62" y1="60" x2="82" y2="60" />
-      <line x1="72" y1="56" x2="72" y2="64" />
-      <circle cx="72" cy="54" r="2" />
-
-      {/* Pulsing flow-node at the valve/pipe junction */}
-      <circle className="emblem-pulse" cx="62" cy="60" r="2" fill="currentColor" stroke="none" />
+      {/* Inner monogram — clean CH letterforms, reads as letters first. */}
+      {/* C: simple arc opening to the right */}
+      <path d="M 52 48 A 12 12 0 1 0 52 72" />
+      {/* H: two vertical strokes + crossbar */}
+      <line x1="60" y1="48" x2="60" y2="72" />
+      <line x1="74" y1="48" x2="74" y2="72" />
+      <line x1="60" y1="60" x2="74" y2="60" />
     </svg>
   );
 }

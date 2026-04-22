@@ -7,29 +7,17 @@ import { PillRow } from "@/components/PillRow";
 import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
-import { chapterColor } from "@/lib/chapters";
+import { DivisionCard } from "@/components/DivisionCard";
 
 /*
-  Homepage rebuilt TBC-style:
-   * Centered emblem above generous negative space
-   * Numbered proposition statement
-   * Four chapter rows (00–03) = the practice directory
-   * Founder-note paragraph lives lower as colophon
-   * Everything below flows naturally from the directory
-*/
+  Homepage — quieter composition.
 
-// The four practice tracks Colin surfaces at the hero, in chapter order.
-// Each picks the matching Division from content to stay in sync.
-const PRACTICE_CHAPTERS: Array<{
-  n: string;
-  label: string;
-  divisionSlug: string;
-}> = [
-  { n: "00", label: "Healthcare operations", divisionSlug: "home-health-operations" },
-  { n: "01", label: "Talent acquisition", divisionSlug: "talent-acquisition" },
-  { n: "02", label: "Contingent workforce", divisionSlug: "talent-acquisition" },
-  { n: "03", label: "Applied AI adoption", divisionSlug: "ai-practice" },
-];
+  Hero: emblem + the approved founder-note sentence + attribution + one CTA.
+  Nothing else above the fold. Let the sentence land; let the page breathe.
+
+  Below: proof strip → the six-division practice grid → founder block →
+  engagement steps → CTA footer.
+*/
 
 const POSITIONS = [
   {
@@ -49,81 +37,61 @@ const POSITIONS = [
   },
 ];
 
+const STEPS = [
+  {
+    n: "01",
+    label: "You submit a brief",
+    dek: "A short, structured conversation. No deck required.",
+  },
+  {
+    n: "02",
+    label: "We respond within three days",
+    dek: "If there is a fit, we schedule a thirty-minute call.",
+  },
+  {
+    n: "03",
+    label: "We send a proposed scope",
+    dek: "Within a week of the call, you have a scope in hand.",
+  },
+];
+
 export default function Home() {
   return (
     <>
-      {/* ═════ HERO — emblem, proposition, chapter directory ═════ */}
-      <section className="relative pt-[160px] pb-[96px] md:pt-[220px] md:pb-[140px]">
-        <Container className="flex flex-col items-center text-center">
+      {/* ═════ HERO — emblem, sentence, attribution, one CTA. Nothing else. ═════ */}
+      <section className="pt-[180px] pb-[140px] md:pt-[240px] md:pb-[180px]">
+        <Container className="flex flex-col items-start gap-14">
           <Reveal>
-            <Emblem size={220} title={FIRM.name} />
+            <Emblem size={200} title={FIRM.name} />
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1
-              className="mt-14 max-w-[22ch] font-sans text-[clamp(32px,4.2vw,60px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]"
+            <p
+              className="max-w-[30ch] font-sans text-[clamp(28px,3.4vw,48px)] font-medium leading-[1.18] tracking-[-0.02em] text-[color:var(--color-ink)]"
               style={{ textWrap: "balance" as const }}
             >
-              Four practices. One operating discipline.
-            </h1>
-            <p className="mt-6 max-w-[54ch] text-[17px] leading-[1.55] text-[color:var(--color-silt)]">
-              Operational programs designed by an operator — built to hold
-              past the first quarter, the tenth manager turnover, and the
-              model upgrade.
+              I design operational programs across healthcare, talent
+              acquisition, contingent workforce, and applied AI — and I
+              build them to last.
             </p>
           </Reveal>
 
-          {/* Chapter directory — four rows, each a deep link. */}
           <Reveal delay={0.2}>
-            <ol className="mt-16 w-full max-w-[680px] list-none divide-y divide-[color:var(--color-mist)] border-y border-[color:var(--color-mist)] text-left">
-              {PRACTICE_CHAPTERS.map((ch) => {
-                const division = DIVISIONS.find((d) => d.slug === ch.divisionSlug);
-                const tintColor = division ? chapterColor(division.chapter) : "var(--color-ink)";
-                return (
-                  <li key={ch.n}>
-                    <Link
-                      href={`/practice/${ch.divisionSlug}`}
-                      data-chapter={division?.chapter}
-                      className="group flex items-center gap-6 py-5 transition-colors hover:text-[color:var(--color-ink)]"
-                    >
-                      <span className="font-mono text-[13px] tracking-[0.12em] text-[color:var(--color-silt)]">
-                        {ch.n}
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="inline-block h-[2px] w-8 shrink-0 transition-[width,background] duration-200 group-hover:w-16"
-                        style={{ background: tintColor }}
-                      />
-                      <span className="flex-1 text-[clamp(20px,2.2vw,28px)] font-medium leading-[1.2] tracking-[-0.01em] text-[color:var(--color-ink)]">
-                        {ch.label}
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="text-[20px] text-[color:var(--color-silt)] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[color:var(--color-ink)]"
-                      >
-                        →
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="mt-12 flex flex-wrap justify-center gap-4">
-              <CTAButton href="/engagement" variant="primary">
-                Begin engagement
-              </CTAButton>
-              <CTAButton href="/practice" variant="secondary">
-                View the full practice
-              </CTAButton>
+            <div className="flex flex-col gap-8">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--color-silt)]">
+                — {FIRM.founderFull} · {FIRM.location} · Est. {FIRM.founded}
+              </p>
+              <div>
+                <CTAButton href="/engagement" variant="primary">
+                  Begin engagement
+                </CTAButton>
+              </div>
             </div>
           </Reveal>
         </Container>
       </section>
 
-      {/* ═════ SECTORS — low-key proof strip ═════ */}
+      {/* ═════ PROOF STRIP — sectors served ═════ */}
       <section className="border-t border-[color:var(--color-mist)] py-14 md:py-20">
         <Container>
           <Reveal>
@@ -132,34 +100,46 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ═════ FOUNDER-NOTE — the 24-word sentence now earns its role as prose ═════ */}
-      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-28">
-        <Container className="max-w-[820px]">
+      {/* ═════ THE PRACTICE — six division cards ═════ */}
+      <section className="py-24 md:py-32">
+        <Container>
           <Reveal>
-            <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-silt)]">
-              — Founder note
-            </div>
-            <p
-              className="mt-8 text-[clamp(22px,2.4vw,32px)] font-normal leading-[1.45] tracking-[-0.015em] text-[color:var(--color-ink)]"
-              style={{ textWrap: "balance" as const }}
-            >
-              I design operational programs across healthcare, talent
-              acquisition, contingent workforce, and applied AI — and I
-              build them to last.
-            </p>
-            <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.12em] text-[color:var(--color-silt)]">
-              {FIRM.founderFull} · {FIRM.location} · Est. {FIRM.founded}
+            <div className="eyebrow mb-4">The Practice</div>
+            <h2 className="max-w-[28ch] font-sans text-[clamp(32px,4vw,56px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]">
+              Six divisions. One operating discipline.
+            </h2>
+            <p className="mt-6 max-w-[58ch] text-[17px] leading-[1.6] text-[color:var(--color-silt)]">
+              Each division stands alone — but each is informed by the same
+              conviction: that the gap between frontline reality and executive
+              decision-making is where most strategy quietly fails.
             </p>
           </Reveal>
+
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {DIVISIONS.map((division, i) => (
+              <Reveal key={division.slug} delay={i * 0.06}>
+                <DivisionCard
+                  division={division}
+                  totalCount={DIVISIONS.length}
+                />
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </section>
 
-      {/* ═════ THE FOUNDER — expanded block (pull-quote + 3 positions) ═════ */}
-      <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
+      {/* ═════ THE FOUNDER — pull-quote + three positions ═════ */}
+      <section className="border-t border-[color:var(--color-mist)] py-24 md:py-32">
         <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+          <Reveal>
+            <div className="eyebrow mb-4">The Founder</div>
+            <h2 className="max-w-[22ch] font-sans text-[clamp(32px,4vw,56px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]">
+              A career built at the intersection.
+            </h2>
+          </Reveal>
+
+          <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
             <Reveal>
-              <div className="eyebrow mb-6">A career built at the intersection</div>
               <PullQuote
                 quote="The best work doesn't come from another framework. It comes from operators who can sit at the bedside, build the spreadsheet, and ship the AI system — and know which one the moment actually calls for."
                 attribution={`— ${FIRM.founderFull} · Founder`}
@@ -171,7 +151,9 @@ export default function Home() {
                   <div className="card p-6 md:p-7">
                     <div className="mono-numeral mb-3">{p.n}</div>
                     <div className="display-sm mb-2">{p.role}</div>
-                    <p className="prose-base text-[color:var(--color-silt)]">{p.text}</p>
+                    <p className="prose-base text-[color:var(--color-silt)]">
+                      {p.text}
+                    </p>
                   </div>
                 </Reveal>
               ))}
@@ -180,18 +162,44 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ═════ CTA FOOTER ═════ */}
-      <section className="border-t border-[color:var(--color-mist)] bg-[color:var(--color-paper)] py-24 md:py-32">
-        <Container className="text-center">
+      {/* ═════ HOW ENGAGEMENTS WORK ═════ */}
+      <section className="border-t border-[color:var(--color-mist)] py-24 md:py-32">
+        <Container>
           <Reveal>
-            <h2 className="mx-auto max-w-[22ch] font-sans text-[clamp(36px,4.8vw,68px)] font-medium leading-[1.02] tracking-[-0.03em] text-[color:var(--color-ink)]">
+            <div className="eyebrow mb-4">How engagements work</div>
+            <h2 className="max-w-[24ch] font-sans text-[clamp(32px,4vw,56px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]">
+              Three steps. No deck required.
+            </h2>
+          </Reveal>
+
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+            {STEPS.map((step, i) => (
+              <Reveal key={step.n} delay={i * 0.1}>
+                <div className="card p-6 md:p-8">
+                  <div className="mono-numeral mb-4">{step.n}</div>
+                  <div className="display-sm mb-3">{step.label}</div>
+                  <p className="prose-base text-[color:var(--color-silt)]">
+                    {step.dek}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ═════ CTA FOOTER ═════ */}
+      <section className="border-t border-[color:var(--color-mist)] bg-[color:var(--color-paper)] py-28 md:py-40">
+        <Container className="flex flex-col items-start gap-10">
+          <Reveal>
+            <h2 className="max-w-[22ch] font-sans text-[clamp(36px,4.8vw,68px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]">
               When the next decision has to survive contact with reality.
             </h2>
-            <div className="mt-10 flex justify-center">
-              <CTAButton href="/engagement" variant="primary">
-                Begin engagement
-              </CTAButton>
-            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <CTAButton href="/engagement" variant="primary">
+              Begin engagement
+            </CTAButton>
           </Reveal>
         </Container>
       </section>
