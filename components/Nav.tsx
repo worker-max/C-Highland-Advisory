@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FIRM } from "@/lib/constants";
 import { Container } from "./Container";
 import { CTAButton } from "./CTAButton";
+import { CHMonogram } from "./icons";
 
 const LINKS = [
   { href: "/practice", label: "Practice" },
@@ -17,12 +18,12 @@ export function Nav() {
       className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--color-mist)] bg-[rgb(247_245_241_/_0.8)] backdrop-blur"
     >
       <Container className="flex items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-3 text-[color:var(--color-ink)]">
-          <span
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--color-ink)] font-sans text-[11px] font-medium"
-          >
-            CH
-          </span>
+        <Link
+          href="/"
+          data-chapter="ai"
+          className="group flex items-center gap-3 text-[color:var(--color-ink)]"
+        >
+          <CHMonogram size={56} title={FIRM.name} />
           <span className="text-[17px] font-medium tracking-tight">{FIRM.name}</span>
         </Link>
 

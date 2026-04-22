@@ -9,6 +9,12 @@ import { PullQuote } from "@/components/PullQuote";
 import { StepFlow } from "@/components/StepFlow";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
+import {
+  PracticeIcon,
+  FounderIcon,
+  AdoptionIcon,
+  HumanAITeammateIcon,
+} from "@/components/icons";
 
 const ENGAGEMENT_STEPS = [
   {
@@ -74,6 +80,9 @@ export default function Home() {
       <section className="py-20 md:py-24">
         <Container>
           <Reveal>
+            <div className="mb-6">
+              <PracticeIcon size={72} />
+            </div>
             <SectionHead
               eyebrow="The Practice"
               title={<>Six disciplines. One operating thesis.</>}
@@ -94,6 +103,9 @@ export default function Home() {
       <section className="border-t border-[color:var(--color-mist)] py-20 md:py-24">
         <Container>
           <Reveal>
+            <div className="mb-6">
+              <FounderIcon size={72} />
+            </div>
             <SectionHead
               eyebrow="The Founder"
               title={<>A career built at the intersection.</>}
@@ -105,6 +117,10 @@ export default function Home() {
                 quote="The best work doesn't come from another framework. It comes from operators who can sit at the bedside, build the spreadsheet, and ship the AI system — and know which one the moment actually calls for."
                 attribution={`— ${FIRM.founderFull} · Founder`}
               />
+              <div className="mt-8 flex items-center gap-3 text-[13px] font-medium text-[color:var(--color-silt)]">
+                <HumanAITeammateIcon size={48} />
+                <span>Signature framework: human-and-AI teammate adoption.</span>
+              </div>
             </Reveal>
             <div className="space-y-4">
               {POSITIONS.map((p, i) => (
@@ -125,10 +141,13 @@ export default function Home() {
       <section className="py-20 md:py-24">
         <Container>
           <Reveal>
+            <div className="mb-6">
+              <AdoptionIcon size={72} />
+            </div>
             <SectionHead
               eyebrow="How engagements work"
               title={<>Three steps. No deck required.</>}
-              lead="Engagements begin with a brief — a short, structured conversation. From there, we scope."
+              lead="Engagements begin with a brief — a short, structured conversation. From there, we scope. Programs are designed to hold — past the launch, past the next manager turnover."
             />
           </Reveal>
           <StepFlow steps={ENGAGEMENT_STEPS} />

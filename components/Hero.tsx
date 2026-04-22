@@ -13,6 +13,7 @@ type CtaSpec = { label: string; href: string };
 type Props = {
   mode?: "homepage" | "page";
   chapter?: ChapterKey;
+  mark?: ReactNode;
   eyebrow?: string;
   headline: ReactNode;
   lead?: ReactNode;
@@ -25,6 +26,7 @@ type Props = {
 export function Hero({
   mode = "page",
   chapter,
+  mark,
   eyebrow,
   headline,
   lead,
@@ -44,6 +46,7 @@ export function Hero({
       {mode === "page" && chapter && <ChapterWash chapter={chapter} />}
       <Container>
         <Reveal>
+          {mark && <div className="mb-8">{mark}</div>}
           {eyebrow && (
             <div
               className="eyebrow mb-6"

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DIVISIONS, getDivision } from "@/content/divisions";
 import { Container } from "@/components/Container";
@@ -11,6 +10,7 @@ import { EngagementModelCard } from "@/components/EngagementModelCard";
 import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
+import { CHAPTER_ICONS, ThesisIcon } from "@/components/icons";
 
 type Params = { slug: string };
 
@@ -47,11 +47,14 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
   const division = getDivision(slug);
   if (!division) notFound();
 
+  const ChapterMark = CHAPTER_ICONS[division.chapter];
+
   return (
     <div data-chapter={division.chapter}>
       <Hero
         mode="page"
         chapter={division.chapter}
+        mark={<ChapterMark size={96} />}
         eyebrow={`${division.number} / 06 · The Practice`}
         headline={division.name}
         lead={division.positioning}
@@ -104,7 +107,10 @@ export default async function DivisionPage({ params }: { params: Promise<Params>
       <section className="border-t border-[color:var(--color-mist)] bg-[color:var(--color-paper)] py-24 md:py-28">
         <Container>
           <Reveal>
-            <div className="eyebrow mb-6">The thesis</div>
+            <div className="mb-6 flex items-center gap-4">
+              <ThesisIcon size={56} />
+              <div className="eyebrow">The thesis</div>
+            </div>
             <PullQuote quote={division.thesis} chapter={division.chapter} />
           </Reveal>
         </Container>
