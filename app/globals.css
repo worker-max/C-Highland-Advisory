@@ -486,6 +486,11 @@ a:hover .emblem-pulse {
   animation: marquee-x 70s linear infinite;
   will-change: transform;
 }
+/* Editorial pacing — names-only typographic ticker. Slower so the eye
+   can linger on a single italic name rather than scan a logo wall. */
+.marquee-track--editorial {
+  animation-duration: 110s;
+}
 .marquee-track:hover,
 .marquee-pause:hover .marquee-track {
   animation-play-state: paused;

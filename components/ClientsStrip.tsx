@@ -1,40 +1,37 @@
-"use client";
-
-import { useState } from "react";
 import { Container } from "./Container";
 import { ClientsMarquee } from "./ClientsMarquee";
-import {
-  OPERATOR_ROLES,
-  clientLogoSrc,
-  clientLogoFallback,
-  type Client,
-} from "@/content/clients";
+import { OPERATOR_ROLES, type Client } from "@/content/clients";
 
 /*
-  Two strips, deliberately different rhythms — minimalist build per user
-  review (drop the verbose sub-labels, let the visuals speak):
+  Two strips, deliberately different rhythms — names-only edition.
 
-   1. Operator Experience — STATIC. Two cells (Humana + CenterWell Home
-      Health). No sub-tag, no marketing meta line.
+  The previous build leaned on logos: a static logo+name grid for operator
+  experience, a logo+name marquee for clients. The user's review:
+  "logos are tiny, some unreadable; this isn't surprising or polished."
+  So this iteration drops logos entirely and trusts the typography.
 
-   2. Clients & Affiliations — MARQUEE. Auto-scrolling ticker. No meta line.
+   1. Operator Experience — STATIC. Two large editorial entries.
+      Newsreader italic name at clamp(36→64), with a thin lime hairline
+      at the left edge as the only chrome. A small mono role tag sits
+      below. No background fill, no card, no border. Reads like a colophon.
+
+   2. Clients & Affiliations — MARQUEE. Names in big italic serif drift
+      past, separated by 4-dot lime diamonds (DotIcon vocabulary). 110s
+      linear pace; pause-on-hover; edge-fade masks. See ClientsMarquee.tsx.
+
+  No marketing meta line on either section. The single mono micro-label
+  per section is sufficient framing.
 */
 
-function OperatorCell({ client }: { client: Client }) {
-  const primary = clientLogoSrc(client);
-  const favicon = clientLogoFallback(client);
-  const [src, setSrc] = useState<string>(primary);
-  const [stage, setStage] = useState<"primary" | "favicon" | "text">("primary");
+function MicroLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
+      {children}
+    </div>
+  );
+}
 
-  function handleError() {
-    if (stage === "primary") {
-      setSrc(favicon);
-      setStage("favicon");
-    } else {
-      setStage("text");
-    }
-  }
-
+function OperatorEntry({ client }: { client: Client }) {
   return (
     <a
       href={client.url}
@@ -42,58 +39,55 @@ function OperatorCell({ client }: { client: Client }) {
       rel="noopener noreferrer"
       title={client.name}
       aria-label={`${client.name} — opens in a new tab`}
-      className="group flex h-20 items-center gap-4 bg-[color:var(--color-bone)] px-6 transition-colors hover:bg-[color:var(--color-paper)]"
+      className="group relative flex flex-col gap-3 py-2 pl-6"
     >
-      {stage !== "text" ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt=""
-          loading="lazy"
-          onError={handleError}
-          className="h-9 w-12 shrink-0 object-contain"
-        />
-      ) : (
-        <span
-          aria-hidden="true"
-          className="flex h-9 w-12 shrink-0 items-center justify-center rounded-[3px] bg-[color:var(--color-mist)]/40"
-        />
-      )}
-      <span className="text-[15px] font-medium leading-[1.2] tracking-[-0.005em] text-[color:var(--color-ink)]">
+      {/* Lime hairline at left edge — the only chrome. Grows on hover. */}
+      <span
+        aria-hidden="true"
+        className="absolute left-0 top-0 h-full w-[2px] bg-[color:var(--color-lime)] transition-all duration-300 group-hover:w-[3px]"
+      />
+      <span
+        className="leading-[1.02] text-[color:var(--color-ink)] transition-colors duration-300 group-hover:text-[color:var(--color-graphite)]"
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontStyle: "italic",
+          fontWeight: 300,
+          fontSize: "clamp(36px, 5vw, 64px)",
+          letterSpacing: "-0.02em",
+        }}
+      >
         {client.name}
+      </span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[color:var(--color-silt)]">
+        Operator role
       </span>
     </a>
   );
 }
 
-function MicroLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
-      {children}
-    </div>
-  );
-}
-
 export function ClientsStrip() {
   return (
-    <section className="border-y border-[color:var(--color-mist)] py-10 md:py-14">
-      {/* Operator Experience — static, wider cells, no meta */}
+    <section className="border-y border-[color:var(--color-mist)] py-16 md:py-24">
+      {/* Operator Experience — flat editorial colophons, no boxes */}
       <Container>
         <MicroLabel>Operator experience</MicroLabel>
-        <div className="grid grid-cols-1 gap-px bg-[color:var(--color-mist)] sm:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-12 md:mt-14 md:grid-cols-2 md:gap-20">
           {OPERATOR_ROLES.map((client) => (
-            <OperatorCell key={client.domain} client={client} />
+            <OperatorEntry key={client.domain} client={client} />
           ))}
         </div>
       </Container>
 
-      <div className="my-8 md:my-10" aria-hidden="true" />
+      {/* Generous separation — the marquee gets its own visual paragraph */}
+      <div className="my-16 md:my-24" aria-hidden="true" />
 
-      {/* Clients & Affiliations — edge-to-edge marquee */}
+      {/* Clients & Affiliations — typographic marquee, names only */}
       <Container>
         <MicroLabel>Clients &amp; affiliations</MicroLabel>
       </Container>
-      <ClientsMarquee />
+      <div className="mt-8 md:mt-12">
+        <ClientsMarquee />
+      </div>
     </section>
   );
 }

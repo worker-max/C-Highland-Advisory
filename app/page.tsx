@@ -56,8 +56,10 @@ const STEPS = [
 export default function Home() {
   return (
     <>
-      {/* ═════ HERO — full logo + sentence + attribution + one CTA ═════ */}
-      <section className="pt-[180px] pb-[140px] md:pt-[240px] md:pb-[180px]">
+      {/* ═════ HERO — full logo + sentence + attribution + one CTA ═════
+          pt has to clear the fixed nav (~92px tall) AND give the 300px logo
+          air to breathe — otherwise the chrome reads as pressing on the mark. */}
+      <section className="pt-[220px] pb-[140px] md:pt-[300px] md:pb-[180px]">
         <Container className="flex flex-col items-start gap-12">
           <Reveal>
             <Logo size={300} variant="symbol" title={FIRM.name} />
