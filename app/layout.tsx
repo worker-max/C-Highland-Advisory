@@ -27,9 +27,10 @@ const jetbrainsMono = JetBrains_Mono({
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
+  // axes:['opsz'] requires variable weight — Next.js constraint.
+  // Dropping the weight array pulls the full variable family.
   axes: ["opsz"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
