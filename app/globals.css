@@ -60,11 +60,16 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-html { scroll-behavior: auto; }
-body { isolation: isolate; }
+/* IMPORTANT: do NOT use overflow-x: hidden on html/body — it creates a
+   scroll container that breaks position: sticky for descendants
+   (kills the Divisions horizontal-scroll mechanic). overflow-x: clip
+   prevents horizontal scrollbars without creating a scroll container.
+   Modern browsers support clip; falls back to visible elsewhere
+   (which is harmless because no section here actually overflows X). */
+html { scroll-behavior: auto; overflow-x: clip; }
+body { isolation: isolate; overflow-x: clip; }
 
 /* Hide native cursor when custom cursor is on. Restore on coarse pointers. */
 body { cursor: none; }
@@ -576,6 +581,25 @@ button {
   align-items: flex-start;
   gap: 24px;
 }
+
+/* Prominent hero logo — leads the eye into the headline.
+   Sits above the meta tag, large enough to feel like the brand mark
+   it is, and inherits the intro animation + hover cascade pulse. */
+.hero-1-logo {
+  position: absolute;
+  top: 14vh;
+  left: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  z-index: 3;
+  margin-top: 28px; /* clears the hero-1-toprow above */
+}
+.hero-1-logo .logo-bar { fill: var(--color-bone); }
+.hero-1-logo .logo-mark { transform-origin: left center; }
+
+@media (max-width: 900px) {
+  .hero-1-logo { margin-top: 36px; }
+}
 .hero-1-tag {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -743,6 +767,10 @@ button {
 .divisions {
   position: relative;
   height: 700vh;
+  /* Establish a clean stacking + containing context so the sticky
+     descendant pins reliably regardless of what the previous section
+     left in the layout. */
+  isolation: isolate;
 }
 .divisions-outer {
   position: sticky;
@@ -751,6 +779,9 @@ button {
   width: 100%;
   overflow: hidden;
   background: var(--color-bone);
+  /* contain: layout helps browsers reason about sticky children and
+     reduces paint surface during scroll. */
+  contain: layout paint;
 }
 .divisions-head {
   position: absolute;
@@ -806,7 +837,9 @@ button {
 }
 .divisions-track {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
   display: flex;
   align-items: center;
   padding: 22vh var(--gutter) 12vh calc(var(--gutter) + 8px);

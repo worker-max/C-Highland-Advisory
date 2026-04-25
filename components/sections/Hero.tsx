@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 
 /*
   Hero — two-panel sticky slide-in.
@@ -54,6 +55,11 @@ export function Hero() {
               <span className="line" aria-hidden="true" />
               Scroll
             </span>
+          </div>
+          {/* Prominent animated brand mark — leads the eye into the
+              headline. Bars draw on first session, nodes cascade on hover. */}
+          <div className="hero-1-logo">
+            <Logo size={140} intro="auto" hover={true} />
           </div>
           <div className="hero-1-content">
             <h1 className="hero-1-headline">
