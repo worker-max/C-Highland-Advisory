@@ -11,21 +11,20 @@ import {
 } from "@/content/clients";
 
 /*
-  Two strips, rendered together:
+  Two strips, both compact horizontal-row cells:
 
-   1. Operator experience (Humana + CenterWell Home Health) — wider, fewer
-      cells per row so each logo carries weight. This is where the operator
-      title was held; honest framing as employer history, not advisory work.
+   1. Operator Experience — Humana, CenterWell Home Health
+   2. Clients & Affiliations — 20 brands
 
-   2. Clients & Affiliations (20 brands) — denser 5x4 grid. The cross-
-      industry portfolio of advisory engagements.
+  Each cell: tight h-16 row, small color logo on the left (h-7), brand name
+  in sans-medium beside it. No grayscale — color is the recognition cue
+  for many of these (Servpro orange, CertaPro red, Citibot blue, etc.).
+  Text fallback (mono caps) takes the cell when logo sources fail.
 
-  Each cell tries Uplead -> DuckDuckGo -> mono-text fallback, so no slot
-  ever blanks out. Cells link to the brand's site (target=_blank).
+  Whole cell links to the brand's site.
 */
 
 function LogoCell({ client }: { client: Client }) {
-  // Three-step source chain: primary, then favicon fallback, then text.
   const primary = clientLogoSrc(client);
   const favicon = clientLogoFallback(client);
   const [src, setSrc] = useState<string>(primary);
@@ -47,22 +46,26 @@ function LogoCell({ client }: { client: Client }) {
       rel="noopener noreferrer"
       title={client.name}
       aria-label={`${client.name} — opens in a new tab`}
-      className="group flex aspect-[5/3] items-center justify-center bg-[color:var(--color-bone)] p-6 transition-colors hover:bg-[color:var(--color-paper)]"
+      className="group flex h-16 items-center gap-3 bg-[color:var(--color-bone)] px-4 transition-colors hover:bg-[color:var(--color-paper)]"
     >
       {stage !== "text" ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
-          alt={client.name}
+          alt=""
           loading="lazy"
           onError={handleError}
-          className="max-h-[44px] max-w-[78%] object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+          className="h-7 w-9 shrink-0 object-contain"
         />
       ) : (
-        <span className="text-center font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-silt)] transition-colors group-hover:text-[color:var(--color-ink)]">
-          {client.name}
-        </span>
+        <span
+          aria-hidden="true"
+          className="flex h-7 w-9 shrink-0 items-center justify-center rounded-[3px] bg-[color:var(--color-mist)]/40"
+        />
       )}
+      <span className="truncate text-[13px] font-medium leading-[1.2] tracking-[-0.005em] text-[color:var(--color-ink)] group-hover:text-[color:var(--color-ink)]">
+        {client.name}
+      </span>
     </a>
   );
 }
@@ -71,17 +74,27 @@ type StripProps = {
   label: string;
   meta?: string;
   items: Client[];
-  /** desktop grid cols; mobile + tablet step down responsively */
-  cols?: 2 | 5;
+  /** desktop columns; mobile/tablet auto-step down */
+  cols?: 2 | 3 | 4 | 5;
 };
 
-function LogoStrip({ label, meta, items, cols = 5 }: StripProps) {
-  const desktopCols = cols === 2 ? "lg:grid-cols-2" : "lg:grid-cols-5";
-  const tabletCols = cols === 2 ? "md:grid-cols-2" : "md:grid-cols-4";
+const COL_DESKTOP: Record<NonNullable<StripProps["cols"]>, string> = {
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+  5: "lg:grid-cols-5",
+};
+const COL_TABLET: Record<NonNullable<StripProps["cols"]>, string> = {
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+  4: "md:grid-cols-4",
+  5: "md:grid-cols-4",
+};
 
+function LogoStrip({ label, meta, items, cols = 4 }: StripProps) {
   return (
     <Container>
-      <div className="mb-8 flex flex-col gap-2 md:mb-10 md:flex-row md:items-baseline md:justify-between">
+      <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
         <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
           — {label}
         </div>
@@ -95,7 +108,7 @@ function LogoStrip({ label, meta, items, cols = 5 }: StripProps) {
       <div
         role="list"
         aria-label={label}
-        className={`grid grid-cols-2 gap-px bg-[color:var(--color-mist)] sm:grid-cols-3 ${tabletCols} ${desktopCols}`}
+        className={`grid grid-cols-1 gap-px bg-[color:var(--color-mist)] sm:grid-cols-2 ${COL_TABLET[cols]} ${COL_DESKTOP[cols]}`}
       >
         {items.map((client) => (
           <div role="listitem" key={`${client.name}-${client.domain}`}>
@@ -109,7 +122,7 @@ function LogoStrip({ label, meta, items, cols = 5 }: StripProps) {
 
 export function ClientsStrip() {
   return (
-    <section className="border-y border-[color:var(--color-mist)] py-14 md:py-20">
+    <section className="border-y border-[color:var(--color-mist)] py-12 md:py-14">
       <LogoStrip
         label="Operator Experience"
         meta="Where the title was held"
@@ -117,13 +130,13 @@ export function ClientsStrip() {
         cols={2}
       />
 
-      <div className="my-14 md:my-20" aria-hidden="true" />
+      <div className="my-8" aria-hidden="true" />
 
       <LogoStrip
         label="Clients & Affiliations"
         meta={`${CLIENTS.length} engagements · across healthcare, government, hospitality, sports & AI`}
         items={CLIENTS}
-        cols={5}
+        cols={4}
       />
     </section>
   );
