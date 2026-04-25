@@ -1,4 +1,3 @@
-import { DIVISIONS } from "@/content/divisions";
 import { FIRM, SECTORS } from "@/lib/constants";
 import { Container } from "@/components/Container";
 import { Emblem } from "@/components/Emblem";
@@ -7,7 +6,7 @@ import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
 import { ClientsStrip } from "@/components/ClientsStrip";
-import { DivisionSection } from "@/components/DivisionSection";
+import { PracticeScroller } from "@/components/PracticeScroller";
 
 /*
   Homepage — quieter composition.
@@ -103,34 +102,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ═════ THE PRACTICE — opening + 7 stacked editorial sections ═════ */}
-      <section className="border-t border-[color:var(--color-mist)] pt-24 md:pt-32">
-        <Container>
-          <Reveal>
-            <div className="eyebrow mb-4">The Practice</div>
-            <h2 className="max-w-[24ch] font-sans text-[clamp(36px,4.4vw,64px)] font-medium leading-[1.04] tracking-[-0.025em] text-[color:var(--color-ink)]">
-              Seven divisions. One operating discipline.
-            </h2>
-            <p className="mt-6 max-w-[58ch] text-[clamp(17px,1.4vw,20px)] leading-[1.55] text-[color:var(--color-silt)]">
-              Six division-tracks plus a dedicated practice for designing
-              human-and-AI workforce programs. Each stands alone — but each
-              is informed by the same conviction: that the gap between
-              frontline reality and executive decision-making is where most
-              strategy quietly fails.
-            </p>
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* Each division as its own full-width editorial section. */}
-      {DIVISIONS.map((division, i) => (
-        <DivisionSection
-          key={division.slug}
-          division={division}
-          index={i}
-          total={DIVISIONS.length}
-        />
-      ))}
+      {/* ═════ THE PRACTICE — horizontal scroll with lime dot patterns + black-hole CTA ═════ */}
+      <PracticeScroller />
 
       {/* ═════ THE FOUNDER — pull-quote + three positions ═════ */}
       <section className="border-t border-[color:var(--color-mist)] py-24 md:py-32">

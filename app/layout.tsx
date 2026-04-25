@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono, Newsreader } from "next/font/google";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { GrainOverlay } from "@/components/GrainOverlay";
@@ -18,6 +18,18 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   weight: ["400", "500"],
+  display: "swap",
+});
+
+// Editorial serif — used in the wordmark + select pull-quote moments.
+// Refined optical-size variable family; lands as Tiempos-adjacent without
+// the theatrical italic of Fraunces.
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-newsreader",
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   display: "swap",
 });
 
@@ -46,7 +58,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}>
       <body>
         <GrainOverlay />
         <Nav />

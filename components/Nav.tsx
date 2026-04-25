@@ -20,10 +20,29 @@ export function Nav() {
       <Container className="flex items-center justify-between py-4">
         <Link
           href="/"
+          aria-label={FIRM.name}
           className="group flex items-center gap-3 text-[color:var(--color-ink)]"
         >
           <Emblem size={40} title={FIRM.name} />
-          <span className="text-[17px] font-medium tracking-tight">{FIRM.name}</span>
+          <span className="flex flex-col leading-none">
+            <span
+              className="font-mono text-[9px] uppercase text-[color:var(--color-silt)]"
+              style={{ letterSpacing: "0.26em" }}
+            >
+              Senior Advisory
+            </span>
+            <span
+              className="mt-1 text-[22px] leading-none"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontWeight: 300,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              C{" "}
+              <span style={{ fontStyle: "italic" }}>Highland</span>
+            </span>
+          </span>
         </Link>
 
         <ul className="hidden items-center gap-8 text-[14px] md:flex">

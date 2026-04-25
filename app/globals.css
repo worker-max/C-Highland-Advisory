@@ -22,12 +22,16 @@
   --color-ch-ai:         #1fa79c;
   --color-ch-humanai:    #4a5278; /* Slate-indigo — Human + AI Workforce Programs */
 
+  /* Lime — system "live signal" accent, used for icons + active CTAs */
+  --color-lime:          #c5e84b;
+
   /* Semantic state — separate from chapter identity */
   --color-error: #c5341e;
 
   /* Fonts */
-  --font-sans: var(--font-dm), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-sans:  var(--font-dm), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:  var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
 
   /* Motion */
   --ease-quiet: cubic-bezier(0.16, 1, 0.3, 1);
@@ -356,3 +360,32 @@ a:hover .emblem-pulse {
   .emblem-pulse { animation: none; }
   .emblem-pulse { opacity: 0.8; }
 }
+
+/* ═══════════════════════════════════════════════
+   Marquee — auto-scrolling client ticker
+   Translate -50% loops seamlessly when content is duplicated.
+   Pause on hover so users can dwell on a logo.
+   ═══════════════════════════════════════════════ */
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee-x 70s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover,
+.marquee-pause:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* Hide native scrollbar on the practice scroller; the peek-of-next-card is
+   the affordance, not a scrollbar. */
+.scroll-no-bar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-no-bar::-webkit-scrollbar { display: none; }
