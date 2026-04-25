@@ -1,155 +1,224 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 
 /*
-  Animated brand mark per logo brief (2026-04-25).
+  C Highland Advisory — animated 7-bar Logo
 
-  Composition:
-   * 7 horizontal bars forming a topographic "C" (one per practice division)
-   * 7 neon-green nodes on the open right edge — node #7 is encircled by a
-     thin ring marking the Workforce Integration division as the connective
-     layer across the others
-   * Variants: "symbol" (no wordmark — for nav, favicons) | "full" (includes
-     internal SVG text wordmark — kept off the live nav since we use an
-     external Newsreader-italic wordmark, but exposed for static exports)
+  Geometry per DESIGN_HANDOFF:
+   • viewBox 104 × 78
+   • 7 black bars, all left-aligned at x = 14, height 6, vertical step 10
+     (rows at y: 6, 16, 26, 36, 46, 56, 66)
+   • Bar widths (top→bottom): [54, 64, 44, 70, 44, 64, 54]
+     fans out into a left-aligned "C" silhouette with bar 4 the longest
+   • 7 green nodes at x = 92, vertically centered on each bar (y = bar.y + 3)
+     r = 3.4, fill var(--color-signal)
+   • Integration ring around node #7 only:
+     cx = 92, cy = 69, r = 6.2, stroke var(--color-signal), 1.5
 
-  Intro animation plays ONCE per browser session via sessionStorage. The
-  ch-logo-skip-intro class is applied after the first play so subsequent
-  navigations / mounts show the final state instantly. CSS in globals.css.
+  Intro animation (plays once per session, sessionStorage gate):
+   1. Bars draw L→R cascading top to bottom (380ms, 90ms stagger)
+   2. Nodes pop in 380ms after intro start, 90ms apart
+   3. Integration ring scales in 100ms after node #7
 
-  prefers-reduced-motion is respected at the CSS layer.
+  Hover cascade: 7 nodes pulse sequentially with 60ms stagger.
+
+  prefers-reduced-motion: disable both intro and pulse.
 */
 
-type Variant = "symbol" | "full";
+const BAR_LEFT = 14;
+const BAR_H = 6;
+const ROW_STEP = 10;
+const ROW_Y0 = 6;
+const BAR_WIDTHS = [54, 64, 44, 70, 44, 64, 54] as const;
+
+const BARS = BAR_WIDTHS.map((w, i) => ({
+  x: BAR_LEFT,
+  y: ROW_Y0 + i * ROW_STEP,
+  w,
+  h: BAR_H,
+}));
+
+const NODE_X = 92;
+const NODES = BARS.map((b) => ({
+  x: NODE_X,
+  y: b.y + b.h / 2,
+}));
+
+const VB_W = 104;
+const VB_H = 78;
+
+type IntroMode = "auto" | "always" | "never";
 
 type Props = {
-  /** Rendered width in px. Height matches the variant aspect ratio. */
   size?: number;
-  /** "symbol" omits the internal SVG wordmark — recommended for header. */
-  variant?: Variant;
+  showWordmark?: boolean;
+  wordmarkSize?: number;
+  intro?: IntroMode;
+  hover?: boolean;
   className?: string;
-  /** Override the accessible label. */
   title?: string;
+  /** "symbol" maintained for backward compat — ignored, behaves as showWordmark=false */
+  variant?: "symbol" | "full";
 };
 
-const SESSION_KEY = "ch-logo-intro-v1";
-
 export function Logo({
-  size = 60,
-  variant = "symbol",
-  className,
+  size = 64,
+  showWordmark = false,
+  wordmarkSize = 22,
+  intro = "auto",
+  hover = true,
+  className = "",
   title = "C Highland Advisory",
+  variant,
 }: Props) {
-  // Default to "skipped" for SSR + first paint to avoid hydration mismatch
-  // and animation flicker. After mount, decide whether to actually skip.
-  const [skipIntro, setSkipIntro] = useState(true);
+  const [phase, setPhase] = useState<"pre" | "drawing" | "done">("pre");
+  const ref = useRef<HTMLSpanElement>(null);
+  const wordmark = variant === "full" || showWordmark;
 
   useEffect(() => {
-    try {
-      const played = sessionStorage.getItem(SESSION_KEY) === "1";
-      if (played) {
-        setSkipIntro(true);
-      } else {
-        setSkipIntro(false);
-        sessionStorage.setItem(SESSION_KEY, "1");
+    let shouldPlay = true;
+    if (intro === "never") shouldPlay = false;
+    if (intro === "auto") {
+      try {
+        if (sessionStorage.getItem("ch-logo-intro-v1") === "played") {
+          shouldPlay = false;
+        }
+      } catch {
+        /* sessionStorage unavailable; play once */
       }
-    } catch {
-      // sessionStorage may be unavailable (private mode, sandbox) — just play
-      setSkipIntro(false);
     }
-  }, []);
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      shouldPlay = false;
+    }
+    if (!shouldPlay) {
+      setPhase("done");
+      return;
+    }
+    setPhase("drawing");
+    const total = 1400;
+    const t = setTimeout(() => {
+      setPhase("done");
+      try {
+        sessionStorage.setItem("ch-logo-intro-v1", "played");
+      } catch {
+        /* sessionStorage unavailable */
+      }
+    }, total);
+    return () => clearTimeout(t);
+  }, [intro]);
 
-  const isFull = variant === "full";
-  const viewBox = isFull ? "0 0 400 280" : "0 0 240 200";
-  const aspect = isFull ? 280 / 400 : 200 / 240;
+  const playing = phase === "drawing";
 
-  // Bar / node positions per the brief's geometry — translated to fit the
-  // 240×200 symbol-only viewBox by shifting bars up by 16px so the symbol
-  // is vertically centered within the smaller canvas.
-  const yOffset = isFull ? 0 : -16;
-  const bars: { x: number; y: number; w: number }[] = [
-    { x: 60, y: 36 + yOffset, w: 120 },
-    { x: 42, y: 56 + yOffset, w: 102 },
-    { x: 30, y: 76 + yOffset, w: 82 },
-    { x: 26, y: 96 + yOffset, w: 74 },
-    { x: 30, y: 116 + yOffset, w: 82 },
-    { x: 42, y: 136 + yOffset, w: 102 },
-    { x: 60, y: 156 + yOffset, w: 120 },
-  ];
-  const nodes = bars.map((b) => ({ cx: 210, cy: b.y + 6 }));
+  const barStep = 90;
+  const nodeBase = 380;
+  const nodeStep = 90;
+
+  const handleHover = () => {
+    if (!hover) return;
+    if (!ref.current) return;
+    ref.current.classList.remove("logo-pulsing");
+    void ref.current.offsetWidth; // force reflow to restart animation
+    ref.current.classList.add("logo-pulsing");
+  };
+
+  const aspect = VB_W / VB_H;
+  const w = size * aspect;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBox}
-      width={size}
-      height={Math.round(size * aspect)}
-      role="img"
-      aria-label={title}
-      className={clsx("ch-logo-svg", skipIntro && "ch-logo-skip-intro", className)}
+    <span
+      className={`logo ${className}`}
+      ref={ref}
+      onMouseEnter={handleHover}
+      data-cursor="hover"
     >
-      <title>{title}</title>
-
-      {bars.map((bar, i) => (
-        <rect
-          key={`bar-${i}`}
-          className="ch-bar"
-          x={bar.x}
-          y={bar.y}
-          width={bar.w}
-          height={12}
-          rx={1}
-        />
-      ))}
-
-      {nodes.map((node, i) => (
-        <circle
-          key={`node-${i}`}
-          className="ch-node"
-          cx={node.cx}
-          cy={node.cy}
-          r={4.5}
-        />
-      ))}
-
-      {/* Integration ring around node #7 */}
-      <circle
-        className="ch-integration-ring"
-        cx={nodes[6].cx}
-        cy={nodes[6].cy}
-        r={9}
-      />
-
-      {isFull && (
-        <>
-          <text
-            x="200"
-            y="218"
-            textAnchor="middle"
-            fontFamily="var(--font-serif), Georgia, serif"
-            fontSize="28"
-            fontWeight="400"
-            fill="var(--color-brand-bar)"
-            letterSpacing="1"
-          >
+      <svg
+        className="logo-mark"
+        width={w}
+        height={size}
+        viewBox={`0 0 ${VB_W} ${VB_H}`}
+        aria-label={title}
+        role="img"
+      >
+        <title>{title}</title>
+        <g>
+          {BARS.map((b, i) => {
+            const delay = i * barStep;
+            const style: React.CSSProperties = playing
+              ? {
+                  transformOrigin: `${b.x}px ${b.y}px`,
+                  animation: `logo-bar-drop 380ms cubic-bezier(0.2,0.7,0.2,1) ${delay}ms both`,
+                }
+              : {};
+            return (
+              <rect
+                key={`bar-${i}`}
+                className="logo-bar"
+                x={b.x}
+                y={b.y}
+                width={b.w}
+                height={b.h}
+                rx={1}
+                style={style}
+              />
+            );
+          })}
+          {NODES.map((n, i) => {
+            const delay = nodeBase + i * nodeStep;
+            const style: React.CSSProperties = playing
+              ? {
+                  transformOrigin: `${n.x}px ${n.y}px`,
+                  animation: `logo-node-pop 320ms cubic-bezier(0.2,0.8,0.2,1.2) ${delay}ms both`,
+                }
+              : {};
+            const pulseDelay = i * 60;
+            return (
+              <g
+                key={`node-${i}`}
+                style={{ ["--pulse-delay" as string]: `${pulseDelay}ms` }}
+                className="logo-node-group"
+              >
+                <circle
+                  className="logo-node"
+                  cx={n.x}
+                  cy={n.y}
+                  r={3.4}
+                  style={style}
+                />
+              </g>
+            );
+          })}
+          {/* Integration ring on node #7 only */}
+          <circle
+            className="logo-ring"
+            cx={NODES[6].x}
+            cy={NODES[6].y}
+            r={6.2}
+            style={
+              playing
+                ? {
+                    transformOrigin: `${NODES[6].x}px ${NODES[6].y}px`,
+                    animation: `logo-ring-in 380ms cubic-bezier(0.2,0.8,0.2,1) ${
+                      nodeBase + 6 * nodeStep + 100
+                    }ms both`,
+                  }
+                : {}
+            }
+          />
+        </g>
+      </svg>
+      {wordmark && (
+        <span className="logo-wordmark" style={{ marginLeft: 10 }}>
+          <span className="name" style={{ fontSize: wordmarkSize }}>
             C Highland
-          </text>
-          <text
-            x="200"
-            y="246"
-            textAnchor="middle"
-            fontFamily="var(--font-sans), system-ui, sans-serif"
-            fontSize="10"
-            fill="var(--color-brand-bar)"
-            letterSpacing="3"
-            opacity="0.7"
-          >
-            A D V I S O R Y
-          </text>
-        </>
+          </span>
+          <span className="sub">Advisory</span>
+        </span>
       )}
-    </svg>
+    </span>
   );
 }

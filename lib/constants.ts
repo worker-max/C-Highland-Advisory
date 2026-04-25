@@ -1,7 +1,7 @@
 export const FIRM = {
   name: "C Highland Advisory",
   legalName: "C Highland Advisory LLC",
-  founded: "2025",
+  founded: "2026",
   location: "Charleston, SC",
   founderFull: "Colin Highland, PT, DPT, CBA",
   founderName: "Colin Highland",
