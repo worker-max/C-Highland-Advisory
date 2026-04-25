@@ -3,6 +3,7 @@ import { DM_Sans, JetBrains_Mono, Newsreader } from "next/font/google";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { GrainOverlay } from "@/components/GrainOverlay";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { FIRM } from "@/lib/constants";
 import "./globals.css";
 
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${dmSans.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}>
       <body>
         <GrainOverlay />
+        <ScrollProgress />
         <Nav />
         <main>{children}</main>
         <Footer />

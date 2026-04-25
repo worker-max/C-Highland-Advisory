@@ -57,9 +57,10 @@ export default function Home() {
   return (
     <>
       {/* ═════ HERO — full logo + sentence + attribution + one CTA ═════
-          pt has to clear the fixed nav (~92px tall) AND give the 300px logo
-          air to breathe — otherwise the chrome reads as pressing on the mark. */}
-      <section className="pt-[220px] pb-[140px] md:pt-[300px] md:pb-[180px]">
+          Pill nav is ~24+64=88px tall on md, ~16+56=72px on mobile.
+          Hero pt = chrome + 140px breathing space so the 300px logo
+          floats well below the pill rather than jamming up against it. */}
+      <section className="pt-[200px] pb-[140px] md:pt-[240px] md:pb-[180px]">
         <Container className="flex flex-col items-start gap-12">
           <Reveal>
             <Logo size={300} variant="symbol" title={FIRM.name} />

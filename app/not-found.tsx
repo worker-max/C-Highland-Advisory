@@ -3,7 +3,7 @@ import { CTAButton } from "@/components/CTAButton";
 
 export default function NotFound() {
   return (
-    <section className="pt-[160px] pb-[100px] md:pt-[200px] md:pb-[140px]">
+    <section className="pt-[180px] pb-[100px] md:pt-[220px] md:pb-[140px]">
       <Container>
         <div className="eyebrow mb-6">Not found</div>
         <h1 className="display-lg max-w-[18ch]">

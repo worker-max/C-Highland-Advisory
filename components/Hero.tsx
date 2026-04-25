@@ -38,7 +38,10 @@ export function Hero({
   return (
     <section
       className={clsx(
-        "relative overflow-hidden pt-[140px] pb-[96px] md:pt-[180px] md:pb-[120px]",
+        // Chrome (pill nav inset + pill height) is ~72-88px. Hero pt gives
+        // ~80-100px breathing space below the pill so headlines never feel
+        // pinched by the floating chrome on internal pages.
+        "relative overflow-hidden pt-[160px] pb-[96px] md:pt-[200px] md:pb-[120px]",
         className,
       )}
     >
