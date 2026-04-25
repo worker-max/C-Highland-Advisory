@@ -1,7 +1,6 @@
-import { FIRM, SECTORS } from "@/lib/constants";
+import { FIRM } from "@/lib/constants";
 import { Container } from "@/components/Container";
-import { Emblem } from "@/components/Emblem";
-import { PillRow } from "@/components/PillRow";
+import { Logo } from "@/components/Logo";
 import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
@@ -57,11 +56,11 @@ const STEPS = [
 export default function Home() {
   return (
     <>
-      {/* ═════ HERO — emblem, sentence, attribution, one CTA. Nothing else. ═════ */}
+      {/* ═════ HERO — full logo + sentence + attribution + one CTA ═════ */}
       <section className="pt-[180px] pb-[140px] md:pt-[240px] md:pb-[180px]">
-        <Container className="flex flex-col items-start gap-14">
+        <Container className="flex flex-col items-start gap-12">
           <Reveal>
-            <Emblem size={200} title={FIRM.name} />
+            <Logo size={300} variant="symbol" title={FIRM.name} />
           </Reveal>
 
           <Reveal delay={0.1}>
@@ -93,14 +92,8 @@ export default function Home() {
       {/* ═════ CLIENTS & AFFILIATIONS — placeholder strip until logo list lands ═════ */}
       <ClientsStrip />
 
-      {/* ═════ SECTORS SERVED ═════ */}
-      <section className="py-14 md:py-20">
-        <Container>
-          <Reveal>
-            <PillRow items={SECTORS} label="Working across" />
-          </Reveal>
-        </Container>
-      </section>
+      {/* Sectors-served pill row removed in minimalist pass — the marquee + the
+          division card list already convey breadth. */}
 
       {/* ═════ THE PRACTICE — horizontal scroll with lime dot patterns + black-hole CTA ═════ */}
       <PracticeScroller />

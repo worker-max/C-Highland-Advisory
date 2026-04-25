@@ -55,6 +55,11 @@ export const metadata: Metadata = {
     title: FIRM.name,
     description: FIRM.discipline,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

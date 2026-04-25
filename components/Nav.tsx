@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FIRM } from "@/lib/constants";
 import { Container } from "./Container";
 import { CTAButton } from "./CTAButton";
-import { Emblem } from "./Emblem";
+import { Logo } from "./Logo";
 
 const LINKS = [
   { href: "/practice", label: "Practice" },
@@ -23,7 +23,7 @@ export function Nav() {
           aria-label={FIRM.name}
           className="group flex items-center gap-3 text-[color:var(--color-ink)]"
         >
-          <Emblem size={40} title={FIRM.name} />
+          <Logo size={56} variant="symbol" title={FIRM.name} />
           <span className="flex flex-col leading-none">
             <span
               className="font-mono text-[9px] uppercase text-[color:var(--color-silt)]"

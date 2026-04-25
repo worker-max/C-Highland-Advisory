@@ -7,19 +7,17 @@ import {
   OPERATOR_ROLES,
   clientLogoSrc,
   clientLogoFallback,
-  CLIENTS,
   type Client,
 } from "@/content/clients";
 
 /*
-  Two strips, deliberately different rhythms:
+  Two strips, deliberately different rhythms — minimalist build per user
+  review (drop the verbose sub-labels, let the visuals speak):
 
    1. Operator Experience — STATIC. Two cells (Humana + CenterWell Home
-      Health) sized to give each weight. Where the title was held.
+      Health). No sub-tag, no marketing meta line.
 
-   2. Clients & Affiliations — MARQUEE. Auto-scrolling ticker of all 20
-      brands. Pauses on hover. Edge-fade mask. Cross-industry breadth
-      shown as continuous motion.
+   2. Clients & Affiliations — MARQUEE. Auto-scrolling ticker. No meta line.
 */
 
 function OperatorCell({ client }: { client: Client }) {
@@ -68,20 +66,20 @@ function OperatorCell({ client }: { client: Client }) {
   );
 }
 
+function MicroLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
+      {children}
+    </div>
+  );
+}
+
 export function ClientsStrip() {
   return (
-    <section className="border-y border-[color:var(--color-mist)] py-12 md:py-14">
-      {/* Operator Experience — static, wider cells */}
+    <section className="border-y border-[color:var(--color-mist)] py-10 md:py-14">
+      {/* Operator Experience — static, wider cells, no meta */}
       <Container>
-        <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
-          <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
-            — Operator Experience
-          </div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-silt)] opacity-70">
-            Where the title was held
-          </div>
-        </div>
-
+        <MicroLabel>Operator experience</MicroLabel>
         <div className="grid grid-cols-1 gap-px bg-[color:var(--color-mist)] sm:grid-cols-2">
           {OPERATOR_ROLES.map((client) => (
             <OperatorCell key={client.domain} client={client} />
@@ -89,21 +87,12 @@ export function ClientsStrip() {
         </div>
       </Container>
 
-      <div className="my-10" aria-hidden="true" />
+      <div className="my-8 md:my-10" aria-hidden="true" />
 
-      {/* Clients & Affiliations — marquee ticker */}
+      {/* Clients & Affiliations — edge-to-edge marquee */}
       <Container>
-        <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
-          <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
-            — Clients &amp; Affiliations
-          </div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-silt)] opacity-70">
-            {CLIENTS.length} engagements · across healthcare, government, hospitality, sports &amp; AI
-          </div>
-        </div>
+        <MicroLabel>Clients &amp; affiliations</MicroLabel>
       </Container>
-
-      {/* Marquee renders edge-to-edge — outside Container so the fade mask aligns with viewport */}
       <ClientsMarquee />
     </section>
   );

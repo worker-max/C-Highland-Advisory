@@ -1,0 +1,18 @@
+<svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="C Highland Advisory">
+  <title>C Highland Advisory</title>
+  <rect fill="#000" x="60" y="20" width="120" height="12" rx="1"/>
+  <rect fill="#000" x="42" y="40" width="102" height="12" rx="1"/>
+  <rect fill="#000" x="30" y="60" width="82"  height="12" rx="1"/>
+  <rect fill="#000" x="26" y="80" width="74"  height="12" rx="1"/>
+  <rect fill="#000" x="30" y="100" width="82"  height="12" rx="1"/>
+  <rect fill="#000" x="42" y="120" width="102" height="12" rx="1"/>
+  <rect fill="#000" x="60" y="140" width="120" height="12" rx="1"/>
+  <circle fill="#000" cx="210" cy="26"  r="4.5"/>
+  <circle fill="#000" cx="210" cy="46"  r="4.5"/>
+  <circle fill="#000" cx="210" cy="66"  r="4.5"/>
+  <circle fill="#000" cx="210" cy="86"  r="4.5"/>
+  <circle fill="#000" cx="210" cy="106" r="4.5"/>
+  <circle fill="#000" cx="210" cy="126" r="4.5"/>
+  <circle fill="#000" cx="210" cy="146" r="4.5"/>
+  <circle fill="none" stroke="#000" stroke-width="1" cx="210" cy="146" r="9"/>
+</svg>

@@ -25,6 +25,13 @@
   /* Lime — system "live signal" accent, used for icons + active CTAs */
   --color-lime:          #c5e84b;
 
+  /* Brand identity — reserved for the Logo only, per logo brief 2026-04-25 */
+  --color-brand-bar:        #1b1b1b;
+  --color-brand-bar-dark:   #edeae0;
+  --color-brand-signal:     #00e676;
+  --color-brand-cream:      #edeae0;
+  --color-brand-forest:     #0f1a14;
+
   /* Semantic state — separate from chapter identity */
   --color-error: #c5341e;
 
@@ -359,6 +366,111 @@ a:hover .emblem-pulse {
   .emblem-ring,
   .emblem-pulse { animation: none; }
   .emblem-pulse { opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════
+   Logo — animated brand mark per brief 2026-04-25
+   7 bars (one per division) + 7 nodes + integration ring on #7
+   Intro: bars draw scaleX, nodes scale-in, ring scales-in last.
+   Hover: left-to-right cascade pulse on nodes + ring.
+   prefers-reduced-motion: disable both animations, show final state.
+   .ch-logo-skip-intro: applied after first session play to skip intro.
+   ═══════════════════════════════════════════════ */
+.ch-logo-svg .ch-bar {
+  fill: var(--color-brand-bar);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: ch-draw-bar 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.ch-logo-svg .ch-bar:nth-of-type(1) { animation-delay: 0.10s; }
+.ch-logo-svg .ch-bar:nth-of-type(2) { animation-delay: 0.20s; }
+.ch-logo-svg .ch-bar:nth-of-type(3) { animation-delay: 0.30s; }
+.ch-logo-svg .ch-bar:nth-of-type(4) { animation-delay: 0.40s; }
+.ch-logo-svg .ch-bar:nth-of-type(5) { animation-delay: 0.50s; }
+.ch-logo-svg .ch-bar:nth-of-type(6) { animation-delay: 0.60s; }
+.ch-logo-svg .ch-bar:nth-of-type(7) { animation-delay: 0.70s; }
+@keyframes ch-draw-bar { to { transform: scaleX(1); } }
+
+.ch-logo-svg .ch-node {
+  fill: var(--color-brand-signal);
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+  transform: scale(0);
+  animation: ch-node-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.ch-logo-svg .ch-node:nth-of-type(1) { animation-delay: 1.00s; }
+.ch-logo-svg .ch-node:nth-of-type(2) { animation-delay: 1.10s; }
+.ch-logo-svg .ch-node:nth-of-type(3) { animation-delay: 1.20s; }
+.ch-logo-svg .ch-node:nth-of-type(4) { animation-delay: 1.30s; }
+.ch-logo-svg .ch-node:nth-of-type(5) { animation-delay: 1.40s; }
+.ch-logo-svg .ch-node:nth-of-type(6) { animation-delay: 1.50s; }
+.ch-logo-svg .ch-node:nth-of-type(7) { animation-delay: 1.65s; }
+@keyframes ch-node-in { to { opacity: 1; transform: scale(1); } }
+
+.ch-logo-svg .ch-integration-ring {
+  fill: none;
+  stroke: var(--color-brand-signal);
+  stroke-width: 1;
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+  transform: scale(0);
+  animation: ch-ring-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.8s forwards;
+}
+@keyframes ch-ring-in { to { opacity: 0.5; transform: scale(1); } }
+
+/* Hover cascade — applies whether intro played or not. */
+.ch-logo-svg:hover .ch-node {
+  animation: ch-node-pulse 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ch-logo-svg:hover .ch-node:nth-of-type(1) { animation-delay: 0s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(2) { animation-delay: 0.07s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(3) { animation-delay: 0.14s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(4) { animation-delay: 0.21s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(5) { animation-delay: 0.28s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(6) { animation-delay: 0.35s; }
+.ch-logo-svg:hover .ch-node:nth-of-type(7) { animation-delay: 0.45s; }
+@keyframes ch-node-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  40%      { opacity: 1; transform: scale(1.8); }
+  60%      { opacity: 0.7; transform: scale(1.4); }
+}
+.ch-logo-svg:hover .ch-integration-ring {
+  animation: ch-ring-pulse 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.45s;
+}
+@keyframes ch-ring-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(1.6); }
+}
+
+/* Already-played intro within this browser session — skip straight to final. */
+.ch-logo-skip-intro .ch-bar {
+  transform: scaleX(1);
+  animation: none;
+}
+.ch-logo-skip-intro .ch-node {
+  opacity: 1;
+  transform: scale(1);
+  animation: none;
+}
+.ch-logo-skip-intro .ch-integration-ring {
+  opacity: 0.5;
+  transform: scale(1);
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-logo-svg .ch-bar,
+  .ch-logo-svg .ch-node,
+  .ch-logo-svg .ch-integration-ring {
+    animation: none !important;
+  }
+  .ch-logo-svg .ch-bar { transform: scaleX(1) !important; }
+  .ch-logo-svg .ch-node { opacity: 1 !important; transform: scale(1) !important; }
+  .ch-logo-svg .ch-integration-ring { opacity: 0.5 !important; transform: scale(1) !important; }
+  .ch-logo-svg:hover .ch-node,
+  .ch-logo-svg:hover .ch-integration-ring { animation: none !important; }
 }
 
 /* ═══════════════════════════════════════════════

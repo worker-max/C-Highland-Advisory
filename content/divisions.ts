@@ -63,7 +63,7 @@ export const DIVISIONS: Division[] = [
     name: "Healthcare Strategy",
     chapter: "healthcare",
     positioning:
-      "Strategy built by someone who has actually been on the floor.",
+      "Operations and workforce strategy translated to healthcare priorities.",
     shortDescription:
       "Market positioning, service line evaluation, and growth strategy for provider organizations navigating reimbursement pressure, regulatory shift, and competitive consolidation.",
     services: [
