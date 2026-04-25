@@ -23,14 +23,44 @@ import { DivisionIcon } from "@/components/DivisionIcon";
 
 export function Divisions() {
   const wrapRef = useRef<HTMLElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
+  const prevScrollYRef = useRef(0);
+  const velocityRef = useRef(0);
   const [progress, setProgress] = useState(0);
   const [activeIdx, setActiveIdx] = useState(0);
+
+  // Scroll-velocity decay loop — writes --scroll-vel as a CSS variable
+  // on the divisions outer so descendants (the division icons) can
+  // transform in response. Decays toward 0 when the user stops scrolling
+  // so the icons "settle" rather than freeze mid-shift.
+  useEffect(() => {
+    let raf: number;
+    const tick = () => {
+      velocityRef.current *= 0.86; // exponential decay
+      if (Math.abs(velocityRef.current) < 0.05) velocityRef.current = 0;
+      if (outerRef.current) {
+        // Clamp so a fast flick doesn't throw the icons offscreen
+        const v = Math.max(-40, Math.min(40, velocityRef.current));
+        outerRef.current.style.setProperty("--scroll-vel", String(v));
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
       if (!wrapRef.current || !trackRef.current) return;
+
+      const scrollY = window.scrollY;
+      // Capture instantaneous velocity (delta from last scroll event)
+      // The decay loop above eases this toward 0 between events.
+      velocityRef.current = scrollY - prevScrollYRef.current;
+      prevScrollYRef.current = scrollY;
+
       const rect = wrapRef.current.getBoundingClientRect();
       const total = wrapRef.current.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
@@ -62,7 +92,7 @@ export function Divisions() {
 
   return (
     <section className="divisions" id="divisions" ref={wrapRef}>
-      <div className="divisions-outer">
+      <div className="divisions-outer" ref={outerRef}>
         <div className="divisions-head">
           <div className="left">
             <span className="eyebrow">
@@ -105,10 +135,14 @@ export function Divisions() {
                   ))}
                 </div>
               </div>
+              {/* Icon as its own large row — scroll velocity translates
+                  it horizontally via the --scroll-vel CSS variable on the
+                  divisions outer. The icon container reads that variable
+                  and shifts/leans in response. */}
+              <div className="icon-slot">
+                <DivisionIcon kind={d.icon} scrollProgress={progress} />
+              </div>
               <div className="bottom">
-                <div className="icon-slot">
-                  <DivisionIcon kind={d.icon} scrollProgress={progress} />
-                </div>
                 <span className="open">
                   Open division <span className="arrow">→</span>
                 </span>
@@ -116,8 +150,10 @@ export function Divisions() {
             </Link>
           ))}
 
-          {/* Black-hole CTA card */}
-          <Link href="#contact" className="div-card cta">
+          {/* Black-hole CTA card. NOT a Link wrapper — the prominent
+              signal-green button inside the body is the only click target.
+              Nesting <a> inside <a> would be illegal HTML anyway. */}
+          <div className="div-card cta">
             <div className="hole" aria-hidden="true" />
             <div className="signal-ring" aria-hidden="true" />
             <div className="top">
@@ -139,14 +175,19 @@ export function Divisions() {
                 Forty-five minutes. No deck. We map the operating problem and
                 decide together if there&apos;s a program worth designing.
               </p>
+              {/* Prominent lime-green CTA pill — sits right under the body
+                  copy per Colin's review. The previous "Begin engagement"
+                  link in the bottom corner was buried. */}
+              <Link
+                href="#contact"
+                className="btn btn-signal cta-pill"
+              >
+                <span>Begin engagement</span>
+                <span className="arrow">→</span>
+              </Link>
             </div>
-            <div className="bottom">
-              <div className="icon-slot" />
-              <span className="open">
-                Begin engagement <span className="arrow">→</span>
-              </span>
-            </div>
-          </Link>
+            <div className="bottom" />
+          </div>
         </div>
       </div>
     </section>
