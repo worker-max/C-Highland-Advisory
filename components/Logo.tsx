@@ -50,6 +50,9 @@ const VB_H = 78;
 
 type IntroMode = "auto" | "always" | "never";
 
+type Tone = "light" | "dark";
+type LogoLayout = "inline" | "stacked";
+
 type Props = {
   size?: number;
   showWordmark?: boolean;
@@ -60,6 +63,12 @@ type Props = {
   title?: string;
   /** "symbol" maintained for backward compat — ignored, behaves as showWordmark=false */
   variant?: "symbol" | "full";
+  /** "light" — black bars + ink wordmark on a light surface (default).
+   *  "dark"  — bone bars + bone wordmark on a dark surface. */
+  tone?: Tone;
+  /** "inline" — wordmark beside the symbol (footer use).
+   *  "stacked" — wordmark below the symbol (standalone, hero, business-card). */
+  layout?: LogoLayout;
 };
 
 export function Logo({
@@ -71,6 +80,8 @@ export function Logo({
   className = "",
   title = "C Highland Advisory",
   variant,
+  tone = "light",
+  layout = "inline",
 }: Props) {
   const [phase, setPhase] = useState<"pre" | "drawing" | "done">("pre");
   const ref = useRef<HTMLSpanElement>(null);
@@ -131,7 +142,7 @@ export function Logo({
 
   return (
     <span
-      className={`logo ${className}`}
+      className={`logo logo-${tone} logo-${layout} ${className}`}
       ref={ref}
       onMouseEnter={handleHover}
       data-cursor="hover"
@@ -212,7 +223,7 @@ export function Logo({
         </g>
       </svg>
       {wordmark && (
-        <span className="logo-wordmark" style={{ marginLeft: 10 }}>
+        <span className="logo-wordmark">
           <span className="name" style={{ fontSize: wordmarkSize }}>
             C Highland
           </span>

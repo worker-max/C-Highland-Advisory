@@ -409,11 +409,30 @@ button {
 
 /* ───────────────────────────── Logo ───────────────────────────── */
 
+/*
+  Logo — supports two tones (light/dark) and two layouts (inline/stacked).
+
+  Tone is a fill swap only — animations are geometry-driven so they're
+  unaffected. The C-silhouette is encoded in the bar widths
+  [54, 64, 44, 70, 44, 64, 54] and must not be modified — those numbers
+  are intentionally asymmetric to draw a left-aligned "C" with the
+  longest bar centered.
+*/
 .logo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
+
+/* Layouts */
+.logo-inline { flex-direction: row; align-items: center; gap: 10px; }
+.logo-stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+/* SVG primitives */
 .logo-mark { display: block; }
 .logo-bar {
   fill: var(--color-ink);
@@ -425,6 +444,14 @@ button {
   stroke: var(--color-signal);
   stroke-width: 1.5;
 }
+
+/* Tone variants — bars + wordmark ink-color swap.
+   Nodes + ring stay signal-green in both tones. */
+.logo-dark .logo-bar { fill: var(--color-bone); }
+.logo-dark .logo-wordmark .name { color: var(--color-bone); }
+.logo-dark .logo-wordmark .sub { color: var(--color-mist); }
+
+/* Wordmark */
 .logo-wordmark {
   display: flex;
   flex-direction: column;
@@ -582,23 +609,18 @@ button {
   gap: 24px;
 }
 
-/* Prominent hero logo — leads the eye into the headline.
-   Sits above the meta tag, large enough to feel like the brand mark
-   it is, and inherits the intro animation + hover cascade pulse. */
+/* Prominent hero logo — full lockup leading the eye into the headline.
+   Stacked layout (mark above wordmark) per Colin's reference image.
+   Tone="dark" comes from the Logo component itself, not a CSS override. */
 .hero-1-logo {
   position: absolute;
   top: 14vh;
   left: var(--gutter);
-  display: inline-flex;
-  align-items: center;
   z-index: 3;
-  margin-top: 28px; /* clears the hero-1-toprow above */
+  margin-top: 36px;
 }
-.hero-1-logo .logo-bar { fill: var(--color-bone); }
-.hero-1-logo .logo-mark { transform-origin: left center; }
-
 @media (max-width: 900px) {
-  .hero-1-logo { margin-top: 36px; }
+  .hero-1-logo { margin-top: 44px; }
 }
 .hero-1-tag {
   font-family: var(--font-mono);

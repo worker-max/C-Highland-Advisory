@@ -50,7 +50,15 @@ export function Preloader() {
       <div className="preloader-deck top" />
       <div className="preloader-deck bottom" />
       <div className="preloader-content">
-        <Logo size={88} intro="always" hover={false} />
+        <Logo
+          size={88}
+          tone="dark"
+          layout="stacked"
+          showWordmark
+          wordmarkSize={26}
+          intro="always"
+          hover={false}
+        />
         <div className="preloader-tag">Senior Advisory · Charleston, SC</div>
       </div>
     </div>

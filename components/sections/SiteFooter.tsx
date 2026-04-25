@@ -27,7 +27,14 @@ export function SiteFooter() {
       </a>
       <div className="footer-grid">
         <div>
-          <Logo size={42} showWordmark wordmarkSize={24} intro="never" />
+          <Logo
+            size={42}
+            tone="dark"
+            layout="inline"
+            showWordmark
+            wordmarkSize={24}
+            intro="never"
+          />
           <p
             className="body-sm"
             style={{

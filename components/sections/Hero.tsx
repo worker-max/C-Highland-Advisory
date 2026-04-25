@@ -56,10 +56,21 @@ export function Hero() {
               Scroll
             </span>
           </div>
-          {/* Prominent animated brand mark — leads the eye into the
-              headline. Bars draw on first session, nodes cascade on hover. */}
+          {/* Prominent animated brand mark — full lockup matching Colin's
+              reference: cream bars + cream "C Highland" + tracked "ADVISORY"
+              on the dark atmosphere. Bars draw on first session, nodes
+              cascade on hover. C-silhouette is encoded in the bar widths
+              [54, 64, 44, 70, 44, 64, 54] in Logo.tsx — must not change. */}
           <div className="hero-1-logo">
-            <Logo size={140} intro="auto" hover={true} />
+            <Logo
+              size={140}
+              tone="dark"
+              layout="stacked"
+              showWordmark
+              wordmarkSize={32}
+              intro="auto"
+              hover={true}
+            />
           </div>
           <div className="hero-1-content">
             <h1 className="hero-1-headline">
