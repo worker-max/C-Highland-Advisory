@@ -493,4 +493,5 @@ export const CHAPTER_ICONS: Record<ChapterKey, (p: IconProps) => React.JSX.Eleme
   talent: TalentMark,
   hr: OpHRMark,
   ai: AIPracticeMark,
+  humanai: HumanAITeammateIcon,
 };

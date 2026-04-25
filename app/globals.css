@@ -20,6 +20,7 @@
   --color-ch-talent:     #b8862e;
   --color-ch-hr:         #6d2e4e;
   --color-ch-ai:         #1fa79c;
+  --color-ch-humanai:    #4a5278; /* Slate-indigo — Human + AI Workforce Programs */
 
   /* Semantic state — separate from chapter identity */
   --color-error: #c5341e;
@@ -268,6 +269,7 @@ button {
 [data-chapter="talent"]     { --ico-accent: var(--color-ch-talent); }
 [data-chapter="hr"]         { --ico-accent: var(--color-ch-hr); }
 [data-chapter="ai"]         { --ico-accent: var(--color-ch-ai); }
+[data-chapter="humanai"]    { --ico-accent: var(--color-ch-humanai); }
 
 /* Pulsing signal node — soft opacity cycle */
 @keyframes ico-pulse {

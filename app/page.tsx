@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { DIVISIONS } from "@/content/divisions";
 import { FIRM, SECTORS } from "@/lib/constants";
 import { Container } from "@/components/Container";
@@ -8,6 +7,13 @@ import { PullQuote } from "@/components/PullQuote";
 import { CTAButton } from "@/components/CTAButton";
 import { Reveal } from "@/components/Reveal";
 import { DivisionCard } from "@/components/DivisionCard";
+import { ClientsStrip } from "@/components/ClientsStrip";
+import { ChapterEdge } from "@/components/ChapterEdge";
+import { CHAPTER_ICONS } from "@/components/icons";
+
+// Standard six divisions vs. the new featured #7 (Human + AI Workforce Programs).
+const standardDivisions = DIVISIONS.filter((d) => d.chapter !== "humanai");
+const featuredDivision = DIVISIONS.find((d) => d.chapter === "humanai");
 
 /*
   Homepage — quieter composition.
@@ -91,8 +97,11 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ═════ PROOF STRIP — sectors served ═════ */}
-      <section className="border-t border-[color:var(--color-mist)] py-14 md:py-20">
+      {/* ═════ CLIENTS & AFFILIATIONS — placeholder strip until logo list lands ═════ */}
+      <ClientsStrip />
+
+      {/* ═════ SECTORS SERVED ═════ */}
+      <section className="py-14 md:py-20">
         <Container>
           <Reveal>
             <PillRow items={SECTORS} label="Working across" />
@@ -100,23 +109,25 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ═════ THE PRACTICE — six division cards ═════ */}
+      {/* ═════ THE PRACTICE — six standard cards + one featured #7 ═════ */}
       <section className="py-24 md:py-32">
         <Container>
           <Reveal>
             <div className="eyebrow mb-4">The Practice</div>
             <h2 className="max-w-[28ch] font-sans text-[clamp(32px,4vw,56px)] font-medium leading-[1.05] tracking-[-0.025em] text-[color:var(--color-ink)]">
-              Six divisions. One operating discipline.
+              Seven divisions. One operating discipline.
             </h2>
             <p className="mt-6 max-w-[58ch] text-[17px] leading-[1.6] text-[color:var(--color-silt)]">
-              Each division stands alone — but each is informed by the same
-              conviction: that the gap between frontline reality and executive
-              decision-making is where most strategy quietly fails.
+              Six division-tracks plus a dedicated practice for designing
+              human-and-AI workforce programs. Each stands alone — but each
+              is informed by the same conviction: that the gap between
+              frontline reality and executive decision-making is where most
+              strategy quietly fails.
             </p>
           </Reveal>
 
           <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {DIVISIONS.map((division, i) => (
+            {standardDivisions.map((division, i) => (
               <Reveal key={division.slug} delay={i * 0.06}>
                 <DivisionCard
                   division={division}
@@ -125,6 +136,52 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+
+          {/* Featured 7th — Human + AI Workforce Programs */}
+          {featuredDivision && (() => {
+            const FeaturedMark = CHAPTER_ICONS[featuredDivision.chapter];
+            return (
+              <Reveal delay={0.42}>
+                <a
+                  href={`/practice/${featuredDivision.slug}`}
+                  data-chapter={featuredDivision.chapter}
+                  className="card card-interactive group relative mt-10 block overflow-hidden p-8 md:mt-12 md:p-10 lg:p-12"
+                >
+                  <ChapterEdge chapter={featuredDivision.chapter} />
+                  <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_auto] md:items-center md:gap-12">
+                    <div>
+                      <div className="mb-4 flex items-center gap-3">
+                        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-silt)]">
+                          07 — Featured Practice
+                        </span>
+                        <span
+                          className="inline-flex items-center rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em]"
+                          style={{
+                            background: "var(--color-ch-humanai)",
+                            color: "var(--color-bone)",
+                          }}
+                        >
+                          New
+                        </span>
+                      </div>
+                      <h3 className="display-md mb-4">
+                        {featuredDivision.name}
+                      </h3>
+                      <p className="prose-base mb-6 max-w-[60ch] text-[color:var(--color-silt)]">
+                        {featuredDivision.shortDescription}
+                      </p>
+                      <span aria-hidden="true" className="cta cta-ghost">
+                        Explore the practice
+                      </span>
+                    </div>
+                    <div className="hidden md:block">
+                      <FeaturedMark size={120} />
+                    </div>
+                  </div>
+                </a>
+              </Reveal>
+            );
+          })()}
         </Container>
       </section>
 

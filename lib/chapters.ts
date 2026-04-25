@@ -12,6 +12,7 @@ export const CHAPTER_VAR: Record<ChapterKey, string> = {
   talent: "var(--color-ch-talent)",
   hr: "var(--color-ch-hr)",
   ai: "var(--color-ch-ai)",
+  humanai: "var(--color-ch-humanai)",
 };
 
 export function chapterColor(chapter: ChapterKey): string {

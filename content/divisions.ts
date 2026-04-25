@@ -6,7 +6,8 @@ export type ChapterKey =
   | "homehealth"
   | "talent"
   | "hr"
-  | "ai";
+  | "ai"
+  | "humanai";
 
 export type Division = {
   number: string;
@@ -34,10 +35,11 @@ export const DIVISIONS: Division[] = [
       "Cross-sector strategic counsel for executives, founders, and public officials navigating growth, market entry, organizational redesign, or technology adoption. The connective tissue across every other division.",
     services: [
       "Strategic planning and market-entry advisory",
-      "Organizational redesign and operating model work",
+      "Organizational redesign and operating-model work",
+      "Enterprise-Wide Education Program — design, rollout, manager enablement",
       "Technology adoption strategy (including but not limited to AI)",
       "Executive decision support and thought partnership",
-      "Growth strategy and service line evaluation",
+      "Growth strategy and service-line evaluation",
       "Board and leadership-team advisory",
     ],
     sectors: [
@@ -113,8 +115,8 @@ export const DIVISIONS: Division[] = [
     shortDescription:
       "Hiring architecture for clinical, operational, and field-service roles. Pipeline design, sourcing systems, structured interviewing, and the workforce planning frameworks that survive the first six months post-engagement.",
     services: [
-      "Pipeline and sourcing strategy",
-      "Structured interview design",
+      "Talent Acquisition Strategies — pipeline design, sourcing systems, structured interviewing",
+      "Contingent Labor Workforce Program — flex-roster architecture, vendor management, utilization",
       "Talent assessment frameworks",
       "Workforce planning and headcount modeling",
       "Compensation strategy",
@@ -139,12 +141,12 @@ export const DIVISIONS: Division[] = [
     shortDescription:
       "Manager development, retention systems, and the operational HR work that determines whether your culture is a slogan or a measurable asset. Built for organizations whose people strategy needs to catch up to their growth.",
     services: [
+      "Retention Strategy — diagnostics, intervention design, longitudinal tracking",
+      "Associate Engagement Programs — measurement, design, manager-rhythm cadence",
       "Manager development and frontline leadership training",
-      "Retention diagnostics and intervention design",
-      "Associate engagement measurement",
       "Performance management redesign",
-      "Manager rhythm and cadence design",
       "Exit interview and sentiment systems",
+      "Culture-as-asset measurement frameworks",
     ],
     sectors: [
       "Healthcare systems",
@@ -186,6 +188,36 @@ export const DIVISIONS: Division[] = [
     engagementModels: ["Build", "Advisory"],
     thesis:
       "Most AI deployments fail not because the models are inadequate, but because the surrounding system — the prompts, the knowledge, the guardrails, the integrations, the change management — wasn't built by someone who understood the domain. We build AI systems the way operators build software: measured, constrained, and accountable to the reality they're deployed into.",
+  },
+  {
+    number: "07",
+    slug: "human-ai-workforce",
+    name: "Human + AI Workforce Programs",
+    shortName: "Human + AI Programs",
+    chapter: "humanai",
+    positioning:
+      "Designing the programs where human operators and AI teammates adopt each other — and stay integrated.",
+    shortDescription:
+      "Adoption and integration programs for organizations bringing AI teammates into existing operations — combining human-side change management with technical integration architecture so the workforce becomes one system, not two.",
+    services: [
+      "Adoption program design — rollout plan, manager enablement, frontline training",
+      "Human-AI workflow integration architecture",
+      "Change management frameworks specific to AI deployments",
+      "Adoption diagnostics and post-launch monitoring",
+      "Governance frameworks for human-and-AI collaboration",
+      "Workforce program redesign for hybrid teams",
+    ],
+    sectors: [
+      "Healthcare systems",
+      "Home health & hospice",
+      "Government agencies",
+      "National home-service brands",
+      "Hospitality groups",
+      "Municipalities",
+    ],
+    engagementModels: ["Build", "Project", "Advisory"],
+    thesis:
+      "An AI deployment is not a tool drop — it's a workforce change. The programs that survive past pilot are the ones designed for the human side of integration from day one. We design AI adoption like an operational program, not a launch.",
   },
 ];
 

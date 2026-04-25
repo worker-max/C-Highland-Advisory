@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Animated icons — proof of concept · C Highland Advisory</title>
+<style>
+  :root {
+    --bone:    #eeeee7;
+    --paper:   #f5f3ec;
+    --ink:     #0f0f10;
+    --silt:    #6b6b6e;
+    --mist:    #c9c6bd;
+    --healthcare: #0e6b5d;
+    --homehealth: #b6482d;
+    --talent:     #b8862e;
+    --hr:         #6d2e4e;
+    --ai:         #1fa79c;
+    /* Lime — system "live signal" accent (not a chapter color).
+       Used for: active CTAs, "still running" indicators, hold-state pulses. */
+    --lime:    #c5e84b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bone); color: var(--ink);
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+         -webkit-font-smoothing: antialiased; }
+
+  header { padding: 56px 48px 24px; max-width: 1200px; margin: 0 auto; }
+  header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+  header p  { color: var(--silt); margin: 0; max-width: 64ch; line-height: 1.55; font-size: 15px; }
+  header p + p { margin-top: 12px; }
+  header code { background: var(--paper); border: 1px solid var(--mist); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+  section.scene {
+    max-width: 1200px;
+    margin: 32px auto 96px;
+    padding: 48px;
+    background: var(--paper);
+    border: 1px solid var(--mist);
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) { section.scene { grid-template-columns: 1fr; gap: 32px; padding: 32px; } }
+
+  .stage {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 360px;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%,
+                                color-mix(in oklab, var(--accent, var(--ink)) 8%, transparent) 0%,
+                                transparent 70%);
+    border-radius: 14px;
+    overflow: visible;
+  }
+
+  .copy h2     { font-size: 13px; font-weight: 500; letter-spacing: -0.005em;
+                 color: var(--silt); margin: 0 0 8px; text-transform: uppercase;
+                 letter-spacing: 0.14em; font-family: ui-monospace, monospace; }
+  .copy h3     { font-size: clamp(28px, 3vw, 44px); font-weight: 500;
+                 letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px; }
+  .copy p      { margin: 0 0 12px; line-height: 1.55; color: var(--silt);
+                 font-size: 16px; max-width: 50ch; }
+  .copy ul     { padding-left: 18px; color: var(--silt); font-size: 14px;
+                 line-height: 1.65; margin: 16px 0 0; }
+  .copy ul li  { margin-bottom: 4px; }
+
+  /* Scene-specific accent. Adoption is mapped to LIME — the system's
+     "still alive / still running" signal. Home Health stays on its chapter color. */
+  .scene-adoption    { --accent: var(--lime); }
+  .scene-homehealth  { --accent: var(--homehealth); }
+  .scene-adoption .stage   { background: radial-gradient(ellipse 80% 60% at 50% 50%,
+                              color-mix(in oklab, var(--lime) 22%, transparent) 0%, transparent 70%); }
+
+  /* ── ICON: Adoption ───────────────────────────────────────────────────
+     320x200 viewBox. Three layers:
+       1. Quarter-marker timeline that "settles in" as a baseline
+       2. A signal/metric line that draws across, pauses at each Q, holds at Q4
+       3. Pulsing nodes at each Q with stagger; final Q gets a hold-pulse + halo
+  ─────────────────────────────────────────────────────────────────────── */
+  .ico-adoption {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    color: var(--ink);
+  }
+  .ico-adoption .baseline       { stroke: var(--mist); stroke-dasharray: 4 3; }
+  .ico-adoption .signal         { stroke: var(--accent); stroke-width: 2; fill: none;
+                                  stroke-dasharray: 280; stroke-dashoffset: 280;
+                                  animation: ad-draw 2.6s cubic-bezier(0.16,1,0.3,1) 0.2s forwards; }
+  .ico-adoption .gridline       { stroke: var(--mist); stroke-width: 0.8; opacity: 0.5; }
+  .ico-adoption .qlabel         { font-family: ui-monospace, monospace; font-size: 9px;
+                                  fill: var(--silt); letter-spacing: 0.08em; }
+  .ico-adoption .qmark          { fill: var(--ink); stroke: none; opacity: 0; transform-box: fill-box;
+                                  transform-origin: center; }
+  .ico-adoption .qmark.q1       { animation: ad-pop 0.6s var(--ease, cubic-bezier(0.16,1,0.3,1)) 0.6s forwards,
+                                             ad-pulse 3s ease-in-out 4s infinite; }
+  .ico-adoption .qmark.q2       { animation: ad-pop 0.6s cubic-bezier(0.16,1,0.3,1) 1.2s forwards,
+                                             ad-pulse 3s ease-in-out 4.4s infinite; }
+  .ico-adoption .qmark.q3       { animation: ad-pop 0.6s cubic-bezier(0.16,1,0.3,1) 1.8s forwards,
+                                             ad-pulse 3s ease-in-out 4.8s infinite; }
+  .ico-adoption .qmark.q4       { fill: var(--accent); stroke: var(--ink); stroke-width: 1.2;
+                                  animation: ad-pop 0.6s cubic-bezier(0.16,1,0.3,1) 2.4s forwards,
+                                             ad-pulse-strong 2s ease-in-out 4s infinite; }
+  .ico-adoption .halo           { fill: var(--accent); opacity: 0; transform-origin: center; transform-box: fill-box;
+                                  animation: ad-halo 2.4s ease-in-out 3s infinite; }
+  .ico-adoption .live-tag       { font-family: ui-monospace, monospace; font-size: 8px;
+                                  letter-spacing: 0.18em; fill: var(--ink); opacity: 0;
+                                  animation: ad-fade-in 0.6s ease 3.4s forwards; }
+  .ico-adoption .live-tag-bg    { fill: var(--lime); opacity: 0;
+                                  animation: ad-fade-in 0.6s ease 3.2s forwards; }
+  .ico-adoption .holdLine       { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 3;
+                                  opacity: 0; animation: ad-fade-in 1s ease-out 3s forwards; }
+  .ico-adoption .header-tick    { stroke: var(--silt); stroke-width: 0.8; opacity: 0; animation: ad-fade-in 0.8s ease 0.4s forwards; }
+  .ico-adoption .header-text    { font-family: ui-monospace, monospace; font-size: 8px; fill: var(--silt);
+                                  letter-spacing: 0.16em; opacity: 0; animation: ad-fade-in 0.8s ease 0.6s forwards; }
+
+  @keyframes ad-draw       { to { stroke-dashoffset: 0; } }
+  @keyframes ad-pop        { 0% { opacity: 0; transform: scale(0.4); }
+                              60% { opacity: 1; transform: scale(1.4); }
+                              100% { opacity: 1; transform: scale(1); } }
+  @keyframes ad-pulse      { 0%,100% { opacity: 1; transform: scale(1); }
+                              50%      { opacity: 0.6; transform: scale(1.18); } }
+  @keyframes ad-pulse-strong { 0%,100% { opacity: 1; transform: scale(1); }
+                                50%      { opacity: 0.85; transform: scale(1.4); } }
+  @keyframes ad-halo       { 0%,100% { opacity: 0;   transform: scale(0.5); }
+                              50%      { opacity: 0.18; transform: scale(2.4); } }
+  @keyframes ad-fade-in    { to { opacity: 1; } }
+
+  /* ── ICON: Home Health Operations ─────────────────────────────────────
+     A small dwelling with intake (dashed, draws in) + outcome trace (solid,
+     draws out + pulse at terminus). Tiny "vital sign" sparkline above the
+     dwelling that traces in once and then breathes subtly.
+  ─────────────────────────────────────────────────────────────────────── */
+  .ico-homehealth {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    color: var(--ink);
+  }
+  .ico-homehealth .intake       { stroke: var(--mist); stroke-dasharray: 3 2; stroke-width: 1.5; opacity: 0;
+                                  animation: hh-fade 0.7s ease 0.2s forwards; }
+  .ico-homehealth .dwelling     { stroke: var(--ink); stroke-width: 1.5; fill: none;
+                                  stroke-dasharray: 220; stroke-dashoffset: 220;
+                                  animation: hh-draw 1.4s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; }
+  .ico-homehealth .vital        { stroke: var(--accent); stroke-width: 1.5; fill: none;
+                                  stroke-dasharray: 100; stroke-dashoffset: 100;
+                                  animation: hh-draw 1.6s cubic-bezier(0.65,0.05,0.36,1) 1.6s forwards,
+                                             hh-breathe 5s ease-in-out 3.5s infinite; }
+  .ico-homehealth .outflow      { stroke: var(--accent); stroke-width: 2; fill: none;
+                                  stroke-dasharray: 120; stroke-dashoffset: 120;
+                                  animation: hh-draw 1.2s cubic-bezier(0.16,1,0.3,1) 2.4s forwards; }
+  .ico-homehealth .outflow-dot  { fill: var(--accent); transform-origin: center; transform-box: fill-box;
+                                  opacity: 0;
+                                  animation: hh-pop 0.6s cubic-bezier(0.16,1,0.3,1) 3.2s forwards,
+                                             hh-pulse 2.4s ease-in-out 4s infinite; }
+  .ico-homehealth .outflow-halo { fill: var(--accent); transform-origin: center; transform-box: fill-box;
+                                  opacity: 0;
+                                  animation: hh-halo 3s ease-in-out 4s infinite; }
+  .ico-homehealth .label-mono   { font-family: ui-monospace, monospace; font-size: 8px;
+                                  fill: var(--silt); letter-spacing: 0.18em; opacity: 0;
+                                  animation: hh-fade 0.8s ease 1.4s forwards; }
+  .ico-homehealth .interior-dot { fill: var(--silt); opacity: 0;
+                                  animation: hh-fade 0.6s ease 2s forwards; }
+
+  @keyframes hh-draw     { to { stroke-dashoffset: 0; } }
+  @keyframes hh-fade     { to { opacity: 1; } }
+  @keyframes hh-breathe  { 0%,100% { opacity: 0.85; }
+                            50%      { opacity: 1; } }
+  @keyframes hh-pop      { 0% { opacity: 0; transform: scale(0.5); }
+                            70% { opacity: 1; transform: scale(1.3); }
+                            100% { opacity: 1; transform: scale(1); } }
+  @keyframes hh-pulse    { 0%,100% { opacity: 1; transform: scale(1); }
+                            50%      { opacity: 0.7; transform: scale(1.25); } }
+  @keyframes hh-halo     { 0%,100% { opacity: 0; transform: scale(0.4); }
+                            50%      { opacity: 0.18; transform: scale(2.2); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .ico-adoption .signal, .ico-homehealth .dwelling,
+    .ico-homehealth .vital, .ico-homehealth .outflow { stroke-dashoffset: 0; }
+    .ico-adoption .qmark, .ico-homehealth .outflow-dot,
+    .ico-homehealth .label-mono, .ico-homehealth .interior-dot,
+    .ico-homehealth .intake, .ico-adoption .holdLine,
+    .ico-adoption .header-tick, .ico-adoption .header-text { opacity: 1; }
+  }
+
+  footer { text-align: center; color: var(--silt); font-size: 12px; padding: 24px 48px 64px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Animated icons — proof of concept</h1>
+  <p>
+    Two animated SVG diagrams in a single coherent visual register. Each
+    performs its topic on first load (~3 seconds), then ambient motion holds
+    the composition alive. The full set would extend this register across
+    Healthcare Ops, Talent Acquisition, Contingent Workforce, Applied AI
+    Adoption, and signature-skill marks (e.g. Human-AI Teammate, Diagnostic).
+  </p>
+  <p>
+    Style register: Linear cycles + Vercel edge-drawing + Stripe annotated
+    flow. Stroke-based, hand-drafted offsets, chapter-color accent on the
+    "live" trace, soft gradient halo behind the active node, mono labels.
+    Reload the page to replay the entry animations.
+  </p>
+</header>
+
+<!-- ────────────────────────────────────────────────────────────── ADOPTION -->
+<section class="scene scene-adoption">
+  <div class="stage">
+    <svg class="ico-adoption" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"
+         stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- header rule + label -->
+      <line class="header-tick" x1="20" y1="40" x2="40" y2="40" />
+      <text class="header-text" x="48" y="44">PROGRAM · STILL HOLDING · Q4+</text>
+      <line class="header-tick" x1="20" y1="60" x2="300" y2="60" />
+
+      <!-- subtle gridlines -->
+      <line class="gridline" x1="20" y1="100" x2="300" y2="100" />
+      <line class="gridline" x1="20" y1="140" x2="300" y2="140" />
+
+      <!-- baseline timeline (dashed draft) -->
+      <line class="baseline" x1="20"  y1="160" x2="300" y2="160" />
+
+      <!-- signal/metric line (draws in) -->
+      <path class="signal" d="M 20 150 L 80 145 L 90 95 L 140 95 L 150 80 L 200 80 L 210 75 L 270 76 L 280 76" />
+
+      <!-- hold-line (dashed, fades in at end to signal "still alive") -->
+      <line class="holdLine" x1="280" y1="76" x2="300" y2="76" />
+
+      <!-- quarter markers at each tick on the timeline -->
+      <line class="gridline" x1="80"  y1="156" x2="80"  y2="164" />
+      <line class="gridline" x1="150" y1="156" x2="150" y2="164" />
+      <line class="gridline" x1="210" y1="156" x2="210" y2="164" />
+      <line class="gridline" x1="280" y1="156" x2="280" y2="164" />
+
+      <!-- quarter-pulse nodes on the metric line -->
+      <circle class="qmark q1" cx="80"  cy="145" r="3.5" />
+      <circle class="qmark q2" cx="150" cy="80" r="3.5" />
+      <circle class="qmark q3" cx="210" cy="75" r="3.5" />
+      <circle class="halo"     cx="280" cy="76" r="6" />
+      <circle class="qmark q4" cx="280" cy="76" r="4.5" />
+
+      <!-- quarter labels -->
+      <text class="qlabel" x="76"  y="180">Q1</text>
+      <text class="qlabel" x="146" y="180">Q2</text>
+      <text class="qlabel" x="206" y="180">Q3</text>
+      <text class="qlabel" x="276" y="180">Q4</text>
+
+      <!-- lime "LIVE" badge near Q4 -->
+      <rect class="live-tag-bg" x="240" y="38" width="44" height="14" rx="2" />
+      <text class="live-tag"    x="246" y="48">LIVE · Q4+</text>
+    </svg>
+  </div>
+
+  <div class="copy">
+    <h2>Adoption</h2>
+    <h3>Programs that hold past Q4.</h3>
+    <p>
+      A timeline performs the program's first year. The metric line draws
+      across, settling above baseline. Each quarter marker pops in turn — Q1
+      through Q3 in graphite, Q4 in chapter-accent with a soft halo and a
+      strong-pulse cycle: the program is still running.
+    </p>
+    <ul>
+      <li>3-second entry animation, then ambient pulse + halo</li>
+      <li>Reduced-motion users see the final state, no animation</li>
+      <li>Chapter color is themable — this one accents in turquoise (AI Practice)</li>
+      <li>~280×200 px native; scales cleanly to 200–400</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── HOME HEALTH OPS -->
+<section class="scene scene-homehealth">
+  <div class="copy">
+    <h2>Home Health Operations</h2>
+    <h3>Intake to outcome — without a hospital corridor.</h3>
+    <p>
+      Same register, different topic. A residential dwelling draws in (single
+      stroke, linecap-round). Above it, a small vital-sign sparkline traces
+      across once and then breathes subtly — the operation is alive. From the
+      dwelling, an outcome trace runs up and out to a pulsing accent dot — the
+      result that lasts past discharge.
+    </p>
+    <ul>
+      <li>Intake pipe enters dashed-draft (planned), dwelling draws as solid (built)</li>
+      <li>Vital sparkline ties the icon visually to clinical practice without using a heart-rate cliché</li>
+      <li>Outcome dot pulses + halos in chapter-accent (persimmon for Home Health)</li>
+    </ul>
+  </div>
+
+  <div class="stage">
+    <svg class="ico-homehealth" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"
+         fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- mono caption -->
+      <text class="label-mono" x="20" y="34">— RESIDENCE · INTAKE · OUTCOME</text>
+
+      <!-- vital sign sparkline above the dwelling -->
+      <path class="vital" d="M 80 70 L 100 70 L 108 56 L 116 84 L 124 70 L 230 70" />
+
+      <!-- intake pipe entering left -->
+      <line class="intake" x1="6" y1="156" x2="80" y2="156" />
+
+      <!-- the dwelling -->
+      <path class="dwelling" d="M 80 130 L 80 174 L 200 174 L 200 130 L 140 90 L 80 130 Z" />
+
+      <!-- interior detail (small dot in the dwelling) -->
+      <circle class="interior-dot" cx="140" cy="148" r="2" />
+
+      <!-- outflow path going up-and-right -->
+      <path class="outflow" d="M 200 144 L 240 144 L 280 90" />
+
+      <!-- terminus halo + dot -->
+      <circle class="outflow-halo" cx="280" cy="90" r="10" />
+      <circle class="outflow-dot"  cx="280" cy="90" r="4" />
+    </svg>
+  </div>
+</section>
+
+<footer>
+  Reload to replay entry animations · Style register: Linear / Vercel / Stripe family ·
+  Each icon is one ~3-second story + ambient breathing
+</footer>
+
+</body>
+</html>
