@@ -54,7 +54,7 @@ export const CLIENTS: Client[] = [
   { name: "Lancaster, CA",      domain: "cityoflancasterca.org", url: "https://www.cityoflancasterca.org/", sector: "government" },
   { name: "KCMO BizCare",       domain: "kcmo.gov",             url: "https://bizcare.kcmo.gov/contactbizcare", sector: "government" },
   { name: "Mt. Pleasant, SC",   domain: "tompsc.com",           url: "https://www.tompsc.com/",           sector: "government" },
-  { name: "Cobb Mosquito",      domain: "mosquitoes.org",       url: "https://www.mosquitoes.org/",       sector: "government" },
+  { name: "Alameda County Mosquito", domain: "mosquitoes.org",   url: "https://www.mosquitoes.org/",       sector: "government", logoSrc: "/clients/alameda-mosquito.png" },
   { name: "Citibot",            domain: "citibot.io",           url: "https://www.citibot.io/",           sector: "ai" },
 
   // Row 3 — healthcare + tech-services
@@ -67,7 +67,7 @@ export const CLIENTS: Client[] = [
   // Row 4 — hospitality + sports + emerging AI
   { name: "Cane & Barrel",      domain: "caneandbarrelstpete.com", url: "https://www.caneandbarrelstpete.com/", sector: "hospitality" },
   { name: "New England Surf",   domain: "newenglandsurf.com",   url: "https://newenglandsurf.com/",       sector: "sports" },
-  { name: "Global Sports Experiences", domain: "globalsportsexperiences.com", url: "https://globalsportsexperiences.com/", sector: "sports" },
+  { name: "Global Sports Experiences", domain: "globalsportsexperiences.com", url: "https://globalsportsexperiences.com/", sector: "sports", logoSrc: "/clients/global-sports-experiences.png" },
   { name: "LouLou.ai",          domain: "loulou.ai",            url: "https://www.loulou.ai/",            sector: "ai" },
   { name: "Loved Ones Voice",   domain: "lovedonesvoice.com",   url: "https://lovedonesvoice.com/",       sector: "ai" },
 ];
