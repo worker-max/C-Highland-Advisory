@@ -23,7 +23,7 @@ const METHOD_CARDS = [
     num: "C.02",
     label: "AI integration",
     title: "Custom AI tool integration.",
-    body: "Pre-fabricated, semi-custom, or fully custom — voice agents, workflow automation, eval harnesses. Audit-first, observable, and owned by you.",
+    body: "Custom tools, chatbots, voice agents, workflow automation, and website-infused AI — pre-fabricated, semi-custom, or fully custom. Audit-first, observable, owned by you.",
   },
   {
     num: "C.03",

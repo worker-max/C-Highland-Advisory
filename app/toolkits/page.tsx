@@ -43,9 +43,9 @@ const TOOLKITS = [
   },
   {
     num: "T04",
-    name: "Voice Agent Operating Model",
+    name: "AI Tool Co-op",
     discipline: "AI Practice",
-    body: "Eval harness, escalation paths, human-in-the-loop architecture. Production-ready for healthcare and workforce surfaces; audit-first by design.",
+    body: "A growing library of pre-fabricated and semi-custom AI tools — chatbots, voice agents, workflow automation modules, custom tools, and website-infused AI surfaces. Members deploy with eval harnesses + audit logs ready out of the box.",
     status: "Available — partner access",
   },
   {

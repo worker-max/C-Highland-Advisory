@@ -197,29 +197,32 @@ export const DIVISIONS: Division[] = [
   {
     num: "06",
     slug: "ai-practice",
-    name: "AI Practice — Voice & Workflow Automation",
+    name: "AI Practice — Tools, Agents & Automation",
     color: "#1fa79c",
-    lede: "Voice agents, workflow automation, and applied AI inside operating environments — designed for safety, audit, and lift.",
+    lede: "Custom AI tools, chatbots, voice agents, workflow automation, and website-infused AI surfaces — applied inside real operating environments, audit-first by design.",
     blurb:
-      "Applied AI inside live operating environments — voice in front, workflow underneath, observable at every layer.",
+      "Applied AI inside live operating environments — the right shape for the use case (custom tool, chatbot, voice, automation, or web-embedded), observable at every layer.",
     programs: [
-      "Voice Agent Operating Model",
+      "Custom AI Tool Development",
+      "Conversational Interfaces (Chatbots + Voice)",
       "Workflow Automation Architecture",
+      "Website-Infused AI Integration",
       "Operator-grade Eval Harness",
     ],
     icon: "wave",
     metrics: [
-      { lbl: "Surfaces", val: "Voice · Workflow · Ops" },
+      { lbl: "Surfaces", val: "Tools · Agents · Automation · Web" },
       { lbl: "Stack", val: "Provider-agnostic" },
       { lbl: "Posture", val: "Audit-first" },
       { lbl: "Sponsor", val: "COO / CTO" },
     ],
     longCopy: [
-      "The AI Practice is C Highland Advisory's applied-AI division — voice agents, workflow automation, and the operator-grade integration work that decides whether AI lives or dies inside a real operating environment.",
-      "The defining posture is audit-first. We design voice and workflow systems with eval harnesses, observable handoffs, and human checkpoints by default — because applied AI inside healthcare and workforce surfaces does not get to be unobservable.",
+      "The AI Practice is C Highland Advisory's applied-AI division — custom tools, chatbots, voice agents, workflow automation, and website-infused AI surfaces. Voice is a specialty here, but it's one shape among many; the work starts from the operating environment and chooses the AI form that fits the use case, not the other way around.",
+      "The defining posture is audit-first. Whether the surface is a custom tool, a chatbot, a voice agent, a workflow automation, or an AI-infused website, every deliverable ships with eval harnesses, observable handoffs, and human checkpoints by default — because applied AI inside healthcare and workforce surfaces does not get to be unobservable.",
     ],
     bench: [
-      "Voice agent architects",
+      "Custom AI tool engineers",
+      "Conversational AI architects (chatbot + voice)",
       "LLM evaluation engineers",
       "AI policy & governance partners",
       "Integration specialists (EHR, CRM, scheduling)",
@@ -322,12 +325,24 @@ export const PROGRAM_COPY: { match: string; body: string }[] = [
     body: "The operating system of HR — cadence, escalation, and the management-system layer beneath it.",
   },
   {
-    match: "Voice Agent",
-    body: "Voice agent operating model — eval harness, escalation, and the human-in-the-loop architecture that lets voice live in production.",
+    match: "Custom AI Tool",
+    body: "Custom AI tools sized to the operating model — pre-fab, semi-custom, or fully bespoke. Eval harnesses + audit logs included; the tool is yours, not ours.",
+  },
+  {
+    match: "Conversational",
+    body: "Chatbots and voice agents designed for the use case, not the demo. Conversational design + eval + escalation + human-in-the-loop architecture so the surface lives in production.",
   },
   {
     match: "Workflow Automation",
     body: "Workflow automation architecture — observable, auditable, and designed to live inside an existing operating environment.",
+  },
+  {
+    match: "Website-Infused",
+    body: "AI surfaces embedded directly into web product — search, summarization, retrieval, in-flow agents. Designed to feel native to the site, not bolted on.",
+  },
+  {
+    match: "Voice Agent",
+    body: "Voice agent operating model — eval harness, escalation, and the human-in-the-loop architecture that lets voice live in production.",
   },
   {
     match: "Eval Harness",
