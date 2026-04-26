@@ -8,6 +8,9 @@ import {
   programCopy,
 } from "@/lib/content/divisions";
 import { SiteFooter } from "@/components/sections/SiteFooter";
+import { DivisionMethod } from "@/components/sections/DivisionMethod";
+import { DivisionBench } from "@/components/sections/DivisionBench";
+import { DivisionEngagement } from "@/components/sections/DivisionEngagement";
 
 type Params = { slug: string };
 
@@ -119,6 +122,18 @@ export default async function DivisionPage(props: {
           ))}
         </div>
       </section>
+
+      {/* C. Method — operational process + custom AI + compliance + delivery */}
+      <DivisionMethod divisionNum={division.num} />
+
+      {/* D. The Bench — SMEs included in engagement rate; $100-$250/hr independent */}
+      <DivisionBench divisionNum={division.num} bench={division.bench} />
+
+      {/* E. Engagement — 4 tiers + Begin engagement CTA */}
+      <DivisionEngagement
+        divisionNum={division.num}
+        divisionName={division.name}
+      />
 
       <section className="next-division">
         <span className="eyebrow">

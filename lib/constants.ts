@@ -8,7 +8,9 @@ export const FIRM = {
   founderCreds: "PT, DPT, CBA",
   discipline: "Strategy, operations & applied AI",
   portfolioUrl: "https://colinhighland.com",
-  contactEmail: "hello@chighlandadvisory.com",
+  // Free Outlook inbox until a domain inbox is funded by revenue.
+  // Single-source so the future domain switch is a one-line change.
+  contactEmail: "colinhighland@outlook.com",
   siteUrl: "https://chighlandadvisory.com",
 } as const;
 

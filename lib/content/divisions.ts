@@ -32,6 +32,9 @@ export type Division = {
   metrics: { lbl: string; val: string }[];
   /** Long-form copy for the division detail page (1-2 paragraphs) */
   longCopy: string[];
+  /** Subject-matter experts on the bench for this discipline. Included
+   *  in engagement rates; available independently at $100-$250/hr. */
+  bench: string[];
 };
 
 export const DIVISIONS: Division[] = [
@@ -59,6 +62,12 @@ export const DIVISIONS: Division[] = [
       "The Strategy & Advisory division is the cross-cutting layer of the firm. It picks up engagements that don't sit cleanly inside a single function — operating diagnostics that span ops, finance, and people decisions, organizational redesigns that need a hand on the cadence, and the program-governance work that decides whether a strategy survives its first quarter of contact.",
       "The work is operator-grade by construction. The Enterprise-Wide Education Program lives here — a curriculum and operating cadence designed to move the body of knowledge in a workforce, not a deck assembled and then forgotten.",
     ],
+    bench: [
+      "Operating-model architects",
+      "Finance & FP&A partners",
+      "Board-level facilitators",
+      "Program governance leads",
+    ],
   },
   {
     num: "02",
@@ -83,6 +92,13 @@ export const DIVISIONS: Division[] = [
     longCopy: [
       "Healthcare Strategy at C Highland Advisory is operations and workforce strategy translated to healthcare priorities. It is not an academic healthcare strategy practice; it is the version of healthcare strategy that comes from running workforce programs inside large, complex provider environments — and from understanding how the pieces actually move.",
       "The work spans service-line operating reviews, provider capacity and access modeling, and care-team workforce architecture. The posture is honest: where the operator track was the strongest, the strategy work draws directly from that. Where it wasn't, we say so.",
+    ],
+    bench: [
+      "Clinical informatics specialists",
+      "Revenue-cycle operators",
+      "Payer-relations leads",
+      "Quality & regulatory partners",
+      "Care-team workforce architects",
     ],
   },
   {
@@ -109,6 +125,12 @@ export const DIVISIONS: Division[] = [
       "Home Health Operations is the operator chair, codified. Branch performance architecture, clinician productivity programs, onboarding-to-productive time — the unglamorous, load-bearing operations work inside a model that punishes anyone who tries to fake their way through it.",
       "Engagements are usually quarter-paced and start at the branch level. The output is a performance architecture the regional and enterprise teams can run from, not a slide pack.",
     ],
+    bench: [
+      "OASIS coding specialists",
+      "Branch operations leads",
+      "Clinical leadership coaches",
+      "Hospice & post-acute partners",
+    ],
   },
   {
     num: "04",
@@ -133,6 +155,12 @@ export const DIVISIONS: Division[] = [
     longCopy: [
       "Talent Acquisition & Workforce Strategy is the people-supply infrastructure division. Two of the firm's named programs live here: the Contingent Labor Workforce Program and Talent Acquisition Strategies — the operating chassis behind a hiring engine that needs to scale faster than its workforce supply allows.",
       "The work covers recruiter-capacity modeling, contingent labor program design (RPO, MSP, and internal hybrids), and the workforce architecture that decides whether the operating model is hireable in the first place.",
+    ],
+    bench: [
+      "RPO + MSP specialists",
+      "Compensation strategists",
+      "Workforce analytics partners",
+      "Sourcing & employer-brand leads",
     ],
   },
   {
@@ -159,6 +187,12 @@ export const DIVISIONS: Division[] = [
       "Operational HR & Associate Engagement is the day-to-day division — the operating layer of HR that decides whether retention numbers actually move between strategy decks. Two named programs live here: Retention Strategy and Associate Engagement Programs.",
       "We are skeptical of survey-led engagement work. The programs we design are operational by default — rituals, cadences, and management-system changes that the frontline can feel without being told they exist.",
     ],
+    bench: [
+      "Frontline manager-development partners",
+      "Total rewards strategists",
+      "Engagement & retention researchers",
+      "Performance-management architects",
+    ],
   },
   {
     num: "06",
@@ -184,6 +218,13 @@ export const DIVISIONS: Division[] = [
       "The AI Practice is C Highland Advisory's applied-AI division — voice agents, workflow automation, and the operator-grade integration work that decides whether AI lives or dies inside a real operating environment.",
       "The defining posture is audit-first. We design voice and workflow systems with eval harnesses, observable handoffs, and human checkpoints by default — because applied AI inside healthcare and workforce surfaces does not get to be unobservable.",
     ],
+    bench: [
+      "Voice agent architects",
+      "LLM evaluation engineers",
+      "AI policy & governance partners",
+      "Integration specialists (EHR, CRM, scheduling)",
+      "Mobile + web product engineers",
+    ],
   },
   {
     num: "07",
@@ -208,6 +249,12 @@ export const DIVISIONS: Division[] = [
     longCopy: [
       "Human + AI Workforce Programs is the workforce-integration division — the discipline that designs around the question that applied AI created and won't answer by itself: who does what, with what oversight, on what timeline.",
       "Engagements are programmatic, not advisory. The output is a working set of integrated roles, a RACI that holds, a governance cadence that runs, and a change-management architecture sized to your actual workforce — not a generic AI-readiness deck.",
+    ],
+    bench: [
+      "Change-management specialists",
+      "RACI & role architects",
+      "Adoption program leads",
+      "AI workforce-governance partners",
     ],
   },
 ];
