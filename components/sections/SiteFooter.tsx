@@ -65,6 +65,12 @@ export function SiteFooter() {
                 <Link href={`/practice/${d.slug}`}>{d.name}</Link>
               </li>
             ))}
+            <li style={{ marginTop: 18 }}>
+              <Link href="/toolkits">Toolkits</Link>
+            </li>
+            <li>
+              <Link href="/login">Partner login</Link>
+            </li>
           </ul>
         </div>
         <div>

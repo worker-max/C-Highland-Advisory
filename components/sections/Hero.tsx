@@ -70,13 +70,20 @@ export function Hero() {
               wordmarkSize={32}
               intro="auto"
               hover={true}
+              pulseBottom
             />
           </div>
           <div className="hero-1-content">
             <h1 className="hero-1-headline">
-              Seven divisions.
+              {/* Lime-green periods are the brand's only typographic accent —
+                  one colored character per phrase, used twice. Tiny defiance
+                  of convention; exactly the punctuation of a mark, not a
+                  paragraph. */}
+              Seven divisions<span className="hl-dot">.</span>
               <br />
-              <em>One operating discipline.</em>
+              <em>
+                One operating discipline<span className="hl-dot">.</span>
+              </em>
             </h1>
             <div className="hero-1-meta">
               <p className="body-base">

@@ -23,6 +23,12 @@ import { Logo } from "@/components/Logo";
 const LINKS = [
   { id: "approach", label: "Approach", href: "/#approach" },
   { id: "divisions", label: "Divisions", href: "/#divisions" },
+  // Toolkits = pre-fabricated programs, products, and tools available
+  // to facilitated partners. Sits between the bespoke "Practice" path
+  // and the operator/founder pages — a different shape of engagement.
+  // Plural label per Colin's pick (signals multiple offerings, not a
+  // single product).
+  { id: "toolkits", label: "Toolkits", href: "/toolkits" },
   { id: "operator", label: "Operator", href: "/#operator" },
   { id: "founder", label: "Founder", href: "/founder" },
 ];
@@ -76,6 +82,43 @@ export function PillNav() {
           <Logo size={32} intro="never" />
         </Link>
         <ul className="nav-links right">
+          {/* Small partner-portal login. Quiet — sits before the primary
+              CTA so the pecking order reads CTA-first. Lock icon makes
+              the affordance unmistakable without needing the word "login"
+              on tighter widths. */}
+          <li>
+            <Link
+              href="/login"
+              className="nav-login"
+              aria-label="Partner login"
+              title="Partner login"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="7"
+                  width="10"
+                  height="7"
+                  rx="1"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                />
+                <path
+                  d="M5.5 7V5a2.5 2.5 0 1 1 5 0v2"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  fill="none"
+                />
+              </svg>
+              <span>Login</span>
+            </Link>
+          </li>
           <li>
             <Link href="/#contact" className="nav-cta">
               <span className="dot" />

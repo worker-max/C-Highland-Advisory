@@ -69,6 +69,10 @@ type Props = {
   /** "inline" — wordmark beside the symbol (footer use).
    *  "stacked" — wordmark below the symbol (standalone, hero, business-card). */
   layout?: LogoLayout;
+  /** When true, the integration-ring node (the bottom-most node #7
+   *  with the surrounding ring) pulses continuously after the intro
+   *  finishes — used on the homepage to signal "the system is live". */
+  pulseBottom?: boolean;
 };
 
 export function Logo({
@@ -82,6 +86,7 @@ export function Logo({
   variant,
   tone = "light",
   layout = "inline",
+  pulseBottom = false,
 }: Props) {
   const [phase, setPhase] = useState<"pre" | "drawing" | "done">("pre");
   const ref = useRef<HTMLSpanElement>(null);
@@ -142,7 +147,7 @@ export function Logo({
 
   return (
     <span
-      className={`logo logo-${tone} logo-${layout} ${className}`}
+      className={`logo logo-${tone} logo-${layout} ${pulseBottom ? "logo-pulse-bottom" : ""} ${className}`}
       ref={ref}
       onMouseEnter={handleHover}
       data-cursor="hover"
@@ -187,11 +192,13 @@ export function Logo({
                 }
               : {};
             const pulseDelay = i * 60;
+            const isBottom = i === 6;
             return (
               <g
                 key={`node-${i}`}
                 style={{ ["--pulse-delay" as string]: `${pulseDelay}ms` }}
                 className="logo-node-group"
+                data-bottom={isBottom ? "true" : undefined}
               >
                 <circle
                   className="logo-node"
@@ -206,6 +213,7 @@ export function Logo({
           {/* Integration ring on node #7 only */}
           <circle
             className="logo-ring"
+            data-bottom="true"
             cx={NODES[6].x}
             cy={NODES[6].y}
             r={6.2}

@@ -373,6 +373,32 @@ button {
   align-items: center;
   justify-content: center;
 }
+.nav-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--color-graphite);
+  border-radius: 999px;
+  transition: background 180ms ease, color 180ms ease;
+  white-space: nowrap;
+}
+.nav-login:hover {
+  background: rgba(15, 15, 16, 0.06);
+  color: var(--color-ink);
+}
+.nav-login svg { display: block; }
+@media (max-width: 720px) {
+  /* Hide the word on narrow screens; lock-icon stays as the affordance. */
+  .nav-login span { display: none; }
+  .nav-login { padding: 0 8px; }
+}
+
 .nav-cta {
   display: inline-flex;
   align-items: center;
@@ -511,6 +537,42 @@ button {
   }
 }
 
+/* Continuous pulse on the integration-ring node (node #7).
+   Activated by the .logo-pulse-bottom class on the .logo wrapper.
+   Used on the homepage hero to signal "the system is live". The pulse
+   runs only AFTER the intro animation finishes — that's why it's
+   composed on the .logo-pulse-bottom class with no animation-delay
+   conflict with the intro keyframes (intro uses scale; this uses a
+   second keyframe applied as an alternate animation when pulse mode
+   is active). */
+@keyframes ch-bottom-node-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.6); opacity: 0.65; }
+}
+@keyframes ch-bottom-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%      { transform: scale(1.45); opacity: 0.95; }
+}
+.logo-pulse-bottom .logo-node-group[data-bottom] circle {
+  animation: ch-bottom-node-pulse 1.8s ease-in-out 1.9s infinite;
+  /* 1.9s start delay = waits for intro (1.4s) + small settle pause */
+}
+.logo-pulse-bottom .logo-ring[data-bottom] {
+  animation: ch-bottom-ring-pulse 1.8s ease-in-out 1.9s infinite;
+}
+/* If the intro was skipped (sessionStorage already played), start
+   the pulse immediately rather than waiting 1.9s for nothing. */
+.logo-pulse-bottom.ch-logo-skip-intro .logo-node-group[data-bottom] circle,
+.logo-pulse-bottom.ch-logo-skip-intro .logo-ring[data-bottom] {
+  animation-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-pulse-bottom .logo-node-group[data-bottom] circle,
+  .logo-pulse-bottom .logo-ring[data-bottom] {
+    animation: none !important;
+  }
+}
+
 /* ───────────────────────────── Hero (2-panel) ───────────────────────────── */
 
 .hero {
@@ -588,6 +650,12 @@ button {
   font-style: italic;
   color: var(--color-mist);
   font-weight: 300;
+}
+/* Lime-green period accent — one colored character per phrase. The
+   .hl-dot class can be reused on any headline that wants the same
+   punctuation accent (e.g., section headlines later). */
+.hl-dot {
+  color: var(--color-signal);
 }
 .hero-1-meta {
   display: flex;
