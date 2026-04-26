@@ -1,132 +1,85 @@
-/*
-  Approach — three-card window-pane.
+import Link from "next/link";
+import { TIERS } from "@/lib/content/engagement";
+import { FIRM } from "@/lib/constants";
 
-  Section bg: --color-bone
-  Three cards in a 1px-gap grid on --color-mist (the window-pane recipe).
-  Each card carries a Step 0N number, serif title, body, and a 56x56 glyph.
+/*
+  Engagement section — the homepage primary visual.
+
+  Renamed in spirit from "Approach" (the file is still Approach.tsx
+  for import-path stability) — this section is now the dominant moment
+  on the homepage. Four tier cards in a 2x2 layout with outsized
+  typography on each tier name. Section reads as four posters, not
+  four cards in a grid.
+
+  Each tier links to its dedicated /engagement/[slug] page; a primary
+  CTA at the bottom routes a generic "Begin engagement" mailto.
+
+  Source of truth for tier copy is lib/content/engagement.ts —
+  same data feeds /engagement (hub), /engagement/[slug] (sub-pages),
+  and the discipline-page DivisionEngagement section.
 */
 
-const STEPS = [
-  {
-    num: "Step 01",
-    title: "Operating diagnostic",
-    body: "Two weeks inside the operation — read the cadence, watch the failure modes, surface the load-bearing walls. Output is honest, not polite.",
-  },
-  {
-    num: "Step 02",
-    title: "Program architecture",
-    body: "Design the program — roles, cadence, instrumentation, governance. Built to be operated, not presented. We size it to your team, not to a deck.",
-  },
-  {
-    num: "Step 03",
-    title: "Embedded execution",
-    body: "Run it for a quarter or three with the people who'll own it after. Hand it over with the muscle memory intact, not the consultant gone.",
-  },
-];
-
-function Glyph({ idx }: { idx: number }) {
-  if (idx === 0) {
-    return (
-      <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
-        <circle
-          cx="28"
-          cy="28"
-          r="14"
-          fill="none"
-          stroke="var(--color-graphite)"
-          strokeWidth="1"
-        />
-        <circle cx="28" cy="28" r="3" fill="var(--color-signal)" />
-      </svg>
-    );
-  }
-  if (idx === 1) {
-    return (
-      <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
-        <rect
-          x="10"
-          y="10"
-          width="36"
-          height="36"
-          fill="none"
-          stroke="var(--color-graphite)"
-          strokeWidth="1"
-        />
-        <line
-          x1="10"
-          y1="22"
-          x2="46"
-          y2="22"
-          stroke="var(--color-graphite)"
-          strokeWidth="1"
-        />
-        <line
-          x1="22"
-          y1="10"
-          x2="22"
-          y2="46"
-          stroke="var(--color-graphite)"
-          strokeWidth="1"
-        />
-        <circle cx="34" cy="34" r="3" fill="var(--color-signal)" />
-      </svg>
-    );
-  }
-  return (
-    <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
-      <line
-        x1="6"
-        y1="28"
-        x2="50"
-        y2="28"
-        stroke="var(--color-graphite)"
-        strokeWidth="1"
-      />
-      <circle cx="14" cy="28" r="2.5" fill="var(--color-graphite)" />
-      <circle cx="28" cy="28" r="2.5" fill="var(--color-graphite)" />
-      <circle cx="44" cy="28" r="3.5" fill="var(--color-signal)" />
-    </svg>
-  );
-}
-
 export function Approach() {
+  const subject = encodeURIComponent("Engagement inquiry");
+  const ctaHref = `mailto:${FIRM.contactEmail}?subject=${subject}`;
+
   return (
-    <section className="approach" id="approach">
-      <div className="approach-head">
-        <div>
-          <span className="eyebrow">
-            <span className="marker" />
-            <span className="num">01</span> Approach
-          </span>
-          <h2 className="h-section" style={{ marginTop: 16 }}>
-            How an engagement{" "}
-            <em style={{ fontStyle: "italic", color: "var(--color-silt)" }}>
-              actually
-            </em>{" "}
-            works.
-          </h2>
-        </div>
-        <p
-          className="body-base"
-          style={{ maxWidth: "44ch", justifySelf: "end" }}
-        >
-          A small, deliberate cadence. Diagnose, design, run. We do the
-          unglamorous middle so the program survives the people who built it.
+    <section className="engagement-primary section" id="approach">
+      <div className="engagement-head">
+        <span className="eyebrow">
+          <span className="marker" />
+          <span className="num">01</span> Engagement
+        </span>
+        <h2 className="engagement-h">
+          Four ways to engage<span className="hl-dot">.</span>
+          <br />
+          <em>Same operating discipline.</em>
+        </h2>
+        <p className="engagement-lede">
+          Every operating problem has its own shape. We&rsquo;ve built four
+          engagement formats so the partnership format never gets in the way
+          of the work — embedded for the heaviest lifts, in-person for the
+          deliberate reset, virtual for the on-call thinking partner, and a
+          small-business co-op for the operators who can&rsquo;t fit a
+          six-figure consulting line item but still need the help.
         </p>
       </div>
-      <div className="approach-grid">
-        {STEPS.map((s, i) => (
-          <div className="approach-card" key={s.num}>
-            <div>
-              <div className="num">{s.num}</div>
-              <h3 style={{ marginTop: 14 }}>{s.title}</h3>
+
+      <div className="tiers-grid">
+        {TIERS.map((t) => (
+          <Link
+            key={t.slug}
+            href={`/engagement/${t.slug}`}
+            className="tier-card"
+          >
+            <div className="tier-num-row">
+              <span className="tier-num">{t.num}</span>
+              <span className="tier-divider" aria-hidden="true" />
+              <span className="tier-shortname">{t.shortName}</span>
             </div>
-            <p>{s.body}</p>
-            <div className="glyph">
-              <Glyph idx={i} />
-            </div>
-          </div>
+            <h3 className="tier-name">{t.name}</h3>
+            <p className="tier-oneliner">{t.oneLiner}</p>
+            <ul className="tier-inclusions">
+              {t.inclusions.slice(0, 3).map((inc) => (
+                <li key={inc}>{inc}</li>
+              ))}
+            </ul>
+            <span className="tier-open">
+              Open tier <span className="arrow">→</span>
+            </span>
+          </Link>
         ))}
+      </div>
+
+      <div className="engagement-cta-row">
+        <a href={ctaHref} className="btn btn-primary">
+          <span>Begin engagement</span>
+          <span className="arrow">→</span>
+        </a>
+        <Link href="/engagement" className="btn btn-ghost">
+          <span>Compare all tiers</span>
+          <span className="arrow">→</span>
+        </Link>
       </div>
     </section>
   );

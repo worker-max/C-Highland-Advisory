@@ -82,11 +82,13 @@ export default function FounderPage() {
               across seven divisions, but they share one operating discipline.
             </p>
             <p>
-              On healthcare strategy specifically: I won&rsquo;t claim heavy
-              hands-on healthcare-strategy delivery experience. The skills
-              translate, and the operations work inside Humana and CenterWell
-              was extensive. We say so honestly, and the work is sized to that
-              posture.
+              On healthcare specifically: the operator track is anchored in
+              home health — branch operations, clinician productivity, and
+              the workforce architecture that surrounds them, all inside
+              CenterWell, with adjacent exposure across the broader Humana
+              platform. The discipline translates outward across healthcare,
+              and the SME bench fills any gaps where the operator track
+              didn&rsquo;t run directly.
             </p>
             <p>
               If the operating problem is real, the first conversation is free.
