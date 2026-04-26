@@ -537,38 +537,26 @@ button {
   }
 }
 
-/* Continuous pulse on the integration-ring node (node #7).
-   Activated by the .logo-pulse-bottom class on the .logo wrapper.
-   Used on the homepage hero to signal "the system is live". The pulse
-   runs only AFTER the intro animation finishes — that's why it's
-   composed on the .logo-pulse-bottom class with no animation-delay
-   conflict with the intro keyframes (intro uses scale; this uses a
-   second keyframe applied as an alternate animation when pulse mode
-   is active). */
+/* Continuous pulse on the integration-ring NODE only (#7). The ring
+   itself stays static — earlier version pulsed both, which read as
+   "moving on/off too much" per Colin's review. Now the ring sits
+   quiet around the pulsing node, which is the right hierarchy: the
+   ring is the framing chrome, the node is the live signal. */
 @keyframes ch-bottom-node-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%      { transform: scale(1.6); opacity: 0.65; }
-}
-@keyframes ch-bottom-ring-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50%      { transform: scale(1.45); opacity: 0.95; }
 }
 .logo-pulse-bottom .logo-node-group[data-bottom] circle {
   animation: ch-bottom-node-pulse 1.8s ease-in-out 1.9s infinite;
   /* 1.9s start delay = waits for intro (1.4s) + small settle pause */
 }
-.logo-pulse-bottom .logo-ring[data-bottom] {
-  animation: ch-bottom-ring-pulse 1.8s ease-in-out 1.9s infinite;
-}
 /* If the intro was skipped (sessionStorage already played), start
    the pulse immediately rather than waiting 1.9s for nothing. */
-.logo-pulse-bottom.ch-logo-skip-intro .logo-node-group[data-bottom] circle,
-.logo-pulse-bottom.ch-logo-skip-intro .logo-ring[data-bottom] {
+.logo-pulse-bottom.ch-logo-skip-intro .logo-node-group[data-bottom] circle {
   animation-delay: 0s;
 }
 @media (prefers-reduced-motion: reduce) {
-  .logo-pulse-bottom .logo-node-group[data-bottom] circle,
-  .logo-pulse-bottom .logo-ring[data-bottom] {
+  .logo-pulse-bottom .logo-node-group[data-bottom] circle {
     animation: none !important;
   }
 }
