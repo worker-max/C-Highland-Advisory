@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { FIRM } from "@/lib/constants";
+import { INDUSTRIES } from "@/lib/content/industries";
 
 /*
   Hero — two-panel sticky slide-in.
@@ -49,7 +51,7 @@ export function Hero() {
           <div className="hero-1-toprow">
             <span className="hero-1-tag">
               <span className="marker" aria-hidden="true" />
-              C Highland Advisory · Charleston, SC · Est. 2026
+              C Highland Advisory · Charleston, SC · Est. {FIRM.founded}
             </span>
             <span className="scroll-cue">
               <span className="line" aria-hidden="true" />
@@ -114,6 +116,27 @@ export function Hero() {
             contingent workforce, and applied AI —{" "}
             <em>and I build them to last.</em>
           </h2>
+
+          {/* Translatable industries column. The pulsing green spotlight
+              visits each entry in turn (1.4s per item, 12.6s full cycle)
+              — see globals.css .hero-2-industries keyframes. Healthcare-
+              first ordering anchors the discipline; the rest signal
+              translatability. */}
+          <div className="hero-2-industries-wrap">
+            <span className="hero-2-industries-eyebrow">
+              <span className="marker" aria-hidden="true" />
+              Translatable across
+            </span>
+            <ul className="hero-2-industries" aria-label="Industries">
+              {INDUSTRIES.map((name) => (
+                <li key={name}>
+                  <span className="dot" aria-hidden="true" />
+                  <span className="name">{name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div className="hero-2-bottom">
             <div className="hero-2-stats">
               <div className="stat">
@@ -125,13 +148,9 @@ export function Hero() {
                 <span className="lbl">Sectors served</span>
               </div>
               <div className="stat">
-                <span className="num">2026</span>
+                <span className="num">{FIRM.founded}</span>
                 <span className="lbl">Founded</span>
               </div>
-            </div>
-            <div className="body-sm" style={{ maxWidth: "32ch" }}>
-              Boutique. Quiet authority. Operator-grade pragmatism. Not
-              academic. Not consultancy-glossy.
             </div>
             <Link href="#contact" className="btn btn-primary">
               <span>Begin engagement</span>

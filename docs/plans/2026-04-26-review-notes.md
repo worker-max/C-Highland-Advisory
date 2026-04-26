@@ -194,14 +194,16 @@ Each tier needs:
 
 ## Triage table (running)
 
-| Item | Type | Files affected | Effort |
-| --- | --- | --- | --- |
-| **CC-1** (2023 founded) | cross-cutting | constants, Hero, SiteFooter, OG | small |
-| **CC-2** (route all emails to colinhighland@outlook.com) | cross-cutting | constants (new), PillNav, SiteFooter, /engagement, /login, /toolkits | small |
-| **CC-3** (Education + Youth Sports added to industries list) | cross-cutting | folds into H2-3 implementation | trivial |
-| **H2-1** (drop boutique copy) | section | Hero | trivial |
-| **H2-3** (translatable list w/ pulsing highlight) | section + new component | Hero, globals.css | medium |
-| **A-1..A-7** (4 engagement tiers + sub-pages + homepage restructure + hub) | major restructure | Approach component (new), `/engagement/[slug]` route (new), `/engagement` rewrite, content data file | **large** |
+| Item | Type | Files affected | Effort | Status |
+| --- | --- | --- | --- | --- |
+| **CC-1** (2023 founded) | cross-cutting | constants, Hero, SiteFooter | small | ✅ DONE (commit pending) |
+| **CC-2** (route all emails to colinhighland@outlook.com) | cross-cutting | constants, SiteFooter, /login, /toolkits | small | ✅ DONE |
+| **CC-3** (Education + Youth Sports added to industries list) | cross-cutting | lib/content/industries.ts | trivial | ✅ DONE |
+| **H2-1** (drop boutique copy) | section | Hero | trivial | ✅ DONE |
+| **H2-3** (translatable list w/ pulsing highlight) | section + data | Hero, globals.css, industries.ts | medium | ✅ DONE |
+| **A-1..A-7** (4 engagement tiers + sub-pages + homepage restructure + hub) | major restructure | Approach, `/engagement/[slug]`, `/engagement`, engagement.ts | large | ✅ DONE (commits 2493537 + 1a2c706) |
+| **H1-1** (logo bottom-node pulse, ring static) | section | globals.css, Logo | small | ✅ DONE (commit 7a25948) |
+| Founder bio: drop healthcare disclaimer | section | /founder | trivial | ✅ DONE (commit 1a2c706) |
 
 ---
 

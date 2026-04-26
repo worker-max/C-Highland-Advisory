@@ -1,7 +1,10 @@
 export const FIRM = {
   name: "C Highland Advisory",
   legalName: "C Highland Advisory LLC",
-  founded: "2026",
+  // Advising since 2023; LLC formed in 2026 but the operator track
+  // long predates the entity. Single-source for "founded" + "Est."
+  // anywhere on the site.
+  founded: "2023",
   location: "Charleston, SC",
   founderFull: "Colin Highland, PT, DPT, CBA",
   founderName: "Colin Highland",

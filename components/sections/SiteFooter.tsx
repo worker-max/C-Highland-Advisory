@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { DIVISIONS } from "@/lib/content/divisions";
+import { FIRM } from "@/lib/constants";
 
 /*
   SiteFooter — dark footer with serif CTA + signal-green email pill +
   4-column grid (logo + wordmark | 4 divisions | 3 divisions | office).
 
   bg: --color-ink, color: --color-bone
+
+  All mailto references route through FIRM.contactEmail so the future
+  domain switch is a one-line change in lib/constants.ts.
 */
 
 export function SiteFooter() {
@@ -18,11 +22,11 @@ export function SiteFooter() {
         <em>Or just bring the problem.</em>
       </div>
       <a
-        href="mailto:engage@chighlandadvisory.com"
+        href={`mailto:${FIRM.contactEmail}`}
         className="btn btn-signal"
         style={{ marginBottom: 80 }}
       >
-        <span>engage@chighlandadvisory.com</span>
+        <span>{FIRM.contactEmail}</span>
         <span className="arrow">→</span>
       </a>
       <div className="footer-grid">
@@ -79,9 +83,7 @@ export function SiteFooter() {
             <li>Charleston, SC</li>
             <li>By appointment</li>
             <li>
-              <a href="mailto:engage@chighlandadvisory.com">
-                engage@chighlandadvisory.com
-              </a>
+              <a href={`mailto:${FIRM.contactEmail}`}>{FIRM.contactEmail}</a>
             </li>
             <li>
               <a
@@ -97,7 +99,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-base">
         <span>© 2026 C Highland Advisory LLC</span>
-        <span>South Carolina · Est. 2026</span>
+        <span>South Carolina · Est. {FIRM.founded}</span>
       </div>
     </footer>
   );

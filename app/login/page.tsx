@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "@/components/sections/SiteFooter";
+import { FIRM } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Partner login",
@@ -67,7 +68,7 @@ export default function LoginPage() {
             Partner access for facilitated programs and shared materials.
             If you don&rsquo;t have credentials yet,{" "}
             <a
-              href="mailto:engage@chighlandadvisory.com?subject=Partner%20portal%20access"
+              href={`mailto:${FIRM.contactEmail}?subject=Partner%20portal%20access`}
               style={{
                 color: "var(--color-ink)",
                 textDecoration: "underline",
@@ -80,7 +81,7 @@ export default function LoginPage() {
           </p>
 
           <form
-            action="mailto:engage@chighlandadvisory.com"
+            action={`mailto:${FIRM.contactEmail}`}
             method="post"
             encType="text/plain"
             style={{
@@ -162,7 +163,7 @@ export default function LoginPage() {
               }}
             >
               Partner authentication is in setup. For now, requests route to
-              engage@chighlandadvisory.com and a partner manager will
+              {FIRM.contactEmail} and a partner manager will
               follow up within one business day.
             </p>
 

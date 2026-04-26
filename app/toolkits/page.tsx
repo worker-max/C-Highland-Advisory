@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "@/components/sections/SiteFooter";
+import { FIRM } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Toolkits",
@@ -101,7 +102,7 @@ export default function ToolkitsPage() {
               <span className="arrow">→</span>
             </Link>
             <a
-              href="mailto:engage@chighlandadvisory.com?subject=Toolkit%20partnership%20inquiry"
+              href={`mailto:${FIRM.contactEmail}?subject=Toolkit%20partnership%20inquiry`}
               className="btn btn-ghost"
             >
               <span>Inquire about partnership</span>
