@@ -807,28 +807,34 @@ button {
 }
 .divisions-head {
   position: absolute;
-  top: 14vh;
+  /* Pulled up from 14vh + reduced h2 so the head fits in a compact band
+     above the cards, leaving generous clearance below. Track padding-top
+     is bumped to 30vh to put the cards well below the head's bottom edge. */
+  top: 5vh;
   left: var(--gutter);
   right: var(--gutter);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  z-index: 5;
+  z-index: 6;
   pointer-events: none;
 }
 .divisions-head .left {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 .divisions-head h2 {
   font-family: var(--font-serif);
-  font-variation-settings: "opsz" 48;
-  font-size: clamp(36px, 4.4vw, 60px);
+  font-variation-settings: "opsz" 44;
+  /* Smaller than the global h-section so it doesn't dominate; this is
+     contextual chrome, not the section's own headline. */
+  font-size: clamp(26px, 3.2vw, 42px);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  letter-spacing: -0.018em;
+  line-height: 1.05;
   color: var(--color-ink);
+  max-width: 16ch;
 }
 .divisions-progress {
   display: flex;
@@ -864,10 +870,16 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 22vh var(--gutter) 12vh calc(var(--gutter) + 8px);
+  /* padding-top 30vh puts cards comfortably below the divisions-head
+     (which now ends around 14-16vh on tall viewports). Bottom padding
+     leaves a band for the indicator/spacing. */
+  padding: 30vh var(--gutter) 10vh calc(var(--gutter) + 8px);
   gap: 16px;
   width: max-content;
   will-change: transform;
+  /* Explicit z-index so the head's z-index:6 reliably wins regardless
+     of stacking-context quirks introduced by the track's transform. */
+  z-index: 1;
 }
 .div-card {
   /* Card grew taller to accommodate the prominent 200px icon row. */
@@ -950,12 +962,10 @@ button {
   align-items: end;
   min-height: 26px;
 }
-/* Icon row — sized 200px (~3.6x the original 56px) so the lime
-   discipline glyphs read as a featured visual, not a footnote.
-   The transform reads --scroll-vel from the divisions outer so
-   the icon "leans" in the direction of scroll motion and settles
-   to neutral when the user stops. The whole transform is GPU-cheap
-   (translate + rotate, no layout). */
+/* Icon row — sized 200px so the lime discipline glyphs read as a
+   featured visual. Each icon runs its own intrinsic mechanism animation
+   (sliders, heartbeat, pulses, etc) — see the per-pattern CSS keyframes
+   below. The container itself stays still. */
 .div-card .icon-slot {
   width: 200px;
   height: 200px;
@@ -967,18 +977,6 @@ button {
 .div-card .icon-slot .icon-pattern {
   width: 100%;
   height: 100%;
-  transform:
-    translateX(calc(var(--scroll-vel, 0) * 0.6px))
-    rotate(calc(var(--scroll-vel, 0) * 0.18deg));
-  transform-origin: center;
-  transition: transform 80ms linear;
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) {
-  .div-card .icon-slot .icon-pattern {
-    transform: none;
-    transition: none;
-  }
 }
 .div-card .open {
   display: inline-flex;
@@ -1055,6 +1053,86 @@ button {
 /* Default icon-pattern size (used outside division cards). The
    in-card icon-slot rule overrides this to 100% × 100% of the slot. */
 .icon-pattern { width: 56px; height: 56px; display: block; }
+
+/* ───────────────────────────── Division icon mechanisms ─────────────────────────────
+   Each glyph narrates its discipline through motion — not abstract decoration.
+   All animations use SMIL on cx/cy/d for SVG-native motion (animates in
+   viewBox units regardless of rendered size) plus CSS keyframes for things
+   like rect height oscillation. SMIL is supported in all modern browsers.
+   prefers-reduced-motion freezes everything to a neutral frame. */
+
+/* Wave pattern (AI Practice) — 6 bars oscillating with phase offset,
+   like a waveform passing left-to-right through the icon. */
+@keyframes ico-wave-bar {
+  0%, 100% { transform: scaleY(0.55); }
+  50%      { transform: scaleY(1.4); }
+}
+.icon-pattern .ico-wave-bar {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ico-wave-bar 1.4s ease-in-out infinite;
+}
+.icon-pattern .ico-wave-bar:nth-of-type(1) { animation-delay: -0.00s; }
+.icon-pattern .ico-wave-bar:nth-of-type(2) { animation-delay: -0.18s; }
+.icon-pattern .ico-wave-bar:nth-of-type(3) { animation-delay: -0.36s; }
+.icon-pattern .ico-wave-bar:nth-of-type(4) { animation-delay: -0.54s; }
+.icon-pattern .ico-wave-bar:nth-of-type(5) { animation-delay: -0.72s; }
+.icon-pattern .ico-wave-bar:nth-of-type(6) { animation-delay: -0.90s; }
+
+/* Knit pattern (Operational HR) — two interweaving curves breathing
+   in counter-phase, like a fabric being woven. */
+@keyframes ico-knit-warp {
+  0%, 100% { transform: translateY(-2px); }
+  50%      { transform: translateY(2px); }
+}
+@keyframes ico-knit-weft {
+  0%, 100% { transform: translateY(2px); }
+  50%      { transform: translateY(-2px); }
+}
+.icon-pattern .ico-knit-warp {
+  animation: ico-knit-warp 2.4s ease-in-out infinite;
+}
+.icon-pattern .ico-knit-weft {
+  animation: ico-knit-weft 2.4s ease-in-out infinite;
+}
+
+/* Pulse rings on Branch / Pipeline / Merge — the moving dots themselves
+   animate via SMIL <animate> on cx, but we add a soft scale pulse via
+   CSS keyframes too so each dot feels "alive". */
+@keyframes ico-pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+.icon-pattern .ico-pulse-soft {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ico-pulse-soft 1.6s ease-in-out infinite;
+}
+
+/* Center node on the Merge pattern — pulses like an interconnect "alive"
+   indicator. */
+@keyframes ico-merge-core {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.35); opacity: 1; }
+}
+.icon-pattern .ico-merge-core {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ico-merge-core 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-pattern .ico-wave-bar,
+  .icon-pattern .ico-knit-warp,
+  .icon-pattern .ico-knit-weft,
+  .icon-pattern .ico-pulse-soft,
+  .icon-pattern .ico-merge-core {
+    animation: none !important;
+    transform: none !important;
+  }
+  /* SMIL animations also need to be paused — see DivisionIcon.tsx where
+     animation elements get begin="indefinite" when reduced motion is set. */
+}
 
 /* ───────────────────────────── Operator strip ───────────────────────────── */
 
