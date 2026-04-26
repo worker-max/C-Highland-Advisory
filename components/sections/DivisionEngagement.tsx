@@ -31,11 +31,25 @@ export function DivisionEngagement({ divisionNum, divisionName }: Props) {
         <span className="marker" />
         <span className="num">{divisionNum}.E</span> Engagement
       </span>
-      <h2 style={{ marginTop: 16 }}>Four ways to engage.</h2>
+      {/*
+        Per Colin's review: every division is available across ALL 4
+        engagement tiers — scope is the pliable derivative. The framing
+        below makes it explicit so buyers don't read the Co-op tier
+        as a watered-down version of the Embedded tier — same
+        discipline, different shape.
+      */}
+      <h2 style={{ marginTop: 16 }}>
+        Any tier. Same discipline.
+        <br />
+        <em style={{ fontStyle: "italic", color: "var(--color-silt)" }}>
+          Scope is the pliable derivative.
+        </em>
+      </h2>
       <p className="lede-sm" style={{ marginTop: 16 }}>
-        The {divisionName} discipline can be delivered through any of four
-        engagement formats. Pricing is scope-dependent and we respond within
-        24 hours of a brief.
+        All four formats deliver the {divisionName} discipline. Length,
+        format, and intensity flex with the operating problem; the
+        discipline holds. Pricing is scope-dependent and we respond
+        within 24 hours of a brief.
       </p>
 
       <div style={{ height: 48 }} aria-hidden="true" />
