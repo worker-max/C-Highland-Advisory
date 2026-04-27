@@ -1,0 +1,29 @@
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="C Highland Advisory">
+  <title>C Highland Advisory</title>
+  <!--
+    Apple Touch Icon for iOS home-screen tile (180×180).
+    Bone-canvas square with the brand mark centered. iOS auto-rounds
+    the corners on Home Screen so we don't need an explicit border-radius.
+    Logo centered on a 104×78 sub-canvas; here we scale + offset:
+      Translate (38, 51) and scale 1.0 against original geometry → puts
+      the logo center at roughly (90, 90) of the 180 canvas.
+  -->
+  <rect width="180" height="180" fill="#eeeee7"/>
+  <g transform="translate(38, 51)">
+    <rect fill="#0f0f10" x="14" y="6"  width="54" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="16" width="64" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="26" width="44" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="36" width="70" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="46" width="44" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="56" width="64" height="6" rx="1"/>
+    <rect fill="#0f0f10" x="14" y="66" width="54" height="6" rx="1"/>
+    <circle fill="#00e676" cx="92" cy="9"  r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="19" r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="29" r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="39" r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="49" r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="59" r="3.4"/>
+    <circle fill="#00e676" cx="92" cy="69" r="3.4"/>
+    <circle fill="none" stroke="#00e676" stroke-width="1.5" cx="92" cy="69" r="6.2"/>
+  </g>
+</svg>

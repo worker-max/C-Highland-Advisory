@@ -51,7 +51,13 @@ export const metadata: Metadata = {
     description: "Seven divisions. One operating discipline.",
   },
   icons: {
+    // Modern browsers prefer SVG; iOS uses apple-touch-icon for home-
+    // screen tiles. Both files render the same C-silhouette geometry
+    // as the live animated Logo (bar widths [54,64,44,70,44,64,54])
+    // — no diamond/hourglass mistake.
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/favicon.svg" }],
   },
 };
 
